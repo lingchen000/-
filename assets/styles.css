@@ -2396,6 +2396,66 @@ body.worldline-inner .site-footer { border-color:rgba(187,124,64,.24);background
   .music-feature-card .latest-copy h2 { font-size:34px; }
 }
 
+/* GitHub Discussions overlay: fixed to the viewport so the original layout never reflows. */
+.discussion-launcher {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 80;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 48px;
+  padding: 0 18px;
+  border: 2px solid #111;
+  border-radius: 0;
+  background: #c51f33;
+  box-shadow: 5px 5px 0 #111;
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+.discussion-launcher:hover { transform: translate(2px, 2px); box-shadow: 3px 3px 0 #111; }
+.discussion-launcher:focus-visible,
+.discussion-close:focus-visible { outline: 3px solid #ffb7c5; outline-offset: 3px; }
+.discussion-launcher span { font-size: 18px; }
+.discussion-launcher strong { font-size: 13px; letter-spacing: .08em; }
+
+.discussion-dialog {
+  width: min(720px, calc(100vw - 32px));
+  max-height: min(780px, calc(100vh - 32px));
+  margin: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #171412;
+}
+.discussion-dialog::backdrop { background: rgba(10, 8, 8, .76); backdrop-filter: blur(7px); }
+.discussion-panel {
+  overflow: auto;
+  max-height: min(780px, calc(100vh - 32px));
+  padding: 28px;
+  border: 2px solid #111;
+  background: #fffaf0;
+  box-shadow: 10px 10px 0 #c51f33;
+}
+.discussion-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; border-bottom: 7px solid #c51f33; padding-bottom: 16px; }
+.discussion-head p { margin: 0 0 4px; color: #c51f33; font-size: 11px; font-weight: 800; letter-spacing: .16em; }
+.discussion-head h2 { margin: 0; color: #111; font-size: clamp(26px, 5vw, 42px); letter-spacing: -.05em; }
+.discussion-close { flex: 0 0 42px; width: 42px; height: 42px; border: 2px solid #111; border-radius: 0; background: #111; color: #fff; font: 700 25px/1 inherit; cursor: pointer; }
+.discussion-note { margin: 18px 0 20px; color: #675d56; font-size: 14px; }
+.discussion-frame { min-height: 190px; }
+.discussion-loading { padding: 42px 0; color: #675d56; text-align: center; }
+.discussion-frame .giscus,
+.discussion-frame .giscus-frame { width: 100%; }
+
+@media (max-width: 560px) {
+  .discussion-launcher { right: 14px; bottom: 14px; min-height: 44px; padding: 0 13px; box-shadow: 4px 4px 0 #111; }
+  .discussion-launcher strong { font-size: 12px; }
+  .discussion-panel { padding: 20px 16px; box-shadow: 6px 6px 0 #c51f33; }
+  .discussion-head { gap: 14px; }
+}
+
 /* Internship observation log terminal */
 .log-terminal-page { min-height:100vh; }
 .log-terminal-page .log-hero { padding-bottom:72px; }

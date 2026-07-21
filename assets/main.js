@@ -501,4 +501,67 @@
       localStorage.setItem(likeKey, next ? "yes" : "no");
     });
   }
+
+  // GitHub Discussions：以悬浮弹层承载评论与收藏，不参与原页面网格排版。
+  const enableDiscussions = !document.body.classList.contains("not-found-page");
+  if (enableDiscussions) {
+    const launcher = document.createElement("button");
+    launcher.className = "discussion-launcher";
+    launcher.type = "button";
+    launcher.setAttribute("aria-haspopup", "dialog");
+    launcher.innerHTML = '<span aria-hidden="true">✦</span><strong>评论 · 收藏</strong>';
+
+    const dialog = document.createElement("dialog");
+    dialog.className = "discussion-dialog";
+    dialog.setAttribute("aria-labelledby", "discussion-title");
+    dialog.innerHTML = `
+      <div class="discussion-panel">
+        <header class="discussion-head">
+          <div>
+            <p>READER ECHO / GITHUB</p>
+            <h2 id="discussion-title">评论与收藏</h2>
+          </div>
+          <button class="discussion-close" type="button" aria-label="关闭评论">×</button>
+        </header>
+        <p class="discussion-note">使用 GitHub 登录后即可留言；点亮反应，就是把这一页收入收藏。</p>
+        <div class="discussion-frame" data-giscus-mount>
+          <p class="discussion-loading">正在连接 GitHub Discussions…</p>
+        </div>
+      </div>`;
+
+    document.body.append(launcher, dialog);
+    const mount = dialog.querySelector("[data-giscus-mount]");
+    let loaded = false;
+
+    const loadGiscus = () => {
+      if (loaded) return;
+      loaded = true;
+      mount.replaceChildren();
+      const script = document.createElement("script");
+      script.src = "https://giscus.app/client.js";
+      script.async = true;
+      script.crossOrigin = "anonymous";
+      script.dataset.repo = "lingchen000/-";
+      script.dataset.repoId = "R_kgDOTXv2iA";
+      script.dataset.category = "General";
+      script.dataset.categoryId = "DIC_kwDOTXv2iM4DBnwM";
+      script.dataset.mapping = "pathname";
+      script.dataset.strict = "0";
+      script.dataset.reactionsEnabled = "1";
+      script.dataset.emitMetadata = "0";
+      script.dataset.inputPosition = "top";
+      script.dataset.theme = "preferred_color_scheme";
+      script.dataset.lang = "zh-CN";
+      mount.appendChild(script);
+    };
+
+    launcher.addEventListener("click", () => {
+      dialog.showModal();
+      loadGiscus();
+    });
+    dialog.querySelector(".discussion-close").addEventListener("click", () => dialog.close());
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+  }
 })();
