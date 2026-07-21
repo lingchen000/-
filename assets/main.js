@@ -204,7 +204,7 @@
         const hour = now.getHours();
         const worldline = document.body.classList.contains("worldline-theme");
         greeting.textContent = worldline
-          ? (hour < 6 ? "深夜观测" : hour < 11 ? "晨间连接" : hour < 14 ? "正午同步" : hour < 18 ? "午后记录" : "夜间连接")
+          ? (hour < 6 ? "深夜独白" : hour < 11 ? "晨间一页" : hour < 14 ? "正午插曲" : hour < 18 ? "午后章节" : "夜间场景")
           : (hour < 6 ? "夜深了" : hour < 11 ? "早上好" : hour < 14 ? "中午好" : hour < 18 ? "下午好" : "晚上好");
       }
     };
@@ -256,11 +256,11 @@
   const noteButton = document.querySelector("[data-random-note]");
   const noteText = document.querySelector("[data-note-text]");
   const notes = [
-    "“选择发生的那一刻，未来已经开始偏移。”",
-    "“欺骗既定的结局之前，先别让今天的自己投降。”",
-    "“所谓偶然，不过是尚未解析完成的世界线指令。”",
-    "“机关可以窃听信号，却无法夺走观测者选择未来的意志。”",
-    "“实习不是重复劳动，是潜入现实系统的一次长期实验。”"
+    "“忘记不是消失，只是故事暂时没有轮到它出场。”",
+    "“所谓日常，大概就是怪异还没来得及自我介绍。”",
+    "“人总在事后替偶然安排伏笔，这也是一种温柔的误读。”",
+    "“没有说出口的话不会消失，它们只是换成了别的语气。”",
+    "“成长不是成为别人，而是终于能替过去的自己补完旁白。”"
   ];
   noteButton?.addEventListener("click", () => {
     if (!noteText) return;

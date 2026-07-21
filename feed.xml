@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>陵辰｜世界线公开信标</title>
+    <title>陵辰｜怪异记录簿</title>
     <link>https://lingchen000.github.io/-/</link>
-    <description>未来道具研究所成员陵辰允许外界读取的世界线公开档案。</description>
+    <description>陵辰公开的故事、日常切片与私人独白。</description>
     <language>zh-CN</language>
     <lastBuildDate>Tue, 21 Jul 2026 00:00:00 +0800</lastBuildDate>
     <atom:link href="https://lingchen000.github.io/-/feed.xml" rel="self" type="application/rss+xml"/>
