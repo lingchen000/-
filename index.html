@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="未来道具研究所成员陵辰的世界线观测终端与实习日志。">
+  <meta name="theme-color" content="#17130f">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="陵辰｜世界线观测终端">
+  <meta property="og:description" content="接收时间信号，封存实习记录，对抗既定未来。">
+  <title>陵辰｜世界线观测日志</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="alternate" type="application/rss+xml" title="陵辰 RSS" href="feed.xml">
+  <link rel="stylesheet" href="assets/styles.css">
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('lingchen-theme-v2')||'light'}catch(_){}</script>
+  <script src="assets/main.js" defer></script>
+</head>
+<body class="dashboard-page dashboard-v2 worldline-theme">
+  <a class="skip-link" href="#main">接入主观测终端</a>
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+
+  <main class="desktop-shell" id="main">
+    <aside class="glass-card profile-card">
+      <a class="profile-avatar" href="about/index.html" aria-label="读取陵辰研究员档案">
+        <img src="assets/lingchen-worldline.png" alt="复古时间实验室与白猫插画">
+      </a>
+      <div class="profile-copy">
+        <p class="profile-kicker">WORLDLINE OBSERVER</p>
+        <h1>陵辰</h1>
+        <p>未来道具研究所非正式成员。持续观测命运的偏移。</p>
+      </div>
+      <nav class="desk-nav" aria-label="终端导航">
+        <a class="is-current" href="index.html"><span>⌂</span><strong>主终端</strong></a>
+        <a href="articles/index.html"><span>⌁</span><strong>公开档案</strong></a>
+        <a href="notes/index.html"><span>✦</span><strong>观测日志</strong></a>
+        <a href="about/index.html"><span>○</span><strong>研究员档案</strong></a>
+      </nav>
+      <div class="profile-footer">
+        <span>LABMEM / LC-001</span>
+        <button class="round-control" type="button" data-theme-toggle aria-label="切换终端显示模式">◐</button>
+      </div>
+    </aside>
+
+    <section class="glass-card scene-card" aria-label="世界线观测窗口">
+      <img src="assets/lingchen-worldline.png" alt="夕阳中的复古电子实验室与时间观测设备">
+      <div class="scene-caption"><span>OBSERVATION WINDOW / 001</span><strong>世界线变动率 · 测量中</strong></div>
+    </section>
+
+    <section class="glass-card welcome-card">
+      <div class="welcome-topline"><span data-greeting>秘密通信已建立</span><span class="status-dot">机关监视中</span></div>
+      <h2>命运不会等待，<br><em>观测者必须先行动。</em></h2>
+      <p>我是陵辰，LABMEM LC-001。此处保存实习行动报告、未来道具实验，以及从无数可能性中泄漏而来的微弱信号。</p>
+      <div class="welcome-actions">
+        <a class="pill primary" href="notes/index.html">上传今日观测 <span>→</span></a>
+        <a class="pill" href="#music">接收音频信号</a>
+      </div>
+      <nav class="social-chips" aria-label="快捷入口">
+        <a href="articles/index.html">公开档案</a><a href="notes/index.html">实习日志</a><a href="feed.xml">RSS 信标</a>
+      </nav>
+    </section>
+
+    <section class="glass-card clock-card" aria-label="当前时间">
+      <div class="clock-label"><span>DIVERGENCE CLOCK</span><span class="live-dot"></span></div>
+      <time class="digital-clock" data-clock>--:--</time>
+      <p data-full-date>正在读取时间</p>
+    </section>
+
+    <section class="glass-card calendar-card" aria-label="本月日历">
+      <div class="calendar-head"><div><span data-calendar-month>七月</span><strong data-calendar-year>2026</strong></div><span class="calendar-mark">月历</span></div>
+      <div class="mini-calendar" data-calendar></div>
+      <p class="lunar-note">每一个今日，都是尚未收束的实验变量。</p>
+    </section>
+
+    <section class="glass-card latest-card music-feature-card">
+      <div class="card-label"><span>LOCAL AUDIO SIGNAL</span><span>MP3</span></div>
+      <div class="latest-art" aria-hidden="true"><span>命</span><i></i></div>
+      <div class="latest-copy">
+        <p>星愿 · OFF VOCAL</p>
+        <h2>星愿</h2>
+        <p class="latest-summary">茶理理 · 本地音频信号</p>
+        <a class="read-link" href="assets/xingyuan-off-vocal.mp3" download>下载音频 <span>↓</span></a>
+      </div>
+    </section>
+
+    <section class="glass-card thought-card">
+      <div class="card-label"><span>ORACLE SIGNAL / RANDOM</span><button type="button" data-random-note aria-label="重新捕获信号">↻</button></div>
+      <blockquote data-note-text>“选择发生的那一刻，未来已经开始偏移。”</blockquote>
+      <a href="notes/index.html">接入观测日志 →</a>
+    </section>
+
+    <section class="glass-card player-card" id="music" aria-label="星愿 off vocal 音乐播放器">
+      <button class="play-button" type="button" data-play aria-label="播放">▶</button>
+      <div class="track-copy">
+        <span>NOW PLAYING / LOCAL SIGNAL</span>
+        <strong>星愿 · off vocal</strong>
+      </div>
+      <div class="wave" data-wave aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+      <audio data-audio preload="metadata" hidden>
+        <source src="assets/xingyuan-off-vocal.mp3" type="audio/mpeg">
+      </audio>
+    </section>
+
+    <section class="glass-card like-card">
+      <button type="button" data-like aria-label="喜欢这个网站"><span>♡</span><strong data-like-count>128</strong></button>
+      <p>共犯者信号</p>
+    </section>
+  </main>
+
+  <footer class="dashboard-footer">
+    <span>© <span data-current-year>2026</span> 陵辰</span>
+    <span>现实坐标已加密 · 当前世界线仍可改写</span>
+  </footer>
+</body>
+</html>

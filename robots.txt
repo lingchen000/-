@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# GitHub Pages 站点地图
+Sitemap: https://lingchen000.github.io/-/sitemap.xml
