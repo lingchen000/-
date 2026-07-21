@@ -31,9 +31,72 @@
         <div><p class="eyebrow">PUBLIC READING / OWNER EDITED</p><h2 id="log-access-title">陵辰的日常页</h2></div>
         <span class="terminal-status"><i></i> READ ONLY / 只读</span>
       </div>
-      <div class="log-empty">
-        <strong>THE PAGE IS STILL BLANK</strong>
-        <p>第一篇记录还没有出现。也许它正在发生，也许叙述者只是还没想好该从哪一句开始。</p>
+      <div class="observation-log-list">
+        <article class="observation-log-entry">
+          <div class="observation-log-meta"><time datetime="2026-07-20">2026.07.20</time><span>LOG 005</span></div>
+          <h3>RealWorld 功能测试与后端认证学习</h3>
+          <p class="observation-log-project">ASSIGNMENT / REALWORLD &amp; ENTERPRISE RESEARCH</p>
+          <div class="observation-log-content">
+            <p>解决了因固定 JDK 8 造成的项目无法运行问题，为不同工具配置对应的 JDK。</p>
+            <p>继续优化项目的 GraphiQL 页面，修复界面虽然显示“请求头”编辑器，但发送请求时只固定携带 Accept 和 Content-Type、无法保存用户令牌的问题。</p>
+            <p>测试了注册用户、登录用户、保存登录信息、查看当前用户、创建文章、修改文章、删除文章、查询文章列表、收藏文章、评论文章及查询文章详情等功能，并针对检查出的请求头问题进行修改。</p>
+            <p>进一步学习后端端口、分层架构与 JWT 的基本认证过程，理解登录令牌在前后端分离项目中的作用。</p>
+            <p>利用企查查和快手采集烟台市十家公司的信息，完成填表并提交给采集部。</p>
+          </div>
+        </article>
+
+        <article class="observation-log-entry">
+          <div class="observation-log-meta"><time datetime="2026-07-17">2026.07.17</time><span>LOG 004</span></div>
+          <h3>让 RealWorld 后端系统正常启动</h3>
+          <p class="observation-log-project">ASSIGNMENT / REALWORLD &amp; ENTERPRISE RESEARCH</p>
+          <div class="observation-log-content">
+            <p>检查本地环境配置并启动调试。针对原有 JDK 与项目不匹配的问题，安装 Temurin JDK 11，重新配置 JAVA_HOME，使项目正常运行；同时学习并掌握了通过 main 方法寻找 Spring Boot 启动类的方法。</p>
+            <p>针对 GraphiQL 引用的旧版 React CDN 地址失效、页面白屏的问题，使用固定版本的 React 和 ReactDOM 修复旧版 GraphiQL 页面。</p>
+            <p>测试运行 RealWorld 内容社区后端系统，检查报错并确认该项目本身没有普通网站首页。</p>
+            <p>完成日照、滨州等地区共 72 家公司的信息采集与填表，并提交给采集部。</p>
+          </div>
+        </article>
+
+        <article class="observation-log-entry">
+          <div class="observation-log-meta"><time datetime="2026-07-16">2026.07.16</time><span>LOG 003</span></div>
+          <h3>翻译体验优化与企业数据核验</h3>
+          <p class="observation-log-project">ASSIGNMENT / TRANSLATION SYSTEM &amp; ENTERPRISE RESEARCH</p>
+          <div class="observation-log-content">
+            <p>针对长文本生成速度过慢的问题，优化 Web 服务的解码速度，将目标输出上限设为 128 个 token。</p>
+            <p>改善语言翻译系统的启动体验，在长时间没有提示时显示“正在加载解码器”等状态文字。</p>
+            <p>在项目配置中将 VS Code 的运行时锁定为 JDK 8，避免出现前一天能够运行、第二天却无法启动的问题。</p>
+            <p>增加一键翻译和翻译历史功能。历史记录只保存在浏览器中，不上传服务器，以保护用户隐私。</p>
+            <p>在抖音搜索日照地区的企业账号，筛选出 26 个具有明确企业认证主体的账号，逐一核对媒体名称、主页网址、平台账号、粉丝量和认证企业名称。开播时间只录入账号主页明确公布的信息，未公开的内容保持空白。</p>
+            <p>使用企查查、天眼查和爱企查等网站核对工商注册地址，补充企业所属区县与行政区域，并检查企业名称和抖音认证主体是否一致。</p>
+            <p>按照直播媒体管理表模板重新录入 26 条日照企业信息，统一省、市、区、完善状态和媒介类型等字段，检查账号网址与企业主体是否重复，并完成格式、数量和准确性核验。</p>
+          </div>
+        </article>
+
+        <article class="observation-log-entry">
+          <div class="observation-log-meta"><time datetime="2026-07-15">2026.07.15</time><span>LOG 002</span></div>
+          <h3>修复翻译调用链与端口冲突</h3>
+          <p class="observation-log-project">ASSIGNMENT / TRANSLATION SYSTEM &amp; ENTERPRISE RESEARCH</p>
+          <div class="observation-log-content">
+            <p>针对语言翻译系统无法完成少数民族语言整句翻译的问题，分别为维吾尔语和蒙古语接入句子级机器翻译模型，检查可离线部署模型的覆盖范围和本机兼容性，并替换原有调用链。</p>
+            <p>针对重启编辑器后项目无法启动的问题重新检查环境，发现电脑中的多个 Java 版本混用，且 VS Code 没有固定运行时，导致选择了不同的 JDK。</p>
+            <p>修复 HTML 文件中误插入连续数字造成的乱码问题，并重新检查页面排版。</p>
+            <p>解决两个程序争用 8000 端口、导致网站 Java 离线服务无法使用的问题。</p>
+            <p>使用天眼查、企查查等网站查询企业统一社会信用代码、信息类别、行业类别、省市区、单位名称、地址、网址、电话和完善状态等信息。</p>
+            <p>将权威网站查询到的企业信息录入表格，整理抖音、快手平台的企业主体清单，补充已核实企业的统一社会信用代码，修正企业简称和不规范名称，并检查主体信息表与媒体管理表的对应关系。</p>
+          </div>
+        </article>
+
+        <article class="observation-log-entry">
+          <div class="observation-log-meta"><time datetime="2026-07-14">2026.07.14</time><span>LOG 001</span></div>
+          <h3>离线语言翻译系统的第一轮改造</h3>
+          <p class="observation-log-project">ASSIGNMENT / TRANSLATION SYSTEM</p>
+          <div class="observation-log-content">
+            <p>测试从 GitHub 拉取的语言翻译系统，重新设计并美化主页面，整理和安装两个模型运行库，实现中英互译与语言切换功能。</p>
+            <p>针对程序崩溃、无法运行的问题重新安装 JDK 8，同时保留 JDK 24 供 Java 扩展自身运行。</p>
+            <p>删除工作区中的冗余文件夹，使项目结构和查询过程更加简洁。</p>
+            <p>实现维吾尔语、蒙古语的民族语言互译功能，增加 310 个词汇概念。文本完全在本机处理，目前可通过离线词库完成单字翻译。</p>
+          </div>
+        </article>
       </div>
       <p class="local-storage-note">※ 本页没有公开写入接口。正式内容仅由站点所有者提交并发布。</p>
     </section>
