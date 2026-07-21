@@ -2574,6 +2574,7 @@ body.monogatari-theme {
   --desk-muted: var(--mono-muted);
   --desk-accent: var(--mono-red);
   color-scheme: light;
+  overflow-x: hidden;
   background:
     linear-gradient(118deg, transparent 0 68%, rgba(197,31,51,.07) 68% 71%, transparent 71%),
     repeating-linear-gradient(90deg, transparent 0 79px, rgba(17,17,17,.035) 79px 80px),
@@ -2850,9 +2851,16 @@ body.monogatari-theme.worldline-inner .eyebrow { color: var(--mono-red); }
 body.monogatari-theme.worldline-inner .page-title { max-width: 760px; color: var(--mono-ink); font-size: clamp(52px, 8vw, 104px); font-weight: 900; letter-spacing: -.08em; line-height: .98; }
 body.monogatari-theme.worldline-inner .page-lede { max-width: 620px; color: var(--mono-muted); }
 
-body.monogatari-theme.worldline-inner .about-layout { align-items: start; gap: 48px; }
+body.monogatari-theme.worldline-inner .about-layout {
+  grid-template-columns: minmax(280px, 340px) minmax(0, 680px);
+  align-items: start;
+  gap: 68px;
+}
 body.monogatari-theme.worldline-inner .portrait-placeholder {
-  min-height: 620px;
+  width: 100%;
+  height: 620px;
+  min-height: 0;
+  aspect-ratio: auto;
   margin: 0;
   padding: 0;
   border: 2px solid var(--mono-line);
@@ -2861,7 +2869,7 @@ body.monogatari-theme.worldline-inner .portrait-placeholder {
   box-shadow: 12px 12px 0 var(--mono-red);
   clip-path: polygon(0 0, 100% 0, 100% 92%, 88% 100%, 0 100%);
 }
-body.monogatari-theme .portrait-photo img { width: 100%; height: 100%; min-height: 620px; object-fit: cover; object-position: 52% center; filter: saturate(.78) contrast(1.12); }
+body.monogatari-theme .portrait-photo img { width: 100%; height: 100%; min-height: 0; object-fit: cover; object-position: 52% center; filter: saturate(.78) contrast(1.12); }
 body.monogatari-theme .portrait-photo .portrait-label { right: 0; bottom: 0; left: 0; padding: 12px 16px; background: var(--mono-red); color: white; }
 body.monogatari-theme.worldline-inner .prose {
   padding: clamp(28px, 5vw, 60px);
@@ -2928,8 +2936,8 @@ body.monogatari-theme.worldline-inner .button { border: 2px solid var(--mono-lin
   body.monogatari-theme.worldline-inner .page-hero { min-height: 380px; padding: 70px 36px 56px; }
   body.monogatari-theme.worldline-inner .page-hero::before { right: 0; width: 15%; opacity: .82; }
   body.monogatari-theme.worldline-inner .about-layout { grid-template-columns: 1fr; }
-  body.monogatari-theme.worldline-inner .portrait-placeholder,
-  body.monogatari-theme .portrait-photo img { min-height: min(86vh, 700px); }
+  body.monogatari-theme.worldline-inner .portrait-placeholder { width: min(100%, 460px); height: auto; min-height: 0; aspect-ratio: 3 / 4; }
+  body.monogatari-theme .portrait-photo img { min-height: 0; }
 }
 
 @media (min-width: 851px) and (max-width: 1180px) {
@@ -2937,6 +2945,10 @@ body.monogatari-theme.worldline-inner .button { border: 2px solid var(--mono-lin
     grid-template-rows: 220px 340px 280px 190px;
     min-height: 1072px;
   }
+}
+
+@media (min-width: 851px) {
+  body.monogatari-theme.worldline-inner .portrait-photo { transform: translateX(-16px); }
 }
 
 @media (max-width: 560px) {
@@ -2975,8 +2987,8 @@ body.monogatari-theme.worldline-inner .button { border: 2px solid var(--mono-lin
   body.monogatari-theme.worldline-inner .page-title { font-size: clamp(46px, 16vw, 70px); }
   body.monogatari-theme.worldline-inner .page-lede { max-width: 85%; }
   body.monogatari-theme.worldline-inner .section { width: calc(100% - 24px); }
-  body.monogatari-theme.worldline-inner .portrait-placeholder,
-  body.monogatari-theme .portrait-photo img { min-height: 520px; }
+  body.monogatari-theme.worldline-inner .portrait-placeholder { min-height: 0; }
+  body.monogatari-theme .portrait-photo img { min-height: 0; }
   body.monogatari-theme.worldline-inner .prose { padding: 28px 22px; box-shadow: 7px 7px 0 var(--mono-line); }
   body.monogatari-theme.worldline-inner .archive-empty-terminal,
   body.monogatari-theme.worldline-inner .log-console { box-shadow: 7px 7px 0 var(--mono-line); }
