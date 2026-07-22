@@ -12,7 +12,7 @@
 - 数字时钟、自动月历和分时段问候
 - 随机独白、音乐播放动效、本地点赞和明暗模式
 - GitHub Discussions 驱动的全站评论与反应收藏，不改变原页面网格
-- 全站“小辰”智能体：由 Cloudflare Worker 安全代理 DeepSeek API，支持页面上下文问答、本地聊天记录，以及公开 GitHub 仓库、目录、文件和 Issue/PR 检索
+- 全站“陵辰”智能体：由 Cloudflare Worker 安全代理 DeepSeek API，支持页面上下文问答、本地聊天记录，以及公开 GitHub 仓库、目录、文件和 Issue/PR 检索
 - 空片段档案、人物侧写与只读日常记录
 - 公开日志采用只读模式，发布权限由 GitHub 仓库账号控制
 - 桌面、平板和手机三档响应式布局

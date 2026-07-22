@@ -511,7 +511,7 @@
     launcher.className = "assistant-launcher";
     launcher.type = "button";
     launcher.setAttribute("aria-haspopup", "dialog");
-    launcher.innerHTML = '<span aria-hidden="true">✧</span><strong>问问小辰</strong>';
+    launcher.innerHTML = '<span aria-hidden="true">✧</span><strong>问问陵辰</strong>';
 
     const dialog = document.createElement("dialog");
     dialog.className = "assistant-dialog";
@@ -521,7 +521,7 @@
         <header class="assistant-head">
           <div class="assistant-identity">
             <span class="assistant-avatar" aria-hidden="true">辰</span>
-            <div><p>LINGCHEN AGENT / ONLINE</p><h2 id="assistant-title">小辰</h2></div>
+            <div><p>LINGCHEN AGENT / ONLINE</p><h2 id="assistant-title">陵辰</h2></div>
           </div>
           <div class="assistant-head-actions">
             <button class="assistant-clear" type="button" title="清空对话">清空</button>
@@ -535,7 +535,7 @@
           <button type="button">随机说句可爱的话</button>
         </div>
         <form class="assistant-form" data-assistant-form>
-          <textarea id="assistant-input" rows="1" maxlength="600" placeholder="想问小辰什么呀……" aria-label="发送给小辰" required></textarea>
+          <textarea id="assistant-input" rows="1" maxlength="600" placeholder="想问陵辰什么呀……" aria-label="发送给陵辰" required></textarea>
           <button type="submit" aria-label="发送消息">➤</button>
         </form>
         <p class="assistant-footnote">AI 的回答可能有误，请不要发送密码或其他隐私信息。</p>
@@ -570,7 +570,7 @@
       const bubble = document.createElement("div");
       bubble.className = `assistant-message ${role} ${extraClass}`.trim();
       const label = document.createElement("span");
-      label.textContent = role === "user" ? "YOU" : "小辰";
+      label.textContent = role === "user" ? "YOU" : "陵辰";
       const text = document.createElement("p");
       text.textContent = content;
       bubble.append(label, text);
@@ -582,7 +582,7 @@
     const renderHistory = () => {
       messagesNode.replaceChildren();
       if (!history.length) {
-        addMessage("assistant", "嗨呀，我是小辰～可以陪你逛博客、找日志，也可以随便聊两句哦。");
+        addMessage("assistant", "嗨呀，我是陵辰～可以陪你逛博客、找日志，也可以随便聊两句哦。");
       } else {
         history.forEach((item) => addMessage(item.role, item.content));
       }
