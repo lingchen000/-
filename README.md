@@ -12,6 +12,7 @@
 - 数字时钟、自动月历和分时段问候
 - 随机独白、音乐播放动效、本地点赞和明暗模式
 - GitHub Discussions 驱动的全站评论与反应收藏，不改变原页面网格
+- 全站“小辰”智能体：由 Cloudflare Worker 安全代理 DeepSeek API，支持页面上下文问答与本地聊天记录
 - 空片段档案、人物侧写与只读日常记录
 - 公开日志采用只读模式，发布权限由 GitHub 仓库账号控制
 - 桌面、平板和手机三档响应式布局
@@ -28,3 +29,5 @@
 ## 发布
 
 整个 `lingchen-blog` 文件夹可以直接部署到 GitHub Pages、Cloudflare Pages、Netlify 或 Vercel，不需要构建命令。当前公开地址为 `https://lingchen000.github.io/-/`。
+
+智能体后端位于 `worker/`，DeepSeek 密钥仅作为 Cloudflare Secret `DEEPSEEK_API_KEY` 保存，不得写入仓库或前端代码。

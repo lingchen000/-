@@ -502,6 +502,179 @@
     });
   }
 
+  // 陵辰助手：通过 Cloudflare Worker 调用模型，浏览器端永远不接触 API 密钥。
+  const assistantEndpoint = "https://lingchen-agent.653050197.workers.dev/chat";
+  const enableAssistant = !document.body.classList.contains("not-found-page");
+  if (enableAssistant) {
+    const assistantStorageKey = "lingchen-assistant-history-v1";
+    const launcher = document.createElement("button");
+    launcher.className = "assistant-launcher";
+    launcher.type = "button";
+    launcher.setAttribute("aria-haspopup", "dialog");
+    launcher.innerHTML = '<span aria-hidden="true">✧</span><strong>问问小辰</strong>';
+
+    const dialog = document.createElement("dialog");
+    dialog.className = "assistant-dialog";
+    dialog.setAttribute("aria-labelledby", "assistant-title");
+    dialog.innerHTML = `
+      <div class="assistant-panel">
+        <header class="assistant-head">
+          <div class="assistant-identity">
+            <span class="assistant-avatar" aria-hidden="true">辰</span>
+            <div><p>LINGCHEN AGENT / ONLINE</p><h2 id="assistant-title">小辰</h2></div>
+          </div>
+          <div class="assistant-head-actions">
+            <button class="assistant-clear" type="button" title="清空对话">清空</button>
+            <button class="assistant-close" type="button" aria-label="关闭智能体">×</button>
+          </div>
+        </header>
+        <div class="assistant-messages" data-assistant-messages aria-live="polite"></div>
+        <div class="assistant-suggestions" data-assistant-suggestions>
+          <button type="button">介绍一下这个博客</button>
+          <button type="button">最近在忙什么？</button>
+          <button type="button">随机说句可爱的话</button>
+        </div>
+        <form class="assistant-form" data-assistant-form>
+          <textarea id="assistant-input" rows="1" maxlength="600" placeholder="想问小辰什么呀……" aria-label="发送给小辰" required></textarea>
+          <button type="submit" aria-label="发送消息">➤</button>
+        </form>
+        <p class="assistant-footnote">AI 的回答可能有误，请不要发送密码或其他隐私信息。</p>
+      </div>`;
+
+    document.body.append(launcher, dialog);
+    const messagesNode = dialog.querySelector("[data-assistant-messages]");
+    const form = dialog.querySelector("[data-assistant-form]");
+    const input = form.querySelector("textarea");
+    const submit = form.querySelector("button[type='submit']");
+    const suggestions = dialog.querySelector("[data-assistant-suggestions]");
+    let history = [];
+
+    const readHistory = () => {
+      try {
+        const saved = JSON.parse(localStorage.getItem(assistantStorageKey) || "[]");
+        return Array.isArray(saved)
+          ? saved.filter((item) => item && ["user", "assistant"].includes(item.role) && typeof item.content === "string").slice(-12)
+          : [];
+      } catch (_) {
+        return [];
+      }
+    };
+
+    const writeHistory = () => {
+      try {
+        localStorage.setItem(assistantStorageKey, JSON.stringify(history.slice(-12)));
+      } catch (_) {}
+    };
+
+    const addMessage = (role, content, extraClass = "") => {
+      const bubble = document.createElement("div");
+      bubble.className = `assistant-message ${role} ${extraClass}`.trim();
+      const label = document.createElement("span");
+      label.textContent = role === "user" ? "YOU" : "小辰";
+      const text = document.createElement("p");
+      text.textContent = content;
+      bubble.append(label, text);
+      messagesNode.appendChild(bubble);
+      messagesNode.scrollTop = messagesNode.scrollHeight;
+      return bubble;
+    };
+
+    const renderHistory = () => {
+      messagesNode.replaceChildren();
+      if (!history.length) {
+        addMessage("assistant", "嗨呀，我是小辰～可以陪你逛博客、找日志，也可以随便聊两句哦。");
+      } else {
+        history.forEach((item) => addMessage(item.role, item.content));
+      }
+    };
+
+    const pageContext = () => {
+      const main = document.querySelector("main");
+      return {
+        title: document.title,
+        path: location.pathname,
+        text: (main?.innerText || "").replace(/\s+/g, " ").trim().slice(0, 3500)
+      };
+    };
+
+    const sendMessage = async (content) => {
+      const cleaned = content.trim();
+      if (!cleaned || submit.disabled) return;
+      suggestions.hidden = true;
+      history.push({ role: "user", content: cleaned });
+      history = history.slice(-12);
+      writeHistory();
+      addMessage("user", cleaned);
+      input.value = "";
+      input.style.height = "auto";
+      submit.disabled = true;
+      input.disabled = true;
+      const pending = addMessage("assistant", "正在翻阅这条世界线……", "is-pending");
+
+      try {
+        const response = await fetch(assistantEndpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ messages: history, page: pageContext() })
+        });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(data.error || "连接暂时中断");
+        const answer = String(data.answer || "唔，没有收到有效回复，再问一次好吗？").trim();
+        history.push({ role: "assistant", content: answer });
+        history = history.slice(-12);
+        writeHistory();
+        pending.querySelector("p").textContent = answer;
+        pending.classList.remove("is-pending");
+      } catch (error) {
+        pending.querySelector("p").textContent = `${error.message || "连接失败"}，稍后再试试吧。`;
+        pending.classList.remove("is-pending");
+        pending.classList.add("is-error");
+      } finally {
+        submit.disabled = false;
+        input.disabled = false;
+        input.focus();
+        messagesNode.scrollTop = messagesNode.scrollHeight;
+      }
+    };
+
+    history = readHistory();
+    renderHistory();
+
+    launcher.addEventListener("click", () => {
+      dialog.showModal();
+      window.setTimeout(() => input.focus(), 80);
+    });
+    dialog.querySelector(".assistant-close").addEventListener("click", () => dialog.close());
+    dialog.querySelector(".assistant-clear").addEventListener("click", () => {
+      history = [];
+      localStorage.removeItem(assistantStorageKey);
+      suggestions.hidden = false;
+      renderHistory();
+      input.focus();
+    });
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      sendMessage(input.value);
+    });
+    input.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        form.requestSubmit();
+      }
+    });
+    input.addEventListener("input", () => {
+      input.style.height = "auto";
+      input.style.height = `${Math.min(input.scrollHeight, 112)}px`;
+    });
+    suggestions.addEventListener("click", (event) => {
+      const button = event.target.closest("button");
+      if (button) sendMessage(button.textContent);
+    });
+  }
+
   // GitHub Discussions：以悬浮弹层承载评论与收藏，不参与原页面网格排版。
   const enableDiscussions = !document.body.classList.contains("not-found-page");
   if (enableDiscussions) {

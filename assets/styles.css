@@ -2621,6 +2621,106 @@ body.worldline-theme .desktop-shell {
   }
 }
 
+/* Lingchen AI assistant */
+.assistant-launcher {
+  position: fixed;
+  right: 20px;
+  bottom: 82px;
+  z-index: 80;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 17px;
+  border: 2px solid #111;
+  border-radius: 0;
+  background: #c51f33;
+  box-shadow: 6px 6px 0 #111;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.assistant-launcher:hover { transform: translate(2px, 2px); box-shadow: 4px 4px 0 #111; }
+.assistant-launcher:focus-visible,
+.assistant-close:focus-visible,
+.assistant-clear:focus-visible,
+.assistant-form button:focus-visible,
+.assistant-suggestions button:focus-visible { outline: 3px solid #ffb7c5; outline-offset: 3px; }
+.assistant-launcher span { font-size: 20px; }
+.assistant-launcher strong { font-size: 13px; letter-spacing: .08em; }
+
+.assistant-dialog {
+  width: min(440px, calc(100vw - 28px));
+  max-width: none;
+  height: min(680px, calc(100dvh - 36px));
+  max-height: none;
+  margin: auto;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+}
+.assistant-dialog::backdrop { background: rgba(10, 8, 8, .74); backdrop-filter: blur(7px); }
+.assistant-panel {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto auto auto;
+  height: 100%;
+  overflow: hidden;
+  border: 2px solid #111;
+  background: #fffaf0;
+  box-shadow: 10px 10px 0 #c51f33;
+  color: #111;
+}
+.assistant-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 16px 18px;
+  border-bottom: 2px solid #111;
+  background: #111;
+  color: #fffaf0;
+}
+.assistant-identity { display: flex; align-items: center; gap: 11px; }
+.assistant-avatar { display: grid; width: 42px; height: 42px; flex: 0 0 auto; place-items: center; background: #c51f33; color: #fff; font-weight: 900; }
+.assistant-identity p { margin: 0 0 2px; color: #ff9caf; font: 700 9px/1.2 var(--font-mono); letter-spacing: .13em; }
+.assistant-identity h2 { margin: 0; color: #fffaf0; font-size: 22px; letter-spacing: .08em; }
+.assistant-head-actions { display: flex; align-items: center; gap: 8px; }
+.assistant-clear { padding: 7px 8px; border: 1px solid #5a5150; background: transparent; color: #c8beb3; font-size: 11px; }
+.assistant-close { width: 34px; height: 34px; padding: 0; border: 1px solid #fffaf0; background: transparent; color: #fffaf0; font-size: 24px; line-height: 1; }
+
+.assistant-messages { overflow-y: auto; padding: 18px; background: linear-gradient(rgba(197,31,51,.035) 1px, transparent 1px), #fffaf0; background-size: 100% 28px; scrollbar-color: #c51f33 transparent; }
+.assistant-message { display: flex; flex-direction: column; align-items: flex-start; margin-bottom: 14px; }
+.assistant-message > span { margin: 0 0 4px 3px; color: #8a7c75; font: 800 9px/1 var(--font-mono); letter-spacing: .12em; }
+.assistant-message p { max-width: 88%; margin: 0; padding: 11px 13px; border: 1px solid #111; background: #fff; color: #261f1d; font-size: 13px; line-height: 1.7; white-space: pre-wrap; overflow-wrap: anywhere; }
+.assistant-message.user { align-items: flex-end; }
+.assistant-message.user > span { margin-right: 3px; }
+.assistant-message.user p { background: #111; color: #fffaf0; }
+.assistant-message.is-pending p { color: #776b65; animation: assistant-pulse 1.2s ease-in-out infinite; }
+.assistant-message.is-error p { border-color: #c51f33; color: #a3172a; }
+
+.assistant-suggestions { display: flex; gap: 7px; padding: 0 14px 12px; overflow-x: auto; background: #fffaf0; }
+.assistant-suggestions[hidden] { display: none; }
+.assistant-suggestions button { flex: 0 0 auto; padding: 7px 10px; border: 1px solid #c9bbb2; background: transparent; color: #5d514c; font-size: 10px; }
+.assistant-form { display: grid; grid-template-columns: minmax(0, 1fr) 46px; gap: 8px; padding: 12px 14px; border-top: 2px solid #111; background: #fffaf0; }
+.assistant-form textarea { width: 100%; min-height: 44px; max-height: 112px; padding: 11px 12px; resize: none; border: 1px solid #111; border-radius: 0; background: #fff; color: #111; font: 13px/1.55 inherit; }
+.assistant-form textarea:focus { outline: 2px solid #c51f33; outline-offset: 1px; }
+.assistant-form button { border: 1px solid #111; background: #c51f33; color: #fff; font-size: 18px; }
+.assistant-form button:disabled { cursor: wait; opacity: .55; }
+.assistant-footnote { margin: 0; padding: 0 14px 10px; background: #fffaf0; color: #85766f; font-size: 9px; text-align: center; }
+@keyframes assistant-pulse { 50% { opacity: .55; } }
+
+@media (max-width: 560px) {
+  .assistant-launcher { right: 14px; bottom: 72px; min-height: 44px; padding: 0 13px; box-shadow: 4px 4px 0 #111; }
+  .assistant-launcher strong { font-size: 12px; }
+  .assistant-dialog { width: calc(100vw - 20px); height: calc(100dvh - 24px); }
+  .assistant-panel { box-shadow: 6px 6px 0 #c51f33; }
+  .assistant-head { padding: 13px 12px; }
+  .assistant-messages { padding: 14px 12px; }
+  .assistant-message p { max-width: 92%; }
+}
+
 /* ── Monogatari-inspired chapter direction ────────────────── */
 body.monogatari-theme {
   --mono-paper: #f3eee3;
