@@ -1779,10 +1779,10 @@ html[data-theme="dark"] .dashboard-page {
 .welcome-card { grid-area: welcome; padding: 28px 30px; }
 .clock-card { grid-area: clock; padding: 22px 26px; }
 .calendar-card { grid-area: calendar; padding: 24px; }
-.latest-card { grid-area: latest; display: grid; grid-template-columns: 42% 1fr; padding: 24px; }
+.latest-card { grid-area: player; display: grid; grid-template-columns: 42% 1fr; padding: 24px; }
 .thought-card { grid-area: thought; padding: 20px 24px; }
-.player-card { grid-area: player; display: flex; align-items: center; gap: 15px; padding: 20px; }
-.like-card { grid-area: player; align-self: end; justify-self: end; width: 96px; height: 54px; transform: translate(-16px, -12px); border-radius: 24px; }
+.player-card { grid-area: latest; display: flex; align-items: center; gap: 15px; padding: 20px; }
+.like-card { grid-area: latest; align-self: end; justify-self: end; width: 96px; height: 54px; transform: translate(-16px, -12px); border-radius: 24px; }
 .like-card:hover { transform: translate(-16px, -15px); }
 
 .profile-avatar {
@@ -1958,14 +1958,15 @@ html[data-theme="dark"] .dashboard-footer { color: rgba(225,237,230,.5); }
   .profile-card { order: 0; }
   .welcome-card { order: 1; min-height: 330px; padding: 27px 24px; }
   .scene-card { order: 2; min-height: 245px; }
-  .latest-card { order: 3; min-height: 470px; grid-template-columns: 1fr; padding: 20px; }
+  .latest-card { order: 7; min-height: 470px; grid-template-columns: 1fr; padding: 20px; }
   .latest-art { min-height: 190px; margin: 28px 0 0; }
   .latest-copy { padding: 18px 4px 0; }
   .latest-copy h2 { font-size: 26px; }
   .clock-card { order: 4; min-height: 160px; }
   .calendar-card { order: 5; min-height: 390px; }
   .thought-card { order: 6; min-height: 175px; }
-  .player-card { order: 7; min-height: 108px; padding-right: 115px; }
+  .player-card { order: 3; min-height: 108px; padding-right: 115px; }
+  .like-card { order: 3; }
   .profile-copy { padding-left: 12px; }
   .desk-nav a { padding: 0 8px; }
   .welcome-card h2 { margin-top: 25px; font-size: 35px; }
@@ -3219,7 +3220,7 @@ body.monogatari-theme.worldline-inner .button { border: 2px solid var(--mono-lin
   body.monogatari-theme.worldline-theme .thought-card blockquote { font-size: 20px; }
   body.monogatari-theme.worldline-theme .clock-card { min-height: 175px; }
   body.monogatari-theme.worldline-theme .calendar-card { min-height: 410px; }
-  body.monogatari-theme.worldline-theme .like-card { order: 8; width: 100%; height: 74px; transform: none; }
+  body.monogatari-theme.worldline-theme .like-card { order: 3; width: 100%; height: 74px; transform: none; }
   body.monogatari-theme.worldline-theme .like-card:hover { transform: translate(3px, 3px); }
   body.monogatari-theme.worldline-inner .nav-wrap { width: calc(100% - 24px); padding-inline: 0; }
   body.monogatari-theme.worldline-inner .brand-sub { display: none; }
