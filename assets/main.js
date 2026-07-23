@@ -579,6 +579,26 @@
       return bubble;
     };
 
+    const addResearchTrace = (bubble, research) => {
+      if (!research || !bubble) return;
+      const labels = {
+        no_sources: "未找到可用来源",
+        single_source: "单一来源，结论需谨慎",
+        cross_checked: `已交叉核验 ${research.independent_domains} 个独立站点`
+      };
+      const trace = document.createElement("div");
+      trace.className = `assistant-research-trace is-${research.verification || "unknown"}`;
+      const stages = [];
+      if (research.plan) stages.push("制定计划");
+      if (research.searches) stages.push(`网页搜索×${research.searches}`);
+      stages.push(labels[research.verification] || "研究完成");
+      trace.textContent = `RESEARCH / ${stages.join(" → ")}`;
+      if (research.plan?.steps?.length) {
+        trace.title = `${research.plan.goal}\n${research.plan.steps.map((step, index) => `${index + 1}. ${step}`).join("\n")}`;
+      }
+      bubble.appendChild(trace);
+    };
+
     const renderHistory = () => {
       messagesNode.replaceChildren();
       if (!history.length) {
@@ -610,6 +630,15 @@
       submit.disabled = true;
       input.disabled = true;
       const pending = addMessage("assistant", "正在翻阅这条世界线……", "is-pending");
+      const progressMessages = ["正在判断是否需要检索……", "正在核对可用信息……", "正在整理结论与来源……"];
+      let progressIndex = 0;
+      const progressTimer = window.setInterval(() => {
+        const text = pending.querySelector("p");
+        if (text) {
+          text.textContent = progressMessages[progressIndex % progressMessages.length];
+          progressIndex += 1;
+        }
+      }, 1800);
 
       try {
         const response = await fetch(assistantEndpoint, {
@@ -625,11 +654,13 @@
         writeHistory();
         pending.querySelector("p").textContent = answer;
         pending.classList.remove("is-pending");
+        addResearchTrace(pending, data.research);
       } catch (error) {
         pending.querySelector("p").textContent = `${error.message || "连接失败"}，稍后再试试吧。`;
         pending.classList.remove("is-pending");
         pending.classList.add("is-error");
       } finally {
+        window.clearInterval(progressTimer);
         submit.disabled = false;
         input.disabled = false;
         input.focus();

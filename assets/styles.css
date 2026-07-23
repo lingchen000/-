@@ -2699,6 +2699,10 @@ body.worldline-theme .desktop-shell {
 .assistant-message.user p { background: #111; color: #fffaf0; }
 .assistant-message.is-pending p { color: #776b65; animation: assistant-pulse 1.2s ease-in-out infinite; }
 .assistant-message.is-error p { border-color: #c51f33; color: #a3172a; }
+.assistant-research-trace { max-width: 88%; margin-top: 6px; padding: 5px 8px; border-left: 2px solid #777; color: #6d625c; font: 700 9px/1.45 var(--font-mono); letter-spacing: .04em; overflow-wrap: anywhere; }
+.assistant-research-trace.is-cross_checked { border-color: #278a58; color: #236f49; }
+.assistant-research-trace.is-single_source { border-color: #c88716; color: #8b5c0d; }
+.assistant-research-trace.is-no_sources { border-color: #c51f33; color: #a3172a; }
 
 .assistant-suggestions { display: flex; gap: 7px; padding: 0 14px 12px; overflow-x: auto; background: #fffaf0; }
 .assistant-suggestions[hidden] { display: none; }

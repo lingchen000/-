@@ -12,7 +12,7 @@
 - 数字时钟、自动月历和分时段问候
 - 随机独白、音乐播放动效、本地点赞和明暗模式
 - GitHub Discussions 驱动的全站评论与反应收藏，不改变原页面网格
-- 全站“陵辰”智能体：由 Cloudflare Worker 安全代理 DeepSeek API，支持页面上下文问答、本地聊天记录，以及公开 GitHub 仓库、目录、文件和 Issue/PR 检索
+- 全站“陵辰”研究 Agent：由 Cloudflare Worker 安全代理 DeepSeek API，支持研究计划、跨来源核验、页面上下文问答、本地聊天记录、带来源引用的中文网页搜索，以及公开 GitHub 仓库、目录、文件和 Issue/PR 检索
 - 空片段档案、人物侧写与只读日常记录
 - 公开日志采用只读模式，发布权限由 GitHub 仓库账号控制
 - 桌面、平板和手机三档响应式布局
@@ -30,4 +30,4 @@
 
 整个 `lingchen-blog` 文件夹可以直接部署到 GitHub Pages、Cloudflare Pages、Netlify 或 Vercel，不需要构建命令。当前公开地址为 `https://lingchen000.github.io/-/`。
 
-智能体后端位于 `worker/`，DeepSeek 密钥仅作为 Cloudflare Secret `DEEPSEEK_API_KEY` 保存，不得写入仓库或前端代码。GitHub 检索默认只访问公开资源；如将来需要私有仓库，应另外配置最小只读权限的 `GITHUB_TOKEN` Secret。
+智能体后端位于 `worker/`，DeepSeek 密钥仅作为 Cloudflare Secret `DEEPSEEK_API_KEY` 保存，不得写入仓库或前端代码。网页搜索使用 Tavily Search API，密钥必须仅配置为 Cloudflare Secret `TAVILY_API_KEY`；搜索结果会限制数量和体积，过滤非 HTTP(S) 链接，并要求回答标注来源。GitHub 检索默认只访问公开资源；如将来需要私有仓库，应另外配置最小只读权限的 `GITHUB_TOKEN` Secret。
