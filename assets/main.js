@@ -271,6 +271,14 @@
   const playButton = document.querySelector("[data-play]");
   const wave = document.querySelector("[data-wave]");
   const audio = document.querySelector("[data-audio]");
+  const nextTrackButton = document.querySelector("[data-next-track]");
+  const trackStatus = document.querySelector("[data-track-status]");
+  const trackTitle = document.querySelector("[data-track-title]");
+  const tracks = [
+    { title: "星愿 · off vocal", src: "assets/xingyuan-off-vocal.mp3" },
+    { title: "ある雨の日 · 神前暁", src: "assets/aru-ame-no-hi.mp3" }
+  ];
+  let trackIndex = 0;
   const syncPlayer = (playing) => {
     wave?.classList.toggle("is-playing", playing);
     if (!playButton) return;
@@ -289,9 +297,27 @@
       audio.pause();
     }
   });
+  const selectTrack = async (index, continuePlaying = false) => {
+    if (!audio) return;
+    trackIndex = (index + tracks.length) % tracks.length;
+    const track = tracks[trackIndex];
+    audio.pause();
+    audio.src = track.src;
+    audio.load();
+    if (trackStatus) trackStatus.textContent = `TRACK ${trackIndex + 1} / ${tracks.length}`;
+    if (trackTitle) trackTitle.textContent = track.title;
+    if (continuePlaying) {
+      try {
+        await audio.play();
+      } catch (_) {
+        syncPlayer(false);
+      }
+    }
+  };
+  nextTrackButton?.addEventListener("click", () => selectTrack(trackIndex + 1, Boolean(audio && !audio.paused)));
   audio?.addEventListener("play", () => syncPlayer(true));
   audio?.addEventListener("pause", () => syncPlayer(false));
-  audio?.addEventListener("ended", () => syncPlayer(false));
+  audio?.addEventListener("ended", () => selectTrack(trackIndex + 1, true));
 
   const logForm = document.querySelector("[data-log-form]");
   if (logForm) {

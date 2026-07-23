@@ -78,8 +78,11 @@
       <div class="latest-copy">
         <p>星愿 · OFF VOCAL</p>
         <h2>星愿</h2>
-        <p class="latest-summary">茶理理 · 今日片尾曲</p>
-        <a class="read-link" href="assets/xingyuan-off-vocal.mp3" download>下载音频 <span>↓</span></a>
+        <p class="latest-summary">茶理理 / 神前暁 · 本地播放列表</p>
+        <div class="music-downloads">
+          <a class="read-link" href="assets/xingyuan-off-vocal.mp3" download>星愿 <span>↓</span></a>
+          <a class="read-link" href="assets/aru-ame-no-hi.mp3" download>ある雨の日 <span>↓</span></a>
+        </div>
       </div>
     </section>
 
@@ -89,12 +92,13 @@
       <a href="notes/index.html">继续读下一页 →</a>
     </section>
 
-    <section class="glass-card player-card" id="music" aria-label="星愿 off vocal 音乐播放器">
+    <section class="glass-card player-card" id="music" aria-label="本地音乐播放列表">
       <button class="play-button" type="button" data-play aria-label="播放">▶</button>
       <div class="track-copy">
-        <span>NOW PLAYING / ENDING</span>
-        <strong>星愿 · off vocal</strong>
+        <span data-track-status>TRACK 1 / 2</span>
+        <strong data-track-title>星愿 · off vocal</strong>
       </div>
+      <button class="track-next" type="button" data-next-track aria-label="播放下一首" title="下一首">›</button>
       <div class="wave" data-wave aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
       <audio data-audio preload="metadata" hidden>
         <source src="assets/xingyuan-off-vocal.mp3" type="audio/mpeg">
