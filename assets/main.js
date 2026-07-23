@@ -528,6 +528,17 @@
     });
   }
 
+  let floatingToolRail;
+  const getFloatingToolRail = () => {
+    if (floatingToolRail) return floatingToolRail;
+    floatingToolRail = document.createElement("nav");
+    floatingToolRail.className = "floating-tool-rail";
+    floatingToolRail.setAttribute("aria-label", "互动工具");
+    document.body.appendChild(floatingToolRail);
+    document.body.classList.add("has-floating-tool-rail");
+    return floatingToolRail;
+  };
+
   // 陵辰助手：通过 Cloudflare Worker 调用模型，浏览器端永远不接触 API 密钥。
   const assistantEndpoint = "https://lingchen-agent.653050197.workers.dev/chat";
   const enableAssistant = !document.body.classList.contains("not-found-page");
@@ -567,7 +578,8 @@
         <p class="assistant-footnote">AI 的回答可能有误，请不要发送密码或其他隐私信息。</p>
       </div>`;
 
-    document.body.append(launcher, dialog);
+    getFloatingToolRail().appendChild(launcher);
+    document.body.appendChild(dialog);
     const messagesNode = dialog.querySelector("[data-assistant-messages]");
     const form = dialog.querySelector("[data-assistant-form]");
     const input = form.querySelector("textarea");
@@ -732,7 +744,7 @@
     });
   }
 
-  // GitHub Discussions：以悬浮弹层承载评论与收藏，不参与原页面网格排版。
+  // GitHub Discussions：入口与智能体共用侧边工具栏，不参与原页面网格排版。
   const enableDiscussions = !document.body.classList.contains("not-found-page");
   if (enableDiscussions) {
     const launcher = document.createElement("button");
@@ -759,7 +771,8 @@
         </div>
       </div>`;
 
-    document.body.append(launcher, dialog);
+    getFloatingToolRail().appendChild(launcher);
+    document.body.appendChild(dialog);
     const mount = dialog.querySelector("[data-giscus-mount]");
     let loaded = false;
 

@@ -2728,6 +2728,79 @@ body.worldline-theme .desktop-shell {
   .assistant-message p { max-width: 92%; }
 }
 
+/* Shared interaction rail: keeps AI and Discussions away from dashboard cards. */
+.floating-tool-rail {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  z-index: 80;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  transform: translateY(-50%);
+}
+.floating-tool-rail .assistant-launcher,
+.floating-tool-rail .discussion-launcher {
+  position: static;
+  right: auto;
+  bottom: auto;
+  display: inline-flex;
+  width: 46px;
+  min-height: 116px;
+  padding: 11px 0;
+  flex-direction: column;
+  justify-content: center;
+  gap: 7px;
+  box-shadow: -4px 4px 0 #111;
+}
+.floating-tool-rail .discussion-launcher { background: #111; }
+.floating-tool-rail .assistant-launcher:hover,
+.floating-tool-rail .discussion-launcher:hover {
+  transform: translateX(-3px);
+  box-shadow: -6px 4px 0 #c51f33;
+}
+.floating-tool-rail .assistant-launcher strong,
+.floating-tool-rail .discussion-launcher strong {
+  font-size: 11px;
+  letter-spacing: .14em;
+  line-height: 1;
+  writing-mode: vertical-rl;
+}
+
+@media (max-width: 560px) {
+  body.has-floating-tool-rail { padding-bottom: 72px; }
+  .floating-tool-rail {
+    top: auto;
+    right: 50%;
+    bottom: 10px;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 7px;
+    transform: translateX(50%);
+  }
+  .floating-tool-rail .assistant-launcher,
+  .floating-tool-rail .discussion-launcher {
+    width: auto;
+    min-width: 126px;
+    min-height: 46px;
+    padding: 0 13px;
+    flex-direction: row;
+    box-shadow: 4px 4px 0 #111;
+  }
+  .floating-tool-rail .assistant-launcher:hover,
+  .floating-tool-rail .discussion-launcher:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 #111;
+  }
+  .floating-tool-rail .assistant-launcher strong,
+  .floating-tool-rail .discussion-launcher strong {
+    font-size: 11px;
+    letter-spacing: .08em;
+    writing-mode: horizontal-tb;
+  }
+}
+
 /* ── Monogatari-inspired chapter direction ────────────────── */
 body.monogatari-theme {
   --mono-paper: #f3eee3;
