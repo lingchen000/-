@@ -1867,6 +1867,10 @@ html[data-theme="dark"] .desk-nav a:hover, html[data-theme="dark"] .desk-nav a.i
 .thought-card blockquote { margin: 18px 0 10px; color: var(--desk-ink); font-family: var(--font-title); font-size: 16px; line-height: 1.6; }
 .thought-card > a { color: var(--desk-muted); font-size: 9px; text-decoration: none; }
 
+.player-art { position: relative; width: 190px; aspect-ratio: 1; flex: 0 0 190px; overflow: hidden; border: 1px solid var(--desk-line); background: #111; clip-path: polygon(0 0, 100% 5%, 94% 100%, 0 96%); transform: rotate(-1.5deg); }
+.player-art::after { position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent 0 3px, rgba(255,255,255,.035) 3px 4px); content: ""; pointer-events: none; }
+.player-art img { width: 100%; height: 100%; object-fit: cover; object-position: center; filter: saturate(.75) contrast(1.08) brightness(.88); }
+.player-art span { position: absolute; right: 0; bottom: 0; z-index: 1; display: grid; width: 48px; height: 48px; place-items: center; border: 1px solid #fffaf0; background: #c51f33; color: white; font-family: var(--font-title); font-size: 19px; }
 .play-button { display: grid; width: 44px; height: 44px; flex: 0 0 auto; padding: 0 0 0 2px; place-items: center; border: 0; border-radius: 50%; background: var(--desk-ink); color: white; font-size: 12px; }
 .track-copy { min-width: 0; }
 .track-copy span, .track-copy strong { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -1942,7 +1946,8 @@ html[data-theme="dark"] .dashboard-footer { color: rgba(225,237,230,.5); }
   .latest-card { min-height: 320px; }
   .calendar-card { min-height: 330px; }
   .thought-card { min-height: 170px; }
-  .player-card { min-height: 110px; }
+  .player-card { min-height: 190px; }
+  .player-art { width: 140px; flex-basis: 140px; }
   .like-card { top: auto; right: 8px; bottom: 6px; transform: none; }
   .like-card:hover { transform: translateY(-3px); }
 }
@@ -1965,7 +1970,11 @@ html[data-theme="dark"] .dashboard-footer { color: rgba(225,237,230,.5); }
   .clock-card { order: 4; min-height: 160px; }
   .calendar-card { order: 5; min-height: 390px; }
   .thought-card { order: 6; min-height: 175px; }
-  .player-card { order: 3; min-height: 108px; padding-right: 115px; }
+  .player-card { order: 3; min-height: 152px; padding: 16px; gap: 10px; }
+  .player-art { width: 96px; flex-basis: 96px; }
+  .player-art span { width: 34px; height: 34px; font-size: 14px; }
+  .player-card .wave { display: none; }
+  .player-card .track-copy strong { max-width: 78px; }
   .like-card { order: 3; }
   .profile-copy { padding-left: 12px; }
   .desk-nav a { padding: 0 8px; }
