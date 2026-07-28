@@ -3298,3 +3298,208 @@ body.monogatari-theme.worldline-inner .button { border: 2px solid var(--mono-lin
     max-width:100%;
   }
 }
+
+/* Technical article / Transformer fragment */
+.article-lead {
+  color: var(--ink);
+  font-family: var(--font-title);
+  font-size: 1.16em;
+  font-weight: 600;
+  line-height: 1.8;
+}
+
+.formula-block {
+  display: grid;
+  gap: 12px;
+  overflow-x: auto;
+  margin: 2em 0;
+  padding: 22px 24px;
+  border: 1px solid var(--line-strong);
+  background: #15171a;
+  color: #f7f1e4;
+  box-shadow: 7px 7px 0 rgba(197, 31, 51, .28);
+  scrollbar-width: thin;
+}
+
+.formula-block code {
+  min-width: max-content;
+  color: inherit;
+  font-family: var(--font-mono);
+  font-size: clamp(13px, 1.7vw, 17px);
+  font-weight: 700;
+  letter-spacing: .01em;
+  line-height: 1.7;
+}
+
+.formula-primary {
+  border-left: 8px solid var(--mono-red, #c51f33);
+}
+
+.table-scroll {
+  overflow-x: auto;
+  margin: 2em 0;
+  border: 2px solid var(--line-strong);
+  scrollbar-width: thin;
+}
+
+.prose table {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.prose th,
+.prose td {
+  padding: 14px 16px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose th:last-child,
+.prose td:last-child {
+  border-right: 0;
+}
+
+.prose tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.prose th {
+  background: #17191c;
+  color: #fffaf0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .06em;
+}
+
+.prose td {
+  background: rgba(255, 255, 255, .18);
+}
+
+.source-list a {
+  overflow-wrap: anywhere;
+}
+
+.archive-counter-label,
+.archive-status {
+  color: var(--mono-muted, var(--muted));
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .13em;
+}
+
+.archive-counter {
+  display: block;
+  margin-top: 4px;
+  color: var(--mono-ink, var(--ink));
+  font-family: var(--font-mono);
+  font-size: 44px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.archive-status {
+  margin: 0;
+}
+
+body.monogatari-theme.worldline-inner .fragment-archive .archive-tools {
+  padding: 24px 28px;
+  border: 2px solid var(--mono-line);
+  border-radius: 0;
+  background: var(--mono-panel);
+  box-shadow: 9px 9px 0 var(--mono-red);
+}
+
+body.monogatari-theme.worldline-inner .fragment-archive .archive-item {
+  border-color: var(--mono-line);
+}
+
+body.monogatari-theme.worldline-inner .fragment-archive .archive-item:hover {
+  background: rgba(197, 31, 51, .07);
+}
+
+body.monogatari-theme.worldline-inner .fragment-archive .archive-title a {
+  color: var(--mono-ink);
+}
+
+body.monogatari-theme.worldline-inner .fragment-archive .archive-summary,
+body.monogatari-theme.worldline-inner .fragment-archive .archive-no,
+body.monogatari-theme.worldline-inner .fragment-archive .archive-date,
+body.monogatari-theme.worldline-inner .fragment-archive .archive-tags {
+  color: var(--mono-muted);
+}
+
+body.monogatari-theme.worldline-inner .article-body .formula-block {
+  border-color: #111;
+  background: #111;
+}
+
+body.monogatari-theme.worldline-inner .article-body .table-scroll {
+  border-color: var(--mono-line);
+}
+
+body.monogatari-theme.worldline-inner .article-body .article-lead {
+  color: #241d17;
+}
+
+body.monogatari-theme.worldline-inner .article-body.prose {
+  border-color: #111;
+  background: #eadfcd;
+  color: #504233;
+  box-shadow: 12px 12px 0 #111;
+}
+
+body.monogatari-theme.worldline-inner .article-body.prose p,
+body.monogatari-theme.worldline-inner .article-body.prose li {
+  color: #504233;
+}
+
+body.monogatari-theme.worldline-inner .article-body.prose h2,
+body.monogatari-theme.worldline-inner .article-body.prose h3,
+body.monogatari-theme.worldline-inner .article-body.prose strong {
+  color: #241d17;
+}
+
+body.monogatari-theme.worldline-inner .article-body.prose a {
+  color: #a91429;
+  font-weight: 700;
+}
+
+body.monogatari-theme.worldline-inner .article-body.prose blockquote {
+  background: rgba(197, 31, 51, .08);
+  color: #241d17;
+}
+
+body.monogatari-theme.worldline-inner .article-body.prose pre {
+  border-color: #111;
+  background: #111;
+  color: #fff7e9;
+}
+
+body.monogatari-theme.worldline-inner .article-body .post-end {
+  border-color: #111;
+  background: #d9cbb5;
+  color: #241d17;
+}
+
+@media (max-width: 600px) {
+  .formula-block {
+    margin-inline: -8px;
+    padding: 18px 16px;
+    box-shadow: 5px 5px 0 rgba(197, 31, 51, .28);
+  }
+
+  .prose table {
+    font-size: 13px;
+  }
+
+  body.monogatari-theme.worldline-inner .fragment-archive .archive-tools {
+    align-items: flex-start;
+    box-shadow: 6px 6px 0 var(--mono-red);
+  }
+}

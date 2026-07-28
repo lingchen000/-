@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="从 RNN 的瓶颈到 QKV、多头注意力、位置编码与完整编码器—解码器流程，详细解读《Attention Is All You Need》与 Transformer 架构。">
+  <meta name="author" content="陵辰">
+  <meta name="theme-color" content="#c51f33">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="《Attention Is All You Need》论文解读｜陵辰">
+  <meta property="og:description" content="Transformer 如何让每个词看见整句话：从 QKV 到完整架构的一次拆解。">
+  <meta property="article:published_time" content="2026-07-28">
+  <title>《Attention Is All You Need》论文解读｜陵辰</title>
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <link rel="canonical" href="https://lingchen000.github.io/-/articles/attention-is-all-you-need/">
+  <link rel="alternate" type="application/rss+xml" title="陵辰订阅" href="../../feed.xml">
+  <link rel="stylesheet" href="../../assets/styles.css?v=20260728-transformer">
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('lingchen-theme-worldline')||'dark'}catch(_){}</script>
+  <script src="../../assets/main.js?v=20260728-transformer" defer></script>
+</head>
+<body class="worldline-inner monogatari-theme">
+  <div class="reading-progress" data-reading-progress aria-hidden="true"></div>
+  <a class="skip-link" href="#article">跳至文章正文</a>
+
+  <header class="site-header" data-header>
+    <div class="page-shell nav-wrap">
+      <a class="brand" href="../../index.html" aria-label="返回陵辰首页">
+        <span class="brand-mark">陵辰</span>
+        <span class="brand-sub">STRANGE RECORD / 002</span>
+      </a>
+      <nav class="site-nav" id="site-nav" data-site-nav aria-label="章节导航">
+        <a href="../../index.html">序章</a>
+        <a href="../index.html" aria-current="page">片段档案</a>
+        <a href="../../notes/index.html">日常记录</a>
+        <a href="../../about/index.html">人物侧写</a>
+        <button class="icon-button" type="button" data-theme-toggle aria-label="切换终端显示模式">
+          <svg class="theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.1A8.5 8.5 0 0 1 8.9 4a7.8 7.8 0 1 0 11.1 11.1Z" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+          <svg class="theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+        </button>
+      </nav>
+      <button class="menu-button" type="button" data-menu-toggle aria-controls="site-nav" aria-expanded="false" aria-label="展开终端导航">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14M5 16h14" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <header class="page-shell post-hero">
+      <p class="post-kicker">TECHNICAL FRAGMENT / CHAPTER 001</p>
+      <h1 class="post-title">《Attention Is All You Need》论文解读</h1>
+      <p class="post-deck">Transformer 如何让每个词“看见”整句话：从 RNN 的瓶颈出发，拆开 QKV、多头注意力、位置编码与完整的编码器—解码器流程。</p>
+      <div class="post-meta">
+        <span>陵辰</span>
+        <time datetime="2026-07-28">2026.07.28</time>
+        <span>约 18 分钟阅读</span>
+      </div>
+    </header>
+
+    <div class="page-shell article-layout">
+      <aside class="article-aside" aria-label="文章信息">
+        <p class="aside-label">FILE INFO</p>
+        <p>编号<br><strong>FRAGMENT 001</strong></p>
+        <p>主题<br><strong>TRANSFORMER</strong></p>
+        <p>关键词<br>Self-Attention<br>QKV<br>Encoder<br>Decoder</p>
+        <p>状态<br><strong>OBSERVED</strong></p>
+      </aside>
+
+      <article class="article-body prose" id="article">
+        <p class="article-lead">2017 年，Google 团队发表了《Attention Is All You Need》。这篇论文最初讨论的是机器翻译，却意外地为此后的 BERT、GPT、T5 以及今天的大语言模型搭起了骨架。</p>
+
+        <p>论文标题很有气势，但也很容易被误解。它并不是说模型里只剩下 Attention，而是说：<strong>在序列建模中，可以不再依赖 RNN 的循环结构和 CNN 的卷积结构，直接把注意力机制放到舞台中央。</strong></p>
+
+        <p>Transformer 的真正突破，也不只是“效果更好”，而是同时改变了模型理解上下文的方式和大规模训练的效率。</p>
+
+        <h2 id="before-transformer">一、Transformer 出现之前，序列模型难在哪里</h2>
+
+        <p>机器翻译属于典型的序列转导任务：输入是一串词，输出是另一串长度可能不同的词。</p>
+
+        <p>早期的 Seq2Seq 模型通常采用 RNN、LSTM 或 GRU。编码器从左到右阅读输入，把信息逐步压缩进隐藏状态；解码器再根据隐藏状态，一个词接一个词地生成结果。</p>
+
+        <p>这种方法有两个明显问题。</p>
+
+        <p>第一，<strong>计算必须按顺序进行</strong>。后一个位置依赖前一个位置的隐藏状态，因此训练时很难把整句话完全并行处理。句子越长，等待链条越长。</p>
+
+        <p>第二，<strong>远距离信息需要经过很长的传递路径</strong>。句首的信息想影响句尾，要经过许多时间步。即使 LSTM 缓解了梯度消失，长距离依赖仍然不轻松。</p>
+
+        <p>后来，注意力机制被加入编码器—解码器模型。解码器不必只依赖一个固定长度的上下文向量，而是可以在生成每个词时，重新查看输入序列中与当前任务最相关的位置。</p>
+
+        <p>Transformer 又向前迈了一步：既然注意力可以直接建立任意两个位置之间的联系，是否还需要循环结构？论文给出的答案是：不需要。</p>
+
+        <h2 id="architecture">二、先用一句话看懂 Transformer</h2>
+
+        <p>Transformer 仍然保留了编码器—解码器框架：</p>
+
+        <ul>
+          <li><strong>编码器（Encoder）</strong>负责阅读输入，并把每个词变成包含上下文的表示；</li>
+          <li><strong>解码器（Decoder）</strong>读取编码结果，并根据已经生成的内容预测下一个词。</li>
+        </ul>
+
+        <p>原论文中的基础模型由 6 层编码器和 6 层解码器组成，隐藏维度为 512，多头注意力包含 8 个头，前馈网络的中间维度为 2048。</p>
+
+        <p>一层编码器包含多头自注意力、残差连接与层归一化、逐位置前馈网络，以及再一次残差连接与层归一化。一层解码器则多出一个连接编码器输出的跨注意力模块。</p>
+
+        <blockquote>
+          <p>编码器负责理解输入，解码器负责逐步生成；Attention 负责位置之间的信息交流，FFN 负责加工每个位置得到的信息。</p>
+        </blockquote>
+
+        <h2 id="qkv">三、Q、K、V 到底是什么</h2>
+
+        <p>自注意力最让人困惑的部分，通常是 Query、Key 和 Value。可以先把它想象成一次检索：</p>
+
+        <ul>
+          <li><strong>Query（查询）</strong>：我现在想寻找什么信息；</li>
+          <li><strong>Key（键）</strong>：我具有什么特征，可以被怎样的查询匹配；</li>
+          <li><strong>Value（值）</strong>：如果匹配上，我真正提供什么内容。</li>
+        </ul>
+
+        <p>例如句子：“小红没有把书借给小明，因为她还没有看完。”当模型处理“她”时，需要判断这个代词更可能指向谁。“她”产生的 Query 会分别与句中所有词的 Key 计算匹配程度。如果“小红”的 Key 得分更高，那么“小红”的 Value 就会在“她”的新表示中占更大比重。</p>
+
+        <p>这个例子只是帮助理解。实际模型不会预先规定某个维度必须表示“人物”或“指代关系”。Q、K、V 都是由训练学到的线性投影：</p>
+
+        <div class="formula-block" role="math" aria-label="Q 等于 X 乘 WQ，K 等于 X 乘 WK，V 等于 X 乘 WV">
+          <code>Q = XW<sup>Q</sup>　　K = XW<sup>K</sup>　　V = XW<sup>V</sup></code>
+        </div>
+
+        <p>其中 X 是输入序列的表示，三个 W 是可学习参数。需要特别注意：<strong>在自注意力中，Q、K、V 来自同一组输入，但经过了不同的投影，因此它们并不是三个完全相同的矩阵。</strong></p>
+
+        <h2 id="scaled-attention">四、缩放点积注意力是怎样计算的</h2>
+
+        <p>论文使用的核心公式是：</p>
+
+        <div class="formula-block formula-primary" role="math" aria-label="Attention Q K V 等于 softmax QK 转置除以根号 dk，再乘 V">
+          <code>Attention(Q, K, V) =</code>
+          <code>softmax((QK<sup>T</sup>) / √d<sub>k</sub>) · V</code>
+        </div>
+
+        <p>它可以拆成四步。</p>
+
+        <h3>1. 用 QK<sup>T</sup> 计算相关性</h3>
+        <p>每个 Query 与所有 Key 做点积，得到一张注意力分数表。假设序列长度为 n，那么这张表的形状就是 n × n。第 i 行表示：第 i 个词在更新自己时，对句中每个位置分别有多感兴趣。</p>
+
+        <h3>2. 除以 √d<sub>k</sub></h3>
+        <p>Key 的维度越大，点积结果的绝对值通常越大。如果直接送进 Softmax，概率可能很快逼近 0 或 1，使梯度变得很小。论文因此用 √d<sub>k</sub> 缩放分数，让 Softmax 工作在更平稳的范围。</p>
+
+        <h3>3. 用 Softmax 转成权重</h3>
+        <p>Softmax 把每一行的分数变成总和为 1 的权重。相关位置获得更高权重，无关位置获得更低权重。</p>
+
+        <h3>4. 对 V 做加权求和</h3>
+        <p>最后，权重矩阵乘以 V。每个词因此获得一个新的表示，其中融合了整句话里与它相关的信息。从直觉上看，QK<sup>T</sup> 决定“看哪里”，乘以 V 决定“拿回来什么”。</p>
+
+        <h2 id="multi-head">五、为什么要使用多头注意力</h2>
+
+        <p>单个注意力头只有一套投影和一张注意力图，容易把不同类型的关系平均在一起。多头注意力会把 Q、K、V 投影到多个不同的表示子空间，并行执行多次注意力计算：</p>
+
+        <div class="formula-block" role="math" aria-label="多头注意力公式">
+          <code>head<sub>i</sub> = Attention(QW<sub>i</sub><sup>Q</sup>, KW<sub>i</sub><sup>K</sup>, VW<sub>i</sub><sup>V</sup>)</code>
+          <code>MultiHead(Q, K, V) = Concat(head<sub>1</sub>, …, head<sub>h</sub>)W<sup>O</sup></code>
+        </div>
+
+        <p>原论文使用 8 个头。由于模型维度为 512，每个头的 Key 和 Value 维度为 64。各个头的结果拼接后，再通过输出矩阵映射回 512 维。</p>
+
+        <p>不同的头可以从不同角度处理信息：有的可能更关注邻近搭配，有的可能更关注长距离依赖，还有的可能捕捉句法或语义关系。不过，这些分工不是人工指定的，也不能把每个注意力头都机械地解释成一种固定语言规则。</p>
+
+        <h2 id="three-attentions">六、Transformer 中其实有三种注意力</h2>
+
+        <p>虽然它们都使用同一套核心公式，但 Q、K、V 的来源并不相同。</p>
+
+        <div class="table-scroll" role="region" aria-label="三种注意力对照表" tabindex="0">
+          <table>
+            <thead><tr><th>位置</th><th>Q 的来源</th><th>K、V 的来源</th><th>作用</th></tr></thead>
+            <tbody>
+              <tr><td>编码器自注意力</td><td>编码器上一层输出</td><td>编码器上一层输出</td><td>让输入中的每个词查看全部输入位置</td></tr>
+              <tr><td>解码器掩码自注意力</td><td>解码器上一层输出</td><td>解码器上一层输出</td><td>只查看当前位置及其之前的输出</td></tr>
+              <tr><td>编码器—解码器注意力</td><td>解码器当前表示</td><td>编码器最终输出</td><td>生成时从输入句子中提取相关信息</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>第三种也常被称为 Cross-Attention。它是连接“输入理解”和“输出生成”的桥梁。</p>
+
+        <h2 id="mask">七、为什么解码器一定要加掩码</h2>
+
+        <p>训练时，整句目标文本是已知的。如果不加限制，模型在预测第 3 个词时可能直接看到第 4、5 个词，相当于提前偷看答案。</p>
+
+        <p>因此，解码器会使用因果掩码，把当前位置右侧的注意力分数设为负无穷。经过 Softmax 后，这些位置的权重就变成 0。</p>
+
+        <div class="code-wrap"><pre><code>第 1 个词：✓ × × ×
+第 2 个词：✓ ✓ × ×
+第 3 个词：✓ ✓ ✓ ×
+第 4 个词：✓ ✓ ✓ ✓</code></pre></div>
+
+        <p>这样既能在训练时并行计算所有目标位置，又能保证每个位置只使用过去信息，维持自回归生成的因果约束。</p>
+
+        <p>不过，“训练可并行”不等于“生成也完全并行”。实际推理时，下一个词依赖已经生成的词，原始 Transformer 解码器仍然需要逐词生成。</p>
+
+        <h2 id="position">八、没有循环结构，模型怎么知道词序</h2>
+
+        <p>单纯的自注意力并不天然理解顺序。对它来说，如果只交换两个输入向量的位置而不提供额外信息，计算结构本身无法区分“我打你”和“你打我”。</p>
+
+        <p>所以，Transformer 会把位置编码加到词向量上：</p>
+
+        <div class="formula-block" role="math" aria-label="正弦余弦位置编码公式">
+          <code>PE(pos, 2i) = sin(pos / 10000<sup>2i / d<sub>model</sub></sup>)</code>
+          <code>PE(pos, 2i + 1) = cos(pos / 10000<sup>2i / d<sub>model</sub></sup>)</code>
+        </div>
+
+        <p>不同维度使用不同频率的正弦、余弦波，相当于为每个位置生成一组独特坐标。位置编码与词嵌入维度相同，因此可以直接相加。</p>
+
+        <p>论文也测试了可学习的位置嵌入，结果与正弦位置编码接近。作者选择正弦方案，是希望模型能更容易表示相对位置，并有机会外推到比训练序列更长的输入。</p>
+
+        <p>今天的模型还会使用相对位置编码、RoPE 等方案，但它们解决的仍是同一个问题：让无循环结构的模型感知顺序与距离。</p>
+
+        <h2 id="other-components">九、Attention 之外，那些不能忽略的组件</h2>
+
+        <h3>1. 逐位置前馈网络</h3>
+        <p>每个编码器或解码器层都包含一个两层全连接网络：</p>
+
+        <div class="formula-block" role="math" aria-label="前馈网络公式">
+          <code>FFN(x) = max(0, xW<sub>1</sub> + b<sub>1</sub>)W<sub>2</sub> + b<sub>2</sub></code>
+        </div>
+
+        <p>原论文先把 512 维扩展到 2048 维，经过 ReLU，再压回 512 维。它对每个位置独立使用同一组参数。可以把两者的分工理解为：Attention 在不同 Token 之间交换信息；FFN 在每个 Token 内部进行非线性特征变换。</p>
+
+        <h3>2. 残差连接</h3>
+        <p>每个子层的输入都会绕过子层，与其输出相加。残差路径既保留原始信息，也让梯度更容易穿过深层网络。</p>
+
+        <h3>3. Layer Normalization</h3>
+        <p>原论文采用：</p>
+
+        <div class="formula-block" role="math" aria-label="残差连接和层归一化公式">
+          <code>LayerNorm(x + Sublayer(x))</code>
+        </div>
+
+        <p>也就是先执行子层与残差相加，再做归一化，通常称为 Post-Norm。许多后来的大模型为了提高深层训练稳定性改用 Pre-Norm，但不能把现代实现与 2017 年原始结构混为一谈。</p>
+
+        <h3>4. Embedding、Linear 与 Softmax</h3>
+        <p>输入 Token 先被映射为连续向量。解码器最后的隐藏状态再经过线性层和 Softmax，得到词表中每个 Token 成为下一个输出的概率。</p>
+
+        <p>因此，“Attention Is All You Need”更准确的理解是：<strong>序列位置之间的建模不再需要循环或卷积，而不是整个神经网络只剩下一条注意力公式。</strong></p>
+
+        <h2 id="data-flow">十、一条数据怎样走完整个 Transformer</h2>
+
+        <p>以机器翻译为例，一次完整流程如下：</p>
+
+        <ol>
+          <li>输入句子被切分为 Token；</li>
+          <li>Token 转成词嵌入，并加上位置编码；</li>
+          <li>数据依次通过 6 层编码器，每一层都进行自注意力和 FFN 计算；</li>
+          <li>编码器输出成为解码器跨注意力中的 K 和 V；</li>
+          <li>目标文本右移一位后送入解码器，并加入位置编码；</li>
+          <li>解码器先执行带掩码的自注意力，再用自己的 Q 查询编码器提供的 K、V；</li>
+          <li>经过 FFN、线性层和 Softmax，得到下一个 Token 的概率；</li>
+          <li>训练时可以同时计算多个目标位置，推理时则把新生成的 Token 再送回模型，继续预测下一个。</li>
+        </ol>
+
+        <p>下面是一段只保留核心逻辑的伪代码：</p>
+
+        <div class="code-wrap"><pre><code>def attention(Q, K, V, mask=None):
+    scores = Q @ K.transpose(-2, -1)
+    scores = scores / sqrt(K.size(-1))
+
+    if mask is not None:
+        scores = scores.masked_fill(mask == 0, -inf)
+
+    weights = softmax(scores, dim=-1)
+    return weights @ V</code></pre></div>
+
+        <p>真正的多头注意力还需要拆分多个头、并行计算、拼接结果以及最后的线性投影，但核心始终是“匹配—归一化—聚合”。</p>
+
+        <h2 id="efficiency">十一、Transformer 为什么更适合大规模训练</h2>
+
+        <p>原论文从计算复杂度、并行度和最长信息路径三个方面比较不同结构。</p>
+
+        <div class="table-scroll" role="region" aria-label="不同网络层复杂度对照表" tabindex="0">
+          <table>
+            <thead><tr><th>层类型</th><th>每层复杂度</th><th>顺序操作数量</th><th>最长路径</th></tr></thead>
+            <tbody>
+              <tr><td>Self-Attention</td><td>O(n²d)</td><td>O(1)</td><td>O(1)</td></tr>
+              <tr><td>RNN</td><td>O(nd²)</td><td>O(n)</td><td>O(n)</td></tr>
+              <tr><td>CNN</td><td>O(knd²)</td><td>O(1)</td><td>O(log<sub>k</sub>n)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>自注意力能让任意两个位置在一层内直接建立联系，最长信息路径为常数；同一层的所有位置也能一起计算，更适合 GPU 的矩阵并行。</p>
+
+        <p>但它并非没有代价。标准自注意力需要构造 n × n 的注意力矩阵，时间与显存开销会随序列长度平方增长。这也是长上下文模型不断研究稀疏注意力、局部注意力和线性注意力的原因。</p>
+
+        <h2 id="results">十二、论文当年的结果意味着什么</h2>
+
+        <p>原论文在 WMT 2014 机器翻译任务上取得了当时非常强的结果：</p>
+        <ul>
+          <li>英译德任务达到 28.4 BLEU；</li>
+          <li>英译法任务达到 41.8 BLEU；</li>
+          <li>大模型在 8 张 NVIDIA P100 GPU 上训练约 3.5 天。</li>
+        </ul>
+
+        <p>基础模型训练 100,000 步，约 12 小时。训练使用 Adam 优化器、4000 步 Warmup、Dropout 和 Label Smoothing。</p>
+
+        <p>这些数字今天看来未必惊人，但在当时说明了一个关键事实：完全基于注意力的架构不仅可行，而且能用更高的并行度、更短的训练时间达到更好的翻译质量。</p>
+
+        <h2 id="legacy">十三、从原始 Transformer 到今天的大模型</h2>
+
+        <p>2017 年论文中的 Transformer 是完整的编码器—解码器模型。后来，人们根据任务保留了不同部分：</p>
+        <ul>
+          <li><strong>BERT</strong>主要使用 Encoder，擅长双向理解和文本表示；</li>
+          <li><strong>GPT</strong>主要使用带因果掩码的 Decoder，擅长自回归生成；</li>
+          <li><strong>T5</strong>保留 Encoder–Decoder，把多种任务统一成“文本到文本”；</li>
+          <li>视觉、语音和多模态模型则把“序列”扩展到图像块、音频片段等形式。</li>
+        </ul>
+
+        <p>现代模型已经更换了不少零件，例如激活函数、归一化位置、位置编码、注意力实现和前馈网络结构，但 QKV、自注意力、残差路径和 Token 级表示这些核心思想依然清晰可见。</p>
+
+        <h2 id="misconceptions">十四、五个常见误区</h2>
+
+        <h3>误区一：Transformer 里只有 Attention</h3>
+        <p>不对。Embedding、位置编码、FFN、残差连接、LayerNorm、线性层和 Softmax 都是完整架构的重要部分。</p>
+
+        <h3>误区二：每个注意力头都有固定且可命名的职责</h3>
+        <p>不一定。不同头确实可能学习不同模式，但这种分工来自训练，而且注意力图也不等同于完整的因果解释。</p>
+
+        <h3>误区三：Transformer 的训练和生成都能完全并行</h3>
+        <p>编码与训练阶段可以高度并行；原始自回归解码在推理时仍要等待前一个 Token。</p>
+
+        <h3>误区四：有了 Attention 就不需要位置信息</h3>
+        <p>恰恰相反。自注意力本身不包含顺序，需要正弦位置编码、可学习位置嵌入、RoPE 或其他位置机制。</p>
+
+        <h3>误区五：Self-Attention 在任何长度下都比 RNN 便宜</h3>
+        <p>不对。Self-Attention 的注意力矩阵具有平方复杂度，序列非常长时会成为明显瓶颈。</p>
+
+        <h2 id="conclusion">结语</h2>
+
+        <p>Transformer 最重要的思想，不是发明了“关注重点”这个概念，而是把注意力从辅助组件提升为序列建模的核心连接方式。</p>
+
+        <p>RNN 像一个人从头到尾读句子，并把记忆一步步传下去；Transformer 更像把整句话摊在桌面上，让每个词直接寻找与自己有关的其他词。前者依赖时间顺序传递，后者把关系转化成可以大规模并行的矩阵运算。</p>
+
+        <p>理解 Transformer 时，不必一开始就被庞大的架构图吓住。只要抓住下面这条主线，整座模型就会清晰很多：</p>
+
+        <blockquote>
+          <p>Token 先获得内容与位置信息，再用 Q 和 K 决定关注谁，用 V 取回内容；多头注意力从多个子空间交流信息，FFN 负责局部加工，残差和归一化保证网络能够稳定堆叠。</p>
+        </blockquote>
+
+        <p>这就是《Attention Is All You Need》留给现代人工智能最有生命力的那部分思想。</p>
+
+        <h2 id="references">参考资料</h2>
+
+        <ol class="source-list">
+          <li><a href="https://www.bilibili.com/video/BV1xoJwzDESD" rel="noopener noreferrer">视频：《Attention is all you need》论文解读及 Transformer 架构详细介绍</a></li>
+          <li><a href="https://arxiv.org/abs/1706.03762" rel="noopener noreferrer">Vaswani 等：《Attention Is All You Need》（arXiv）</a></li>
+          <li><a href="https://papers.neurips.cc/paper/7181-attention-is-all-you-need.pdf" rel="noopener noreferrer">NeurIPS 论文 PDF</a></li>
+          <li><a href="https://nlp.seas.harvard.edu/2018/04/03/attention.html" rel="noopener noreferrer">Harvard NLP：The Annotated Transformer</a></li>
+          <li><a href="https://github.com/huangyf2013320506/bilibili_repository/tree/master/0517Transformer" rel="noopener noreferrer">视频作者公开的 PPT、论文笔记与相关资料</a></li>
+        </ol>
+
+        <div class="post-end">世界线记录完毕。真正理解一个模型，始于知道每一条连接为何存在。</div>
+
+        <a class="next-post" href="../index.html">
+          <span><small>RETURN / ARCHIVE</small><strong>返回片段档案</strong></span>
+          <span class="next-post-arrow" aria-hidden="true">→</span>
+        </a>
+      </article>
+
+      <nav class="article-toc" data-toc aria-label="文章目录">
+        <p class="toc-title">CONTENTS</p>
+        <ul>
+          <li><a href="#before-transformer">问题背景</a></li>
+          <li><a href="#architecture">整体架构</a></li>
+          <li><a href="#qkv">Q、K、V</a></li>
+          <li><a href="#scaled-attention">缩放点积</a></li>
+          <li><a href="#multi-head">多头注意力</a></li>
+          <li><a href="#three-attentions">三种注意力</a></li>
+          <li><a href="#mask">因果掩码</a></li>
+          <li><a href="#position">位置编码</a></li>
+          <li><a href="#other-components">其他组件</a></li>
+          <li><a href="#data-flow">数据流程</a></li>
+          <li><a href="#efficiency">效率与代价</a></li>
+          <li><a href="#results">论文结果</a></li>
+          <li><a href="#legacy">后续影响</a></li>
+          <li><a href="#misconceptions">常见误区</a></li>
+          <li><a href="#conclusion">结语</a></li>
+        </ul>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="page-shell">
+      <div class="footer-top">
+        <p class="footer-line">把结构拆开，才能看清思想如何流动。</p>
+        <nav class="footer-links" aria-label="页脚导航">
+          <a href="../index.html">片段档案</a>
+          <a href="../../notes/index.html">日常记录</a>
+          <a href="../../about/index.html">人物侧写</a>
+          <a href="../../feed.xml">订阅</a>
+        </nav>
+      </div>
+      <div class="footer-bottom"><span>© <span data-current-year>2026</span> 陵辰</span><span>FRAGMENT / 001</span></div>
+    </div>
+  </footer>
+</body>
+</html>

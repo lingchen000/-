@@ -5,7 +5,14 @@
     <link>https://lingchen000.github.io/-/</link>
     <description>陵辰公开的故事、日常切片与私人独白。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Tue, 21 Jul 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 28 Jul 2026 00:00:00 +0800</lastBuildDate>
     <atom:link href="https://lingchen000.github.io/-/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>《Attention Is All You Need》论文解读</title>
+      <link>https://lingchen000.github.io/-/articles/attention-is-all-you-need/</link>
+      <guid isPermaLink="true">https://lingchen000.github.io/-/articles/attention-is-all-you-need/</guid>
+      <pubDate>Tue, 28 Jul 2026 00:00:00 +0800</pubDate>
+      <description>Transformer 如何让每个词看见整句话：从 RNN 的瓶颈到 QKV、多头注意力、位置编码与完整架构。</description>
+    </item>
   </channel>
 </rss>
