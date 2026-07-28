@@ -4087,3 +4087,103 @@ body.monogatari-theme.worldline-inner.monogatari-article-page .site-footer .page
     box-shadow: 6px 6px 0 var(--mono-red);
   }
 }
+
+/* Transformer chapter — daytime palette */
+html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page {
+  --mono-paper: #e8dfd2;
+  --mono-panel: #f5efe4;
+  --mono-ink: #171412;
+  --mono-muted: #665c54;
+  --mono-line: #171412;
+  color-scheme: light;
+  background:
+    linear-gradient(116deg, transparent 0 74%, rgba(197, 31, 51, .085) 74% 75.2%, transparent 75.2%),
+    repeating-linear-gradient(0deg, rgba(54, 42, 34, .035) 0 1px, transparent 1px 4px),
+    #e8dfd2;
+  color: #302823;
+}
+
+html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page::before {
+  opacity: .16;
+  background:
+    linear-gradient(90deg, transparent 49.9%, rgba(58, 43, 35, .2) 50%, transparent 50.1%),
+    repeating-linear-gradient(90deg, transparent 0 119px, rgba(58, 43, 35, .075) 119px 120px);
+}
+
+html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .site-header {
+  border-bottom-color: var(--mono-red);
+  background: rgba(245, 239, 228, .95);
+  box-shadow: 0 9px 30px rgba(63, 45, 35, .09);
+}
+
+html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .brand-mark {
+  color: #171412;
+}
+
+html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .brand-sub {
+  color: #a91429;
+}
+
+html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .site-nav {
+  background: #f5efe4;
+}
+
+html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .site-nav a {
+  color: #665c54;
+}
+
+html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .site-nav a:hover,
+html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .site-nav a[aria-current="page"] {
+  color: #171412;
+}
+
+html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .icon-button,
+html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .menu-button {
+  color: #171412;
+}
+
+html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .article-toc {
+  border-color: #171412;
+  background: rgba(245, 239, 228, .9);
+  box-shadow: 9px 9px 0 var(--mono-red);
+  color: #51483f;
+}
+
+html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .article-toc a {
+  color: #665c54;
+}
+
+html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .article-toc a:hover,
+html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .article-toc a.is-active {
+  border-left-color: var(--mono-red);
+  background: rgba(197, 31, 51, .1);
+  color: #171412;
+}
+
+html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .site-footer {
+  border-color: #171412;
+  background: rgba(245, 239, 228, .92);
+  color: #665c54;
+}
+
+html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .footer-line,
+html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .footer-links a {
+  color: #211c18;
+}
+
+html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .footer-top {
+  border-color: rgba(75, 56, 45, .22);
+}
+
+html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .floating-tool-rail .discussion-launcher {
+  border-color: #171412;
+  background: #f5efe4;
+  box-shadow: -4px 4px 0 var(--mono-red);
+  color: #171412;
+}
+
+@media (max-width: 560px) {
+  html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .floating-tool-rail .discussion-launcher {
+    box-shadow: 4px 4px 0 var(--mono-red);
+  }
+}
