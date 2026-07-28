@@ -3783,13 +3783,13 @@ body.monogatari-theme.worldline-inner.monogatari-article-page .article-body .for
 }
 
 body.monogatari-theme.worldline-inner.monogatari-article-page .article-body .table-scroll {
-  border: 2px solid #111;
+  border: 1px solid rgba(102, 71, 59, .2);
   border-radius: 0;
-  box-shadow: 7px 7px 0 var(--mono-red);
+  box-shadow: 0 12px 28px rgba(77, 51, 38, .08);
 }
 
 body.monogatari-theme.worldline-inner.monogatari-article-page .article-body.prose th {
-  background: #111;
+  background: #9e4450;
   color: #fffaf0;
 }
 
@@ -3799,11 +3799,14 @@ body.monogatari-theme.worldline-inner.monogatari-article-page .article-body.pros
 }
 
 body.monogatari-theme.worldline-inner.monogatari-article-page .article-body.prose pre {
-  border: 2px solid #111;
+  border: 1px solid rgba(102, 71, 59, .19);
+  border-left: 7px solid rgba(197, 31, 51, .78);
   border-radius: 0;
-  background: #111;
-  color: #fffaf0;
-  box-shadow: 7px 7px 0 var(--mono-red);
+  background:
+    linear-gradient(128deg, rgba(137, 105, 91, .15), rgba(197, 31, 51, .07)),
+    rgba(218, 207, 190, .7);
+  color: #29221e;
+  box-shadow: 0 12px 28px rgba(77, 51, 38, .09);
 }
 
 body.monogatari-theme.worldline-inner.monogatari-article-page .copy-button {
@@ -3827,18 +3830,22 @@ body.monogatari-theme.worldline-inner.monogatari-article-page .article-body .pos
 body.monogatari-theme.worldline-inner.monogatari-article-page .article-body .next-post {
   margin-top: 34px;
   padding: 24px;
-  border: 2px solid #111;
-  background: #111;
-  color: #fffaf0;
+  border: 1px solid rgba(102, 71, 59, .2);
+  border-left: 7px solid var(--mono-red);
+  background:
+    linear-gradient(128deg, rgba(197, 31, 51, .13), rgba(156, 111, 91, .07)),
+    rgba(222, 211, 194, .62);
+  color: #302823;
+  box-shadow: 0 12px 28px rgba(77, 51, 38, .08);
 }
 
 body.monogatari-theme.worldline-inner.monogatari-article-page .article-body .next-post small {
-  color: var(--mono-pink);
+  color: #a91429;
 }
 
 body.monogatari-theme.worldline-inner.monogatari-article-page .article-body .next-post strong,
 body.monogatari-theme.worldline-inner.monogatari-article-page .article-body .next-post-arrow {
-  color: #fffaf0;
+  color: #302823;
 }
 
 body.monogatari-theme.worldline-inner.monogatari-article-page .article-toc {
