@@ -3746,17 +3746,21 @@ body.monogatari-theme.worldline-inner.monogatari-article-page .article-body.pros
 
 body.monogatari-theme.worldline-inner.monogatari-article-page .article-body.prose blockquote {
   margin-inline: 0;
-  padding: 24px 26px;
-  border: 0;
-  border-left: 10px solid var(--mono-red);
-  background: #111;
-  color: #fffaf0;
+  padding: 26px 28px;
+  border: 1px solid rgba(102, 71, 59, .17);
+  border-left: 8px solid rgba(197, 31, 51, .78);
+  background:
+    linear-gradient(128deg, rgba(197, 31, 51, .16), rgba(156, 111, 91, .09)),
+    rgba(222, 211, 194, .62);
+  color: #302823;
   font-weight: 800;
-  box-shadow: 7px 7px 0 var(--mono-red);
+  box-shadow: 0 12px 28px rgba(77, 51, 38, .08);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
 body.monogatari-theme.worldline-inner.monogatari-article-page .article-body.prose blockquote p {
-  color: #fffaf0;
+  color: #302823;
 }
 
 body.monogatari-theme.worldline-inner.monogatari-article-page .article-body .formula-block {
