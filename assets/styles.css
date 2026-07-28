@@ -3762,16 +3762,20 @@ body.monogatari-theme.worldline-inner.monogatari-article-page .article-body.pros
 body.monogatari-theme.worldline-inner.monogatari-article-page .article-body .formula-block {
   margin-block: 2.2em;
   padding: 22px 24px;
-  border: 2px solid #111;
-  border-left: 10px solid var(--mono-red);
+  border: 1px solid rgba(17, 17, 17, .16);
+  border-left: 6px solid rgba(197, 31, 51, .78);
   border-radius: 0;
-  background: #111;
-  box-shadow: 7px 7px 0 #d1c3ad;
-  color: #fffaf0;
+  background:
+    linear-gradient(125deg, rgba(255, 255, 255, .38), rgba(197, 31, 51, .045)),
+    rgba(255, 250, 240, .2);
+  box-shadow: 0 12px 30px rgba(58, 42, 31, .08);
+  color: #211c18;
+  backdrop-filter: blur(8px) saturate(.9);
+  -webkit-backdrop-filter: blur(8px) saturate(.9);
 }
 
 body.monogatari-theme.worldline-inner.monogatari-article-page .article-body .formula-block code {
-  color: #fffaf0;
+  color: #211c18;
 }
 
 body.monogatari-theme.worldline-inner.monogatari-article-page .article-body .table-scroll {
@@ -4061,8 +4065,8 @@ body.monogatari-theme.worldline-inner.monogatari-article-page .site-footer .page
   body.monogatari-theme.worldline-inner.monogatari-article-page .article-body .formula-block {
     margin-inline: -5px;
     padding: 17px 14px;
-    border-left-width: 7px;
-    box-shadow: 5px 5px 0 #d1c3ad;
+    border-left-width: 5px;
+    box-shadow: 0 9px 22px rgba(58, 42, 31, .08);
   }
 
   body.monogatari-theme.worldline-inner.monogatari-article-page .site-footer {
