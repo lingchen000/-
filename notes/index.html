@@ -33,6 +33,20 @@
       </div>
       <div class="observation-log-list">
         <article class="observation-log-entry">
+          <div class="observation-log-meta"><time datetime="2026-07-29">2026.07.29</time><span>LOG 012</span></div>
+          <h3>设备推流运维与翻译模型优化</h3>
+          <p class="observation-log-project">ASSIGNMENT / DEVICE STREAMING, OPERATIONS &amp; TRANSLATION OPTIMIZATION</p>
+          <div class="observation-log-content">
+            <p>学习设备复位、登录管理页面、调整分辨率和码率、开启 RTMP 直播流、添加时间水印以及修改网络参数的方法。编码器默认地址为 192.168.1.168，配置时需先让电脑与编码器处于同一网段，修改完成后重启设备，并通过预览页面或播放器验证画面和推流状态。</p>
+            <p>了解 Ubuntu 设备中 TVHeadend 的服务管理、日志检查、定时任务、磁盘挂载和常见故障排查方法，以及使用 rqdStreamer 搜索 DVB、DTMB、IPTV 节目并通过 VLC 等客户端播放的流程。</p>
+            <p>通过泰信解绑器教程，了解连接智能卡与读卡器、获取频率、读取通信数据、分析并保存配对信息，以及通过 U 盘将配对文件导入机顶盒的大致步骤。</p>
+            <p>掌握设备安装过程中避免带电插拔的安全要求，并学习在连接完成后检查风扇、硬盘、网口及主板指示灯是否正常。</p>
+            <p>针对语言翻译系统启动时选择 600M 快速模型而非预期 1.3B 高质量模型的问题，分析 600M 模型目录在纯 Java 程序中提供兼容组件的保留价值，并继续以 1.3B 模型作为主要翻译引擎。</p>
+            <p>将 Java 最大堆内存设置为 12GB。重新启动后，通过系统接口确认当前运行引擎已切换为“NLLB-200 1.3B INT8 高质量模型”，并验证可使用 F5 启动、Shift+F5 停止。</p>
+          </div>
+        </article>
+
+        <article class="observation-log-entry">
           <div class="observation-log-meta"><time datetime="2026-07-28">2026.07.28</time><span>LOG 011</span></div>
           <h3>虚拟机配置与 Linux 基础环境</h3>
           <p class="observation-log-project">ASSIGNMENT / VIRTUAL MACHINE &amp; LINUX ENVIRONMENT</p>
