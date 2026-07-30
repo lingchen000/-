@@ -3062,6 +3062,43 @@ body.monogatari-theme.worldline-theme .like-card button { color: #fffaf0; }
 body.monogatari-theme.worldline-theme .like-card p { color: #b9afa8; }
 body.monogatari-theme.worldline-theme .dashboard-footer { color: var(--mono-muted); }
 
+/* The inverted chapter cards follow the selected theme instead of staying black. */
+html[data-theme="light"] body.monogatari-theme.worldline-theme .profile-card,
+html[data-theme="light"] body.monogatari-theme.worldline-theme .latest-card,
+html[data-theme="light"] body.monogatari-theme.worldline-theme .like-card {
+  background:
+    repeating-linear-gradient(0deg, rgba(17,17,17,.025) 0 1px, transparent 1px 4px),
+    #fffaf0;
+  color: var(--mono-ink);
+}
+html[data-theme="light"] body.monogatari-theme.worldline-theme .profile-copy h1,
+html[data-theme="light"] body.monogatari-theme.worldline-theme .latest-copy h2,
+html[data-theme="light"] body.monogatari-theme.worldline-theme .like-card button {
+  color: var(--mono-ink);
+}
+html[data-theme="light"] body.monogatari-theme.worldline-theme .profile-kicker,
+html[data-theme="light"] body.monogatari-theme.worldline-theme .latest-copy > p:first-child,
+html[data-theme="light"] body.monogatari-theme.worldline-theme .read-link {
+  color: var(--mono-red);
+}
+html[data-theme="light"] body.monogatari-theme.worldline-theme .profile-copy > p:last-child,
+html[data-theme="light"] body.monogatari-theme.worldline-theme .desk-nav a,
+html[data-theme="light"] body.monogatari-theme.worldline-theme .latest-summary,
+html[data-theme="light"] body.monogatari-theme.worldline-theme .like-card p {
+  color: var(--mono-muted);
+}
+html[data-theme="light"] body.monogatari-theme.worldline-theme .profile-footer {
+  border-color: rgba(17,17,17,.22);
+  color: var(--mono-muted);
+}
+html[data-theme="light"] body.monogatari-theme.worldline-theme .round-control {
+  border-color: var(--mono-line);
+  color: var(--mono-ink);
+}
+html[data-theme="light"] body.monogatari-theme.worldline-theme .latest-art {
+  border-color: var(--mono-line);
+}
+
 /* Inner chapter pages */
 body.monogatari-theme.worldline-inner {
   background:
