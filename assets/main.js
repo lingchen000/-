@@ -10,7 +10,6 @@
   const startupIntro = document.querySelector("[data-startup-intro]");
   if (startupIntro) {
     if (root.classList.contains("intro-pending")) {
-      const startupKey = "lingchen-startup-v1";
       const skipButton = startupIntro.querySelector("[data-startup-skip]");
       let introTimer;
       let introFinished = false;
@@ -22,17 +21,12 @@
         root.classList.remove("intro-pending");
         startupIntro.hidden = true;
         document.removeEventListener("keydown", handleIntroKeydown);
-        try {
-          sessionStorage.setItem(startupKey, "seen");
-        } catch (_) {
-          // The animation still works when storage is unavailable.
-        }
       };
 
       const skipIntro = () => {
         if (introFinished || startupIntro.classList.contains("is-skipping")) return;
         startupIntro.classList.add("is-skipping");
-        window.setTimeout(removeIntro, 260);
+        window.setTimeout(removeIntro, 320);
       };
 
       const handleIntroKeydown = (event) => {
@@ -41,7 +35,7 @@
 
       skipButton?.addEventListener("click", skipIntro);
       document.addEventListener("keydown", handleIntroKeydown);
-      introTimer = window.setTimeout(removeIntro, 2800);
+      introTimer = window.setTimeout(removeIntro, 2300);
     } else {
       startupIntro.hidden = true;
     }

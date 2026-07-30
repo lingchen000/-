@@ -11,28 +11,35 @@
   <title>陵辰｜怪异记录簿</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="alternate" type="application/rss+xml" title="陵辰订阅" href="feed.xml">
-  <link rel="stylesheet" href="assets/styles.css?v=20260730-startup">
+  <link rel="stylesheet" href="assets/styles.css?v=20260730-opening-v2">
   <script>
     try {
       const savedTheme = localStorage.getItem("lingchen-theme-worldline");
       document.documentElement.dataset.theme = savedTheme === "light" || savedTheme === "dark" ? savedTheme : "dark";
-      if (!matchMedia("(prefers-reduced-motion: reduce)").matches && !sessionStorage.getItem("lingchen-startup-v1")) {
+      if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
         document.documentElement.classList.add("intro-pending");
       }
     } catch (_) {
       document.documentElement.dataset.theme = "dark";
     }
   </script>
-  <script src="assets/main.js?v=20260730-startup" defer></script>
+  <script src="assets/main.js?v=20260730-opening-v2" defer></script>
 </head>
 <body class="dashboard-page dashboard-v2 worldline-theme monogatari-theme">
   <div class="startup-intro" data-startup-intro role="presentation">
-    <div class="startup-intro-stage" aria-hidden="true">
-      <p class="startup-intro-code"><span>STARTUP SEQUENCE</span><span>LC / 001</span></p>
-      <p class="startup-intro-chapter">序章 <span>MONOLOGUE ARCHIVE</span></p>
-      <h1 class="startup-intro-title"><span>陵</span><span>辰</span></h1>
-      <div class="startup-intro-status"><span>SCENE INITIALIZED</span><strong>READY</strong></div>
-      <div class="startup-intro-progress"><i></i></div>
+    <div class="startup-intro-curtain startup-intro-curtain-top" aria-hidden="true"></div>
+    <div class="startup-intro-curtain startup-intro-curtain-bottom" aria-hidden="true"></div>
+    <div class="startup-intro-frame" aria-hidden="true">
+      <div class="startup-intro-index">
+        <span>EPISODE</span>
+        <strong>001</strong>
+      </div>
+      <div class="startup-intro-heading">
+        <p>PROLOGUE</p>
+        <strong><span>序</span><span>章</span></strong>
+        <small>日常发生在怪异之前。</small>
+        <i></i>
+      </div>
     </div>
     <button class="startup-intro-skip" type="button" data-startup-skip>SKIP / 跳过</button>
   </div>
