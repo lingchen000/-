@@ -11,6 +11,7 @@
   if (startupIntro) {
     if (root.classList.contains("intro-pending")) {
       const skipButton = startupIntro.querySelector("[data-startup-skip]");
+      const introStorageKey = "lingchen-opening-seen-v3";
       let introTimer;
       let introFinished = false;
 
@@ -18,9 +19,17 @@
         if (introFinished) return;
         introFinished = true;
         window.clearTimeout(introTimer);
+        try {
+          localStorage.setItem(introStorageKey, "1");
+        } catch (_) {
+          // The opening still closes normally when storage is unavailable.
+        }
         root.classList.remove("intro-pending");
         startupIntro.hidden = true;
         document.removeEventListener("keydown", handleIntroKeydown);
+        if (document.activeElement === skipButton) {
+          document.querySelector(".desk-nav a")?.focus({ preventScroll: true });
+        }
       };
 
       const skipIntro = () => {
@@ -35,7 +44,7 @@
 
       skipButton?.addEventListener("click", skipIntro);
       document.addEventListener("keydown", handleIntroKeydown);
-      introTimer = window.setTimeout(removeIntro, 2300);
+      introTimer = window.setTimeout(removeIntro, 2280);
     } else {
       startupIntro.hidden = true;
     }
