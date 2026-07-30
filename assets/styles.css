@@ -2455,19 +2455,12 @@ body.worldline-inner .site-footer { border-color:rgba(187,124,64,.24);background
 .discussion-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; border-bottom: 7px solid #c51f33; padding-bottom: 16px; }
 .discussion-head p { margin: 0 0 4px; color: #c51f33; font-size: 11px; font-weight: 800; letter-spacing: .16em; }
 .discussion-head h2 { margin: 0; color: #111; font-size: clamp(26px, 5vw, 42px); letter-spacing: -.05em; }
-.discussion-close { flex: 0 0 42px; width: 42px; height: 42px; border: 2px solid #111; border-radius: 0; background: #111; color: #fff; font: 700 25px/1 inherit; cursor: pointer; }
+.discussion-close { flex: 0 0 44px; width: 44px; height: 44px; border: 2px solid #111; border-radius: 0; background: #111; color: #fff; font: 700 25px/1 inherit; cursor: pointer; }
 .discussion-note { margin: 18px 0 20px; color: #675d56; font-size: 14px; }
 .discussion-frame { min-height: 190px; }
 .discussion-loading { padding: 42px 0; color: #675d56; text-align: center; }
 .discussion-frame .giscus,
 .discussion-frame .giscus-frame { width: 100%; }
-
-@media (max-width: 560px) {
-  .discussion-launcher { right: 14px; bottom: 14px; min-height: 44px; padding: 0 13px; box-shadow: 4px 4px 0 #111; }
-  .discussion-launcher strong { font-size: 12px; }
-  .discussion-panel { padding: 20px 16px; box-shadow: 6px 6px 0 #c51f33; }
-  .discussion-head { gap: 14px; }
-}
 
 /* Internship observation log terminal */
 .log-terminal-page { min-height:100vh; }
@@ -2700,8 +2693,8 @@ body.worldline-theme .desktop-shell {
 .assistant-identity p { margin: 0 0 2px; color: #ff9caf; font: 700 9px/1.2 var(--font-mono); letter-spacing: .13em; }
 .assistant-identity h2 { margin: 0; color: #fffaf0; font-size: 22px; letter-spacing: .08em; }
 .assistant-head-actions { display: flex; align-items: center; gap: 8px; }
-.assistant-clear { padding: 7px 8px; border: 1px solid #5a5150; background: transparent; color: #c8beb3; font-size: 11px; }
-.assistant-close { width: 34px; height: 34px; padding: 0; border: 1px solid #fffaf0; background: transparent; color: #fffaf0; font-size: 24px; line-height: 1; }
+.assistant-clear { min-height: 44px; padding: 7px 10px; border: 1px solid #5a5150; background: transparent; color: #c8beb3; font-size: 11px; }
+.assistant-close { width: 44px; height: 44px; padding: 0; border: 1px solid #fffaf0; background: transparent; color: #fffaf0; font-size: 24px; line-height: 1; }
 
 .assistant-messages { overflow-y: auto; padding: 18px; background: linear-gradient(rgba(197,31,51,.035) 1px, transparent 1px), #fffaf0; background-size: 100% 28px; scrollbar-color: #c51f33 transparent; }
 .assistant-message { display: flex; flex-direction: column; align-items: flex-start; margin-bottom: 14px; }
@@ -2721,22 +2714,12 @@ body.worldline-theme .desktop-shell {
 .assistant-suggestions[hidden] { display: none; }
 .assistant-suggestions button { flex: 0 0 auto; padding: 7px 10px; border: 1px solid #c9bbb2; background: transparent; color: #5d514c; font-size: 10px; }
 .assistant-form { display: grid; grid-template-columns: minmax(0, 1fr) 46px; gap: 8px; padding: 12px 14px; border-top: 2px solid #111; background: #fffaf0; }
-.assistant-form textarea { width: 100%; min-height: 44px; max-height: 112px; padding: 11px 12px; resize: none; border: 1px solid #111; border-radius: 0; background: #fff; color: #111; font: 13px/1.55 inherit; }
+.assistant-form textarea { width: 100%; min-height: 44px; max-height: 112px; padding: 11px 12px; resize: none; border: 1px solid #111; border-radius: 0; background: #fff; color: #111; font-family: inherit; font-size: 13px; line-height: 1.55; }
 .assistant-form textarea:focus { outline: 2px solid #c51f33; outline-offset: 1px; }
 .assistant-form button { border: 1px solid #111; background: #c51f33; color: #fff; font-size: 18px; }
 .assistant-form button:disabled { cursor: wait; opacity: .55; }
 .assistant-footnote { margin: 0; padding: 0 14px 10px; background: #fffaf0; color: #85766f; font-size: 9px; text-align: center; }
 @keyframes assistant-pulse { 50% { opacity: .55; } }
-
-@media (max-width: 560px) {
-  .assistant-launcher { right: 14px; bottom: 72px; min-height: 44px; padding: 0 13px; box-shadow: 4px 4px 0 #111; }
-  .assistant-launcher strong { font-size: 12px; }
-  .assistant-dialog { width: calc(100vw - 20px); height: calc(100dvh - 24px); }
-  .assistant-panel { box-shadow: 6px 6px 0 #c51f33; }
-  .assistant-head { padding: 13px 12px; }
-  .assistant-messages { padding: 14px 12px; }
-  .assistant-message p { max-width: 92%; }
-}
 
 /* Shared interaction rail: keeps AI and Discussions away from dashboard cards. */
 .floating-tool-rail {
@@ -2750,6 +2733,9 @@ body.worldline-theme .desktop-shell {
   gap: 8px;
   transform: translateY(-50%);
 }
+.interaction-actions { display: contents; }
+.interaction-actions[hidden] { display: none !important; }
+.interaction-toggle { display: none; }
 .floating-tool-rail .assistant-launcher,
 .floating-tool-rail .discussion-launcher {
   position: static;
@@ -2778,37 +2764,154 @@ body.worldline-theme .desktop-shell {
   writing-mode: vertical-rl;
 }
 
-@media (max-width: 560px) {
-  body.has-floating-tool-rail { padding-bottom: 72px; }
+html.interaction-modal-open,
+html.interaction-modal-open body {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+@keyframes interaction-drawer-in {
+  from { opacity: 0; transform: translateY(8px) scale(.98); }
+}
+
+@media (max-width: 760px) {
+  body.has-floating-tool-rail { padding-bottom: calc(78px + env(safe-area-inset-bottom)); }
   .floating-tool-rail {
     top: auto;
-    right: 50%;
-    bottom: 10px;
-    flex-direction: row;
-    align-items: stretch;
+    right: max(12px, env(safe-area-inset-right));
+    bottom: max(12px, env(safe-area-inset-bottom));
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    transform: none;
+    transition: opacity .18s ease, transform .18s ease;
+  }
+  .floating-tool-rail.is-field-active {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(12px);
+  }
+  .interaction-toggle {
+    display: inline-flex;
+    width: 56px;
+    height: 56px;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    border: 2px solid #111;
+    border-radius: 50%;
+    background: #c51f33;
+    box-shadow: 4px 4px 0 #111;
+    color: #fff;
+    cursor: pointer;
+    font: inherit;
+  }
+  .interaction-toggle[hidden] { display: none; }
+  .interaction-toggle span { font-size: 16px; line-height: 1; }
+  .interaction-toggle strong { font-size: 11px; letter-spacing: .04em; }
+  .interaction-toggle:focus-visible { outline: 3px solid #ffb7c5; outline-offset: 3px; }
+  .interaction-toggle:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 #111; }
+  .interaction-actions {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 10px);
+    display: grid;
+    width: min(280px, calc(100vw - 24px));
     gap: 7px;
-    transform: translateX(50%);
+    padding: 8px;
+    border: 2px solid #111;
+    background: rgba(255, 250, 240, .98);
+    box-shadow: 6px 6px 0 #c51f33;
+    animation: interaction-drawer-in .18s ease-out both;
   }
   .floating-tool-rail .assistant-launcher,
   .floating-tool-rail .discussion-launcher {
-    width: auto;
-    min-width: 126px;
-    min-height: 46px;
-    padding: 0 13px;
+    width: 100%;
+    min-width: 0;
+    min-height: 52px;
+    padding: 0 16px;
     flex-direction: row;
-    box-shadow: 4px 4px 0 #111;
+    justify-content: flex-start;
+    box-shadow: none;
   }
   .floating-tool-rail .assistant-launcher:hover,
   .floating-tool-rail .discussion-launcher:hover {
-    transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0 #111;
+    transform: none;
+    box-shadow: inset 5px 0 0 #ffb7c5;
+  }
+  .floating-tool-rail .assistant-launcher:active,
+  .floating-tool-rail .discussion-launcher:active {
+    transform: translateX(2px);
   }
   .floating-tool-rail .assistant-launcher strong,
   .floating-tool-rail .discussion-launcher strong {
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: .08em;
     writing-mode: horizontal-tb;
   }
+
+  .assistant-dialog,
+  .discussion-dialog {
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    height: 100vh;
+    height: 100dvh;
+    max-height: none;
+    margin: 0;
+    overflow: hidden;
+  }
+  .assistant-panel,
+  .discussion-panel {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    border: 0;
+    box-shadow: none;
+  }
+  .assistant-head {
+    gap: 10px;
+    padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) 12px max(12px, env(safe-area-inset-left));
+  }
+  .assistant-avatar { width: 38px; height: 38px; }
+  .assistant-identity p { font-size: 8px; }
+  .assistant-identity h2 { font-size: 20px; }
+  .assistant-head-actions { gap: 6px; }
+  .assistant-messages {
+    padding: 14px max(12px, env(safe-area-inset-right)) 14px max(12px, env(safe-area-inset-left));
+    overscroll-behavior: contain;
+  }
+  .assistant-message p { max-width: 92%; }
+  .assistant-suggestions {
+    padding-right: max(12px, env(safe-area-inset-right));
+    padding-left: max(12px, env(safe-area-inset-left));
+  }
+  .assistant-suggestions button { min-height: 44px; }
+  .assistant-form {
+    grid-template-columns: minmax(0, 1fr) 48px;
+    padding-right: max(12px, env(safe-area-inset-right));
+    padding-left: max(12px, env(safe-area-inset-left));
+  }
+  .assistant-form textarea { min-height: 48px; font-size: 16px; }
+  .assistant-form button { min-width: 48px; min-height: 48px; }
+  .assistant-footnote {
+    padding-right: max(12px, env(safe-area-inset-right));
+    padding-bottom: max(10px, env(safe-area-inset-bottom));
+    padding-left: max(12px, env(safe-area-inset-left));
+  }
+  .discussion-panel {
+    overflow: auto;
+    padding: max(18px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(18px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+    overscroll-behavior: contain;
+  }
+  .discussion-head { gap: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .interaction-actions { animation: none; }
+  .floating-tool-rail { transition: none; }
 }
 
 /* ── Monogatari-inspired chapter direction ────────────────── */
@@ -4219,9 +4322,9 @@ html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-articl
   color: #171412;
 }
 
-@media (max-width: 560px) {
+@media (max-width: 760px) {
   html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .floating-tool-rail .discussion-launcher {
-    box-shadow: 4px 4px 0 var(--mono-red);
+    box-shadow: none;
   }
 }
 

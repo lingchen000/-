@@ -793,15 +793,95 @@
     });
   }
 
+  const mobileInteractionMedia = window.matchMedia("(max-width: 760px)");
   let floatingToolRail;
+  let floatingToolActions;
+  let floatingToolToggle;
+  let floatingToolsOpen = false;
+
+  const setFloatingToolsOpen = (open, { restoreFocus = false } = {}) => {
+    if (!floatingToolRail) return;
+    const isMobile = mobileInteractionMedia.matches;
+    floatingToolsOpen = isMobile && Boolean(open);
+    floatingToolRail.classList.toggle("is-open", floatingToolsOpen);
+    floatingToolToggle.hidden = !isMobile;
+    floatingToolToggle.setAttribute("aria-expanded", String(floatingToolsOpen));
+    floatingToolToggle.setAttribute("aria-label", floatingToolsOpen ? "收起互动工具" : "打开互动工具");
+    floatingToolActions.hidden = isMobile && !floatingToolsOpen;
+    if (restoreFocus && isMobile) floatingToolToggle.focus();
+  };
+
+  const showInteractionDialog = (dialog) => {
+    dialog.showModal();
+    document.documentElement.classList.add("interaction-modal-open");
+  };
+
+  const handleInteractionDialogClose = () => {
+    document.documentElement.classList.remove("interaction-modal-open");
+    if (mobileInteractionMedia.matches && floatingToolToggle) {
+      floatingToolRail?.classList.remove("is-field-active");
+      floatingToolToggle.focus({ preventScroll: true });
+    }
+  };
+
   const getFloatingToolRail = () => {
-    if (floatingToolRail) return floatingToolRail;
+    if (floatingToolRail) return floatingToolActions;
     floatingToolRail = document.createElement("nav");
     floatingToolRail.className = "floating-tool-rail";
     floatingToolRail.setAttribute("aria-label", "互动工具");
+
+    floatingToolActions = document.createElement("div");
+    floatingToolActions.id = "interaction-actions";
+    floatingToolActions.className = "interaction-actions";
+
+    floatingToolToggle = document.createElement("button");
+    floatingToolToggle.className = "interaction-toggle";
+    floatingToolToggle.type = "button";
+    floatingToolToggle.setAttribute("aria-controls", floatingToolActions.id);
+    floatingToolToggle.innerHTML = '<span aria-hidden="true">✦</span><strong>互动</strong>';
+    floatingToolRail.append(floatingToolToggle, floatingToolActions);
     document.body.appendChild(floatingToolRail);
     document.body.classList.add("has-floating-tool-rail");
-    return floatingToolRail;
+
+    floatingToolToggle.addEventListener("click", () => {
+      setFloatingToolsOpen(!floatingToolsOpen);
+    });
+
+    document.addEventListener("pointerdown", (event) => {
+      if (floatingToolsOpen && !floatingToolRail.contains(event.target)) setFloatingToolsOpen(false);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && floatingToolsOpen) {
+        event.preventDefault();
+        setFloatingToolsOpen(false, { restoreFocus: true });
+      }
+    });
+
+    const isTextField = (target) => target instanceof Element
+      && Boolean(target.closest("input, textarea, [contenteditable='true']"));
+    document.addEventListener("focusin", (event) => {
+      if (!mobileInteractionMedia.matches || !isTextField(event.target)) return;
+      setFloatingToolsOpen(false);
+      floatingToolRail.classList.add("is-field-active");
+    });
+    document.addEventListener("focusout", () => {
+      window.setTimeout(() => {
+        if (!isTextField(document.activeElement)) floatingToolRail?.classList.remove("is-field-active");
+      }, 0);
+    });
+
+    const syncFloatingTools = () => {
+      floatingToolRail.classList.remove("is-field-active");
+      setFloatingToolsOpen(false);
+    };
+    if (typeof mobileInteractionMedia.addEventListener === "function") {
+      mobileInteractionMedia.addEventListener("change", syncFloatingTools);
+    } else {
+      mobileInteractionMedia.addListener(syncFloatingTools);
+    }
+    syncFloatingTools();
+    return floatingToolActions;
   };
 
   // 陵辰助手：通过 Cloudflare Worker 调用模型，浏览器端永远不接触 API 密钥。
@@ -966,7 +1046,7 @@
         window.clearInterval(progressTimer);
         submit.disabled = false;
         input.disabled = false;
-        input.focus();
+        if (!mobileInteractionMedia.matches && dialog.open) input.focus();
         messagesNode.scrollTop = messagesNode.scrollHeight;
       }
     };
@@ -975,16 +1055,22 @@
     renderHistory();
 
     launcher.addEventListener("click", () => {
-      dialog.showModal();
-      window.setTimeout(() => input.focus(), 80);
+      setFloatingToolsOpen(false);
+      showInteractionDialog(dialog);
+      if (mobileInteractionMedia.matches) {
+        dialog.querySelector(".assistant-close").focus({ preventScroll: true });
+      } else {
+        window.setTimeout(() => input.focus(), 80);
+      }
     });
+    dialog.addEventListener("close", handleInteractionDialogClose);
     dialog.querySelector(".assistant-close").addEventListener("click", () => dialog.close());
     dialog.querySelector(".assistant-clear").addEventListener("click", () => {
       history = [];
       localStorage.removeItem(assistantStorageKey);
       suggestions.hidden = false;
       renderHistory();
-      input.focus();
+      if (!mobileInteractionMedia.matches) input.focus();
     });
     dialog.addEventListener("click", (event) => {
       if (event.target === dialog) dialog.close();
@@ -994,7 +1080,8 @@
       sendMessage(input.value);
     });
     input.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" && !event.shiftKey) {
+      if (event.isComposing) return;
+      if (event.key === "Enter" && !event.shiftKey && !mobileInteractionMedia.matches) {
         event.preventDefault();
         form.requestSubmit();
       }
@@ -1064,9 +1151,11 @@
     };
 
     launcher.addEventListener("click", () => {
-      dialog.showModal();
+      setFloatingToolsOpen(false);
+      showInteractionDialog(dialog);
       loadGiscus();
     });
+    dialog.addEventListener("close", handleInteractionDialogClose);
     dialog.querySelector(".discussion-close").addEventListener("click", () => dialog.close());
     dialog.addEventListener("click", (event) => {
       if (event.target === dialog) dialog.close();
