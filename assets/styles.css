@@ -4884,3 +4884,400 @@ html.intro-pending .startup-intro.is-skipping {
     display: none !important;
   }
 }
+
+/* Daily archive controls: Monogatari-style month index and collapsible entries. */
+.log-terminal-page .notes-archive-toolbar {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) auto;
+  align-items: end;
+  gap: 20px;
+  margin: 4px 0 38px;
+  padding: 24px 0;
+  border-top: 2px solid var(--mono-line);
+  border-bottom: 1px solid color-mix(in srgb, var(--mono-line) 28%, transparent);
+}
+
+.log-terminal-page .notes-archive-search {
+  display: grid;
+  gap: 9px;
+  color: var(--mono-ink);
+  font: 700 10px/1.4 var(--font-mono);
+  letter-spacing: .12em;
+}
+
+.log-terminal-page .notes-archive-search b {
+  color: var(--mono-red);
+  font-weight: 700;
+}
+
+.log-terminal-page .notes-archive-search input {
+  width: min(100%, 640px);
+  min-height: 48px;
+  padding: 0 15px;
+  border: 2px solid var(--mono-line);
+  border-radius: 0;
+  outline: none;
+  background: var(--mono-panel);
+  color: var(--mono-ink);
+  font: 500 15px/1.5 var(--font-body);
+  transition: border-color .18s ease, box-shadow .18s ease;
+}
+
+.log-terminal-page .notes-archive-search input::placeholder {
+  color: var(--mono-muted);
+  opacity: .72;
+}
+
+.log-terminal-page .notes-archive-search input:focus {
+  border-color: var(--mono-red);
+  box-shadow: 5px 5px 0 var(--mono-red);
+}
+
+.log-terminal-page .notes-archive-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+}
+
+.log-terminal-page .notes-result-count {
+  color: var(--mono-muted);
+  font: 700 10px/1.4 var(--font-mono);
+  letter-spacing: .08em;
+  white-space: nowrap;
+}
+
+.log-terminal-page .notes-toggle-all,
+.log-terminal-page .notes-archive-empty button {
+  min-width: 104px;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 2px solid var(--mono-line);
+  border-radius: 0;
+  background: var(--mono-red);
+  color: #fff;
+  font: 700 11px/1 var(--font-body);
+  letter-spacing: .08em;
+  cursor: pointer;
+  box-shadow: 4px 4px 0 var(--mono-line);
+  transition: box-shadow .16s ease, transform .16s ease;
+}
+
+.log-terminal-page .notes-toggle-all:hover,
+.log-terminal-page .notes-archive-empty button:hover {
+  box-shadow: 2px 2px 0 var(--mono-line);
+  transform: translate(2px, 2px);
+}
+
+.log-terminal-page .notes-toggle-all:focus-visible,
+.log-terminal-page .notes-archive-empty button:focus-visible {
+  outline: 3px solid var(--mono-red);
+  outline-offset: 4px;
+}
+
+.log-terminal-page .notes-toggle-all:disabled {
+  cursor: default;
+  opacity: .45;
+  transform: none;
+}
+
+.log-terminal-page .observation-log-list {
+  display: grid;
+  gap: 42px;
+}
+
+.log-terminal-page .notes-month-group {
+  min-width: 0;
+}
+
+.log-terminal-page .notes-month-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  margin: 0 0 15px;
+  padding: 0 0 12px;
+  border-bottom: 8px solid var(--mono-red);
+  color: var(--mono-ink);
+}
+
+.log-terminal-page .notes-month-title > span {
+  font-family: var(--font-title);
+  font-size: clamp(40px, 6vw, 68px);
+  font-weight: 900;
+  letter-spacing: -.06em;
+  line-height: .95;
+}
+
+.log-terminal-page .notes-month-title small {
+  color: var(--mono-red);
+  font: 700 10px/1.4 var(--font-mono);
+  letter-spacing: .12em;
+  white-space: nowrap;
+}
+
+.log-terminal-page .notes-month-entries {
+  display: grid;
+  gap: 12px;
+}
+
+.log-terminal-page .observation-log-entry {
+  scroll-margin-top: 92px;
+  padding: 0;
+  border: 2px solid var(--mono-line);
+  border-radius: 0;
+  background: var(--mono-panel);
+  color: var(--mono-ink);
+  box-shadow: none;
+}
+
+.log-terminal-page .observation-log-entry.is-latest {
+  border-left: 8px solid var(--mono-red);
+}
+
+.log-terminal-page .observation-log-entry::after {
+  display: none;
+}
+
+.log-terminal-page .notes-entry-summary {
+  display: block;
+  min-height: 112px;
+  padding: 18px 20px;
+  list-style: none;
+  cursor: pointer;
+  transition: background-color .16s ease;
+}
+
+.log-terminal-page .notes-entry-summary::-webkit-details-marker {
+  display: none;
+}
+
+.log-terminal-page .notes-entry-summary:hover {
+  background: color-mix(in srgb, var(--mono-red) 7%, transparent);
+}
+
+.log-terminal-page .notes-entry-summary:focus-visible {
+  outline: 3px solid var(--mono-red);
+  outline-offset: -3px;
+}
+
+.log-terminal-page .notes-entry-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 22px;
+  margin: 0;
+  color: inherit;
+  font: inherit;
+}
+
+.log-terminal-page .notes-entry-summary-main {
+  display: block;
+  min-width: 0;
+}
+
+.log-terminal-page .observation-log-meta {
+  color: var(--mono-red);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.log-terminal-page .notes-entry-title {
+  display: block;
+  margin: 10px 0 5px;
+  color: var(--mono-ink);
+  font-family: var(--font-title);
+  font-size: clamp(21px, 3vw, 28px);
+  font-weight: 700;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.log-terminal-page .observation-log-project {
+  display: block;
+  margin: 0;
+  color: var(--mono-muted);
+  font-size: 9px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.log-terminal-page .notes-entry-state {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 76px;
+  min-height: 44px;
+  border: 1px solid var(--mono-red);
+  color: var(--mono-red);
+  font: 700 10px/1 var(--font-mono);
+  letter-spacing: .08em;
+}
+
+.log-terminal-page .notes-entry-state-icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.log-terminal-page .notes-entry-details[open] .notes-entry-state {
+  background: var(--mono-red);
+  color: #fff;
+}
+
+.log-terminal-page .notes-entry-body {
+  padding: 24px 22px 22px;
+  border-top: 1px solid color-mix(in srgb, var(--mono-line) 24%, transparent);
+}
+
+.log-terminal-page .observation-log-content {
+  max-width: 920px;
+  color: var(--mono-muted);
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+.log-terminal-page .observation-log-content p:first-child {
+  margin-top: 0;
+}
+
+.log-terminal-page .observation-log-content p:last-child {
+  margin-bottom: 0;
+}
+
+.log-terminal-page .notes-entry-permalink {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 44px;
+  margin-top: 12px;
+  color: var(--mono-red);
+  font: 700 10px/1 var(--font-mono);
+  letter-spacing: .08em;
+  text-decoration: none;
+}
+
+.log-terminal-page .notes-entry-permalink span {
+  font-size: 17px;
+}
+
+.log-terminal-page .notes-entry-permalink:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.log-terminal-page .notes-entry-permalink:focus-visible {
+  outline: 2px solid var(--mono-red);
+  outline-offset: 3px;
+}
+
+.log-terminal-page .notes-archive-empty {
+  padding: 64px 24px;
+  border: 2px dashed var(--mono-line);
+  background: color-mix(in srgb, var(--mono-red) 5%, transparent);
+  text-align: center;
+}
+
+.log-terminal-page .notes-archive-empty strong {
+  display: block;
+  color: var(--mono-ink);
+  font: 900 clamp(38px, 7vw, 72px)/1 var(--font-title);
+  letter-spacing: -.05em;
+}
+
+.log-terminal-page .notes-archive-empty p {
+  margin: 12px 0 24px;
+  color: var(--mono-muted);
+}
+
+.log-terminal-page .observation-log-entry[hidden],
+.log-terminal-page .notes-month-group[hidden],
+.log-terminal-page .notes-archive-empty[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 680px) {
+  .log-terminal-page .notes-archive-toolbar {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+    margin-bottom: 30px;
+  }
+
+  .log-terminal-page .notes-archive-search input {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  .log-terminal-page .notes-archive-actions {
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 520px) {
+  .log-terminal-page .notes-month-title {
+    align-items: flex-end;
+    gap: 12px;
+    border-bottom-width: 6px;
+  }
+
+  .log-terminal-page .notes-month-title > span {
+    font-size: 36px;
+  }
+
+  .log-terminal-page .notes-month-title small {
+    max-width: 112px;
+    font-size: 8px;
+    text-align: right;
+    white-space: normal;
+  }
+
+  .log-terminal-page .notes-entry-heading {
+    gap: 12px;
+  }
+
+  .log-terminal-page .notes-entry-summary {
+    min-height: 108px;
+    padding: 15px 13px;
+  }
+
+  .log-terminal-page .observation-log-meta {
+    font-size: 9px;
+  }
+
+  .log-terminal-page .notes-entry-title {
+    margin-top: 8px;
+    font-size: 19px;
+  }
+
+  .log-terminal-page .observation-log-project {
+    font-size: 8px;
+  }
+
+  .log-terminal-page .notes-entry-state {
+    min-width: 70px;
+    min-height: 46px;
+    gap: 6px;
+    font-size: 9px;
+  }
+
+  .log-terminal-page .notes-entry-state-icon {
+    font-size: 19px;
+  }
+
+  .log-terminal-page .notes-entry-body {
+    padding: 19px 14px 16px;
+  }
+
+  .log-terminal-page .observation-log-content {
+    font-size: 14px;
+    line-height: 1.85;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .log-terminal-page .notes-toggle-all,
+  .log-terminal-page .notes-archive-empty button,
+  .log-terminal-page .notes-entry-summary {
+    transition: none;
+  }
+}

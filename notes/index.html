@@ -6,9 +6,9 @@
   <meta name="description" content="陵辰的公开只读日常记录。">
   <title>日常记录｜陵辰</title>
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="../assets/styles.css?v=20260723-cover">
+  <link rel="stylesheet" href="../assets/styles.css?v=20260730-notes">
   <script>try{document.documentElement.dataset.theme=localStorage.getItem('lingchen-theme-worldline')||'dark'}catch(_){}</script>
-  <script src="../assets/main.js?v=20260723-rail" defer></script>
+  <script src="../assets/main.js?v=20260730-notes" defer></script>
 </head>
 <body class="worldline-inner log-terminal-page monogatari-theme">
   <a class="skip-link" href="#main">跳至日常记录</a>
@@ -31,8 +31,18 @@
         <div><p class="eyebrow">PUBLIC READING / OWNER EDITED</p><h2 id="log-access-title">陵辰的日常页</h2></div>
         <span class="terminal-status"><i></i> READ ONLY / 只读</span>
       </div>
-      <div class="observation-log-list">
-        <article class="observation-log-entry">
+      <div class="notes-archive-toolbar" aria-label="日常记录筛选">
+        <label class="notes-archive-search" for="notes-search">
+          <span>记录检索 <b>/ SEARCH</b></span>
+          <input id="notes-search" type="search" inputmode="search" autocomplete="off" placeholder="检索日期、标题或正文" data-notes-search>
+        </label>
+        <div class="notes-archive-actions">
+          <span class="notes-result-count" data-notes-result-count role="status" aria-live="polite" aria-atomic="true">共 13 条记录</span>
+          <button class="notes-toggle-all" type="button" data-notes-toggle-all>展开全部</button>
+        </div>
+      </div>
+      <div class="observation-log-list" data-notes-list>
+        <article class="observation-log-entry" id="log-2026-07-30" data-notes-entry data-latest>
           <div class="observation-log-meta"><time datetime="2026-07-30">2026.07.30</time><span>LOG 013</span></div>
           <h3>仓库整理与硬件基础认识</h3>
           <p class="observation-log-project">ASSIGNMENT / WAREHOUSE ORGANIZATION &amp; HARDWARE BASICS</p>
@@ -45,7 +55,7 @@
           </div>
         </article>
 
-        <article class="observation-log-entry">
+        <article class="observation-log-entry" id="log-2026-07-29" data-notes-entry>
           <div class="observation-log-meta"><time datetime="2026-07-29">2026.07.29</time><span>LOG 012</span></div>
           <h3>设备推流运维与翻译模型优化</h3>
           <p class="observation-log-project">ASSIGNMENT / DEVICE STREAMING, OPERATIONS &amp; TRANSLATION OPTIMIZATION</p>
@@ -59,7 +69,7 @@
           </div>
         </article>
 
-        <article class="observation-log-entry">
+        <article class="observation-log-entry" id="log-2026-07-28" data-notes-entry>
           <div class="observation-log-meta"><time datetime="2026-07-28">2026.07.28</time><span>LOG 011</span></div>
           <h3>虚拟机配置与 Linux 基础环境</h3>
           <p class="observation-log-project">ASSIGNMENT / VIRTUAL MACHINE &amp; LINUX ENVIRONMENT</p>
@@ -71,7 +81,7 @@
           </div>
         </article>
 
-        <article class="observation-log-entry">
+        <article class="observation-log-entry" id="log-2026-07-27" data-notes-entry>
           <div class="observation-log-meta"><time datetime="2026-07-27">2026.07.27</time><span>LOG 010</span></div>
           <h3>远程运维与硬件设备学习</h3>
           <p class="observation-log-project">ASSIGNMENT / REMOTE MAINTENANCE &amp; HARDWARE DEVICES</p>
@@ -85,7 +95,7 @@
           </div>
         </article>
 
-        <article class="observation-log-entry">
+        <article class="observation-log-entry" id="log-2026-07-24" data-notes-entry>
           <div class="observation-log-meta"><time datetime="2026-07-24">2026.07.24</time><span>LOG 009</span></div>
           <h3>民族语言翻译系统与架构交付优化</h3>
           <p class="observation-log-project">ASSIGNMENT / TRANSLATION SYSTEM &amp; ARCHITECTURE DELIVERY</p>
@@ -97,7 +107,7 @@
           </div>
         </article>
 
-        <article class="observation-log-entry">
+        <article class="observation-log-entry" id="log-2026-07-23" data-notes-entry>
           <div class="observation-log-meta"><time datetime="2026-07-23">2026.07.23</time><span>LOG 008</span></div>
           <h3>数据库项目与博客智能体优化</h3>
           <p class="observation-log-project">ASSIGNMENT / DATABASE SYSTEM &amp; BLOG AGENT</p>
@@ -110,7 +120,7 @@
           </div>
         </article>
 
-        <article class="observation-log-entry">
+        <article class="observation-log-entry" id="log-2026-07-22" data-notes-entry>
           <div class="observation-log-meta"><time datetime="2026-07-22">2026.07.22</time><span>LOG 007</span></div>
           <h3>数据库项目测试与翻译系统优化</h3>
           <p class="observation-log-project">ASSIGNMENT / DATABASE SYSTEM &amp; TRANSLATION OPTIMIZATION</p>
@@ -125,7 +135,7 @@
           </div>
         </article>
 
-        <article class="observation-log-entry">
+        <article class="observation-log-entry" id="log-2026-07-21" data-notes-entry>
           <div class="observation-log-meta"><time datetime="2026-07-21">2026.07.21</time><span>LOG 006</span></div>
           <h3>个人博客实现与接口学习</h3>
           <p class="observation-log-project">ASSIGNMENT / PERSONAL BLOG &amp; DEVELOPMENT ENVIRONMENT</p>
@@ -139,7 +149,7 @@
           </div>
         </article>
 
-        <article class="observation-log-entry">
+        <article class="observation-log-entry" id="log-2026-07-20" data-notes-entry>
           <div class="observation-log-meta"><time datetime="2026-07-20">2026.07.20</time><span>LOG 005</span></div>
           <h3>RealWorld 功能测试与后端认证学习</h3>
           <p class="observation-log-project">ASSIGNMENT / REALWORLD &amp; ENTERPRISE RESEARCH</p>
@@ -152,7 +162,7 @@
           </div>
         </article>
 
-        <article class="observation-log-entry">
+        <article class="observation-log-entry" id="log-2026-07-17" data-notes-entry>
           <div class="observation-log-meta"><time datetime="2026-07-17">2026.07.17</time><span>LOG 004</span></div>
           <h3>让 RealWorld 后端系统正常启动</h3>
           <p class="observation-log-project">ASSIGNMENT / REALWORLD &amp; ENTERPRISE RESEARCH</p>
@@ -164,7 +174,7 @@
           </div>
         </article>
 
-        <article class="observation-log-entry">
+        <article class="observation-log-entry" id="log-2026-07-16" data-notes-entry>
           <div class="observation-log-meta"><time datetime="2026-07-16">2026.07.16</time><span>LOG 003</span></div>
           <h3>翻译体验优化与企业数据核验</h3>
           <p class="observation-log-project">ASSIGNMENT / TRANSLATION SYSTEM &amp; ENTERPRISE RESEARCH</p>
@@ -179,7 +189,7 @@
           </div>
         </article>
 
-        <article class="observation-log-entry">
+        <article class="observation-log-entry" id="log-2026-07-15" data-notes-entry>
           <div class="observation-log-meta"><time datetime="2026-07-15">2026.07.15</time><span>LOG 002</span></div>
           <h3>修复翻译调用链与端口冲突</h3>
           <p class="observation-log-project">ASSIGNMENT / TRANSLATION SYSTEM &amp; ENTERPRISE RESEARCH</p>
@@ -193,7 +203,7 @@
           </div>
         </article>
 
-        <article class="observation-log-entry">
+        <article class="observation-log-entry" id="log-2026-07-14" data-notes-entry>
           <div class="observation-log-meta"><time datetime="2026-07-14">2026.07.14</time><span>LOG 001</span></div>
           <h3>离线语言翻译系统的第一轮改造</h3>
           <p class="observation-log-project">ASSIGNMENT / TRANSLATION SYSTEM</p>
@@ -204,6 +214,11 @@
             <p>实现维吾尔语、蒙古语的民族语言互译功能，增加 310 个词汇概念。文本完全在本机处理，目前可通过离线词库完成单字翻译。</p>
           </div>
         </article>
+      </div>
+      <div class="notes-archive-empty" data-notes-empty hidden>
+        <strong>NO CUTS</strong>
+        <p>没有找到这段日常。</p>
+        <button type="button" data-notes-clear>清除检索</button>
       </div>
       <p class="local-storage-note">※ 本页没有公开写入接口。正式内容仅由站点所有者提交并发布。</p>
     </section>

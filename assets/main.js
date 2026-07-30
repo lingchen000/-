@@ -227,6 +227,229 @@
     filterArticles();
   }
 
+  // 日常记录：按月份归档，并提供检索、折叠与稳定锚点。
+  const notesList = document.querySelector("[data-notes-list]");
+  if (notesList) {
+    const notesEntries = Array.from(notesList.querySelectorAll("[data-notes-entry]")).sort((entryA, entryB) => {
+      const dateA = entryA.querySelector("time[datetime]")?.dateTime || "";
+      const dateB = entryB.querySelector("time[datetime]")?.dateTime || "";
+      return dateB.localeCompare(dateA);
+    });
+    const notesSearch = document.querySelector("[data-notes-search]");
+    const notesResultCount = document.querySelector("[data-notes-result-count]");
+    const notesToggleAll = document.querySelector("[data-notes-toggle-all]");
+    const notesEmpty = document.querySelector("[data-notes-empty]");
+    const notesClear = document.querySelector("[data-notes-clear]");
+    const monthNames = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
+    const searchIndexes = new Map();
+    const openStates = new Map();
+    const detailsByEntry = new Map();
+    const monthGroups = new Map();
+    const usedNotesIds = new Set();
+
+    const normalizeNotesText = (value) =>
+      value.normalize("NFKC").toLocaleLowerCase("zh-CN").replace(/\s+/g, " ").trim();
+
+    const updateEntryState = (entry) => {
+      const details = detailsByEntry.get(entry);
+      const state = entry.querySelector("[data-notes-entry-state]");
+      const icon = entry.querySelector(".notes-entry-state-icon");
+      if (details && state) state.textContent = details.open ? "收起" : "展开";
+      if (details && icon) icon.textContent = details.open ? "−" : "+";
+    };
+
+    const visibleEntries = () => notesEntries.filter((entry) => !entry.hidden);
+
+    const updateToggleAll = () => {
+      if (!notesToggleAll) return;
+      const visible = visibleEntries();
+      const allOpen = visible.length > 0 && visible.every((entry) => detailsByEntry.get(entry)?.open);
+      notesToggleAll.textContent = allOpen ? "收起全部" : "展开全部";
+      notesToggleAll.disabled = visible.length === 0;
+    };
+
+    notesEntries.forEach((entry, index) => {
+      const time = entry.querySelector("time[datetime]");
+      const meta = entry.querySelector(".observation-log-meta");
+      const sourceTitle = entry.querySelector("h3, h4");
+      const project = entry.querySelector(".observation-log-project");
+      const content = entry.querySelector(".observation-log-content");
+      if (!time || !meta || !sourceTitle || !project || !content) return;
+
+      const date = time.dateTime;
+      const monthKey = date.slice(0, 7);
+      const logLabel = meta.querySelector("span")?.textContent.trim() || `LOG ${String(notesEntries.length - index).padStart(3, "0")}`;
+      searchIndexes.set(entry, normalizeNotesText(`${date} ${logLabel} ${entry.textContent}`));
+      const baseId = entry.id || `log-${date}`;
+      entry.id = usedNotesIds.has(baseId) ? `${baseId}-${String(index + 1).padStart(2, "0")}` : baseId;
+      usedNotesIds.add(entry.id);
+      const isLatest = index === 0;
+      entry.toggleAttribute("data-latest", isLatest);
+      entry.classList.toggle("is-latest", isLatest);
+
+      const details = document.createElement("details");
+      details.className = "notes-entry-details";
+      details.open = isLatest;
+      openStates.set(entry, details.open);
+      detailsByEntry.set(entry, details);
+
+      const summary = document.createElement("summary");
+      summary.className = "notes-entry-summary";
+      const summaryHeading = document.createElement("h4");
+      summaryHeading.className = "notes-entry-heading";
+      summaryHeading.id = `${entry.id}-title`;
+      entry.setAttribute("aria-labelledby", summaryHeading.id);
+      const summaryMain = document.createElement("span");
+      summaryMain.className = "notes-entry-summary-main";
+      const summaryMeta = document.createElement("span");
+      summaryMeta.className = "observation-log-meta";
+      summaryMeta.append(...Array.from(meta.childNodes));
+      const summaryTitle = document.createElement("span");
+      summaryTitle.className = "notes-entry-title";
+      summaryTitle.textContent = sourceTitle.textContent;
+      const summaryProject = document.createElement("span");
+      summaryProject.className = "observation-log-project";
+      summaryProject.textContent = project.textContent;
+      summaryMain.append(summaryMeta, summaryTitle, summaryProject);
+      const state = document.createElement("span");
+      state.className = "notes-entry-state";
+      state.setAttribute("aria-hidden", "true");
+      const stateLabel = document.createElement("span");
+      stateLabel.dataset.notesEntryState = "";
+      const stateIcon = document.createElement("span");
+      stateIcon.className = "notes-entry-state-icon";
+      stateIcon.textContent = details.open ? "−" : "+";
+      state.append(stateLabel, stateIcon);
+      summaryHeading.append(summaryMain, state);
+      summary.append(summaryHeading);
+
+      const body = document.createElement("div");
+      body.className = "notes-entry-body";
+      body.id = `${entry.id}-body`;
+      body.append(content);
+
+      const permalink = document.createElement("a");
+      permalink.className = "notes-entry-permalink";
+      permalink.href = `#${entry.id}`;
+      permalink.setAttribute("aria-label", `${summaryTitle.textContent.trim()}的固定链接`);
+      permalink.innerHTML = "<span aria-hidden=\"true\">#</span> 固定链接";
+      body.append(permalink);
+
+      details.append(summary, body);
+      entry.replaceChildren(details);
+      updateEntryState(entry);
+
+      summary.addEventListener("click", () => {
+        openStates.set(entry, !details.open);
+      });
+      details.addEventListener("toggle", () => {
+        updateEntryState(entry);
+        updateToggleAll();
+      });
+
+      if (!monthGroups.has(monthKey)) {
+        const section = document.createElement("section");
+        section.className = "notes-month-group";
+        section.dataset.notesMonth = monthKey;
+        const headingId = `notes-month-${monthKey}`;
+        section.setAttribute("aria-labelledby", headingId);
+
+        const heading = document.createElement("h3");
+        heading.className = "notes-month-title";
+        heading.id = headingId;
+        const headingDate = document.createElement("span");
+        headingDate.textContent = monthKey.replace("-", " / ");
+        const headingMeta = document.createElement("small");
+        const monthIndex = Number(monthKey.slice(5, 7)) - 1;
+        const monthName = monthNames[monthIndex] || "MONTH";
+        headingMeta.textContent = `${monthName} · 0 CUTS`;
+        heading.append(headingDate, headingMeta);
+
+        const entriesContainer = document.createElement("div");
+        entriesContainer.className = "notes-month-entries";
+        section.append(heading, entriesContainer);
+        monthGroups.set(monthKey, { section, entriesContainer, headingMeta, monthName, entries: [] });
+      }
+
+      const group = monthGroups.get(monthKey);
+      group.entries.push(entry);
+      group.entriesContainer.append(entry);
+    });
+
+    monthGroups.forEach((group) => {
+      group.headingMeta.textContent = `${group.monthName} · ${group.entries.length} ${group.entries.length === 1 ? "CUT" : "CUTS"}`;
+    });
+    notesList.replaceChildren(...Array.from(monthGroups.values(), (group) => group.section));
+
+    const applyNotesFilter = () => {
+      const query = normalizeNotesText(notesSearch?.value || "");
+      const terms = query ? query.split(" ") : [];
+      const matchingEntries = new Set(notesEntries.filter((entry) =>
+        terms.every((term) => searchIndexes.get(entry)?.includes(term))
+      ));
+      const matchCount = matchingEntries.size;
+
+      notesEntries.forEach((entry) => {
+        const matches = matchingEntries.has(entry);
+        entry.hidden = !matches;
+        const details = detailsByEntry.get(entry);
+        if (details) {
+          details.open = query && matchCount === 1 && matches ? true : Boolean(openStates.get(entry));
+          updateEntryState(entry);
+        }
+      });
+
+      monthGroups.forEach((group) => {
+        const visibleCount = group.entries.filter((entry) => !entry.hidden).length;
+        group.section.hidden = visibleCount === 0;
+        group.headingMeta.textContent = `${group.monthName} · ${visibleCount} ${visibleCount === 1 ? "CUT" : "CUTS"}`;
+      });
+
+      if (notesResultCount) {
+        notesResultCount.textContent = query ? `找到 ${matchCount} 条记录` : `共 ${notesEntries.length} 条记录`;
+      }
+      if (notesEmpty) notesEmpty.hidden = matchCount !== 0;
+      updateToggleAll();
+    };
+
+    notesSearch?.addEventListener("input", applyNotesFilter);
+    notesClear?.addEventListener("click", () => {
+      if (notesSearch) notesSearch.value = "";
+      applyNotesFilter();
+      notesSearch?.focus();
+    });
+
+    notesToggleAll?.addEventListener("click", () => {
+      const visible = visibleEntries();
+      const shouldOpen = visible.some((entry) => !detailsByEntry.get(entry)?.open);
+      visible.forEach((entry) => {
+        const details = detailsByEntry.get(entry);
+        if (!details) return;
+        openStates.set(entry, shouldOpen);
+        details.open = shouldOpen;
+        updateEntryState(entry);
+      });
+      updateToggleAll();
+    });
+
+    const showHashTarget = () => {
+      const id = decodeURIComponent(window.location.hash.slice(1));
+      const target = id ? document.getElementById(id) : null;
+      if (!target?.matches("[data-notes-entry]")) return;
+      if (notesSearch) notesSearch.value = "";
+      openStates.set(target, true);
+      applyNotesFilter();
+      const details = detailsByEntry.get(target);
+      if (details) details.open = true;
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      window.requestAnimationFrame(() => target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" }));
+    };
+
+    window.addEventListener("hashchange", showHashTarget);
+    applyNotesFilter();
+    showHashTarget();
+  }
+
   // 首页桌面小组件：时间、月历、片段、播放器与本地点赞。
   const clock = document.querySelector("[data-clock]");
   const fullDate = document.querySelector("[data-full-date]");
