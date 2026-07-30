@@ -11,11 +11,32 @@
   <title>陵辰｜怪异记录簿</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="alternate" type="application/rss+xml" title="陵辰订阅" href="feed.xml">
-  <link rel="stylesheet" href="assets/styles.css?v=20260730-light-panels">
-  <script>try{document.documentElement.dataset.theme=localStorage.getItem('lingchen-theme-v2')||'light'}catch(_){}</script>
-  <script src="assets/main.js?v=20260723-nochance" defer></script>
+  <link rel="stylesheet" href="assets/styles.css?v=20260730-startup">
+  <script>
+    try {
+      const savedTheme = localStorage.getItem("lingchen-theme-worldline");
+      document.documentElement.dataset.theme = savedTheme === "light" || savedTheme === "dark" ? savedTheme : "dark";
+      if (!matchMedia("(prefers-reduced-motion: reduce)").matches && !sessionStorage.getItem("lingchen-startup-v1")) {
+        document.documentElement.classList.add("intro-pending");
+      }
+    } catch (_) {
+      document.documentElement.dataset.theme = "dark";
+    }
+  </script>
+  <script src="assets/main.js?v=20260730-startup" defer></script>
 </head>
 <body class="dashboard-page dashboard-v2 worldline-theme monogatari-theme">
+  <div class="startup-intro" data-startup-intro role="presentation">
+    <div class="startup-intro-stage" aria-hidden="true">
+      <p class="startup-intro-code"><span>STARTUP SEQUENCE</span><span>LC / 001</span></p>
+      <p class="startup-intro-chapter">序章 <span>MONOLOGUE ARCHIVE</span></p>
+      <h1 class="startup-intro-title"><span>陵</span><span>辰</span></h1>
+      <div class="startup-intro-status"><span>SCENE INITIALIZED</span><strong>READY</strong></div>
+      <div class="startup-intro-progress"><i></i></div>
+    </div>
+    <button class="startup-intro-skip" type="button" data-startup-skip>SKIP / 跳过</button>
+  </div>
+
   <a class="skip-link" href="#main">跳至正文</a>
   <div class="ambient ambient-one" aria-hidden="true"></div>
   <div class="ambient ambient-two" aria-hidden="true"></div>
