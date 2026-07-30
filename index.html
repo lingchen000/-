@@ -11,7 +11,7 @@
   <title>陵辰｜怪异记录簿</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="alternate" type="application/rss+xml" title="陵辰订阅" href="feed.xml">
-  <link rel="stylesheet" href="assets/styles.css?v=20260730-hitagi-opening">
+  <link rel="stylesheet" href="assets/styles.css?v=20260730-hitagi-wide">
   <script>
     try {
       const savedTheme = localStorage.getItem("lingchen-theme-worldline");
@@ -21,7 +21,7 @@
     }
 
     (() => {
-      const introKey = "lingchen-opening-seen-v3";
+      const introKey = "lingchen-opening-seen-v4";
       const introUrl = new URL(window.location.href);
       const forceIntro = introUrl.searchParams.get("intro") === "1";
       const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -44,13 +44,13 @@
       }
     })();
   </script>
-  <script src="assets/main.js?v=20260730-hitagi-opening" defer></script>
+  <script src="assets/main.js?v=20260730-hitagi-wide" defer></script>
 </head>
 <body class="dashboard-page dashboard-v2 worldline-theme monogatari-theme">
   <div class="startup-intro" data-startup-intro aria-label="片头动画">
     <div class="startup-intro-stage" aria-hidden="true">
       <div class="startup-intro-portrait">
-        <img src="assets/hitagi-official.jpg" alt="" decoding="async" fetchpriority="high">
+        <img src="assets/hitagi-opening.png" alt="" decoding="async" fetchpriority="high">
       </div>
       <div class="startup-intro-copy">
         <span>EPISODE / 001</span>
@@ -60,7 +60,7 @@
       <span class="startup-intro-number">001</span>
       <i class="startup-intro-redline"></i>
     </div>
-    <a class="startup-intro-credit" href="https://www.monogatari-series.com/2ndseason/sp/character/hitagi.html" target="_blank" rel="noopener">CHARACTER ART / OFFICIAL　© 西尾維新／講談社・アニプレックス・シャフト</a>
+    <span class="startup-intro-credit">OPENING ART / HITAGI</span>
     <button class="startup-intro-skip" type="button" data-startup-skip>SKIP / 跳过</button>
   </div>
 

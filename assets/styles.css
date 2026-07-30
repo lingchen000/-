@@ -4510,12 +4510,11 @@ html.intro-pending .startup-intro-heading i {
   }
 }
 
-/* Homepage opening v3 — Hitagi Club */
+/* Homepage opening v4 — Hitagi widescreen */
 .startup-intro {
   --opening-ink: #171412;
   --opening-paper: #eee7dc;
   --opening-red: #a92f3a;
-  --opening-split: 36%;
   background: var(--opening-ink);
   clip-path: inset(0);
   isolation: isolate;
@@ -4533,12 +4532,7 @@ html.intro-pending .startup-intro {
   position: absolute;
   inset: 0;
   overflow: hidden;
-  background:
-    linear-gradient(
-      90deg,
-      var(--opening-ink) 0 var(--opening-split),
-      var(--opening-paper) var(--opening-split) 100%
-    );
+  background: #15131a;
 }
 
 .startup-intro-stage::before {
@@ -4565,9 +4559,9 @@ html.intro-pending .startup-intro {
   background:
     linear-gradient(
       90deg,
-      transparent 0 31%,
-      rgba(23, 20, 18, .16) 36%,
-      transparent 45% 100%
+      rgba(238, 231, 220, .16) 0,
+      rgba(238, 231, 220, .08) 28%,
+      transparent 52% 100%
     );
   pointer-events: none;
 }
@@ -4575,26 +4569,28 @@ html.intro-pending .startup-intro {
 .startup-intro-portrait {
   position: absolute;
   z-index: 1;
-  top: clamp(12px, 2.2vh, 26px);
-  right: clamp(20px, 3vw, 56px);
-  bottom: clamp(12px, 2.2vh, 26px);
-  left: calc(var(--opening-split) + 2px);
+  inset: 0;
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
+  background: #15131a;
   clip-path: inset(0 0 0 100%);
+}
+
+.startup-intro-portrait::before {
+  content: none;
 }
 
 .startup-intro-portrait img {
   display: block;
-  width: auto;
-  max-width: 100%;
+  width: 100%;
+  max-width: none;
   height: 100%;
-  object-fit: contain;
-  object-position: right center;
-  mix-blend-mode: multiply;
-  filter: saturate(.9) contrast(1.025);
-  transform-origin: right center;
+  object-fit: cover;
+  object-position: center;
+  filter: none;
+  transform-origin: center;
 }
 
 html.intro-pending .startup-intro-portrait {
@@ -4610,8 +4606,8 @@ html.intro-pending .startup-intro-portrait img {
   top: 50%;
   left: clamp(28px, 5.5vw, 88px);
   z-index: 5;
-  width: min(27vw, 420px);
-  color: var(--opening-paper);
+  width: min(34vw, 500px);
+  color: var(--opening-ink);
   transform: translateY(-51%);
 }
 
@@ -4623,7 +4619,7 @@ html.intro-pending .startup-intro-portrait img {
 }
 
 .startup-intro-copy span {
-  color: #d7a6ab;
+  color: var(--opening-red);
 }
 
 .startup-intro-copy strong {
@@ -4636,8 +4632,8 @@ html.intro-pending .startup-intro-portrait img {
 
 .startup-intro-copy small {
   padding-top: clamp(13px, 2vh, 22px);
-  border-top: 1px solid rgba(238, 231, 220, .32);
-  color: rgba(238, 231, 220, .62);
+  border-top: 1px solid rgba(23, 20, 18, .28);
+  color: rgba(23, 20, 18, .62);
 }
 
 html.intro-pending .startup-intro-copy {
@@ -4649,7 +4645,7 @@ html.intro-pending .startup-intro-copy {
   bottom: clamp(18px, 4vh, 44px);
   left: clamp(26px, 5.4vw, 86px);
   z-index: 3;
-  color: rgba(238, 231, 220, .07);
+  color: rgba(23, 20, 18, .08);
   font: 900 clamp(70px, 10vw, 152px)/.72 var(--font-mono);
   letter-spacing: -.09em;
 }
@@ -4660,42 +4656,38 @@ html.intro-pending .startup-intro-number {
 
 .startup-intro-redline {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: var(--opening-split);
+  top: auto;
+  right: auto;
+  bottom: 13%;
+  left: 0;
   z-index: 5;
   display: block;
-  width: 4px;
-  height: auto;
+  width: min(34vw, 520px);
+  height: 4px;
   margin: 0;
   background: var(--opening-red);
-  transform: scaleY(0);
-  transform-origin: center top;
+  transform: scaleX(0);
+  transform-origin: left center;
 }
 
 html.intro-pending .startup-intro-redline {
-  animation: startup-hitagi-rule-y .58s .18s cubic-bezier(.65, 0, .35, 1) forwards;
+  animation: startup-hitagi-rule-x .58s .18s cubic-bezier(.65, 0, .35, 1) forwards;
 }
 
 .startup-intro-credit {
   position: absolute;
-  right: clamp(92px, 10vw, 150px);
-  bottom: max(20px, env(safe-area-inset-bottom));
+  top: clamp(22px, 4vh, 44px);
+  right: auto;
+  bottom: auto;
+  left: clamp(28px, 5.5vw, 88px);
   z-index: 7;
-  max-width: min(54vw, 620px);
+  max-width: min(34vw, 500px);
   overflow: hidden;
-  color: rgba(23, 20, 18, .52);
+  color: rgba(23, 20, 18, .46);
   font: 700 clamp(6px, .55vw, 8px)/1.4 var(--font-mono);
   letter-spacing: .08em;
-  text-decoration: none;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.startup-intro-credit:hover,
-.startup-intro-credit:focus-visible {
-  color: var(--opening-red);
-  outline: none;
 }
 
 .startup-intro-skip {
@@ -4761,50 +4753,60 @@ html.intro-pending .startup-intro.is-skipping {
 }
 
 @media (max-width: 560px) {
-  .startup-intro {
-    --opening-split: 42%;
-  }
-
   .startup-intro-stage {
-    background:
-      linear-gradient(
-        180deg,
-        var(--opening-ink) 0 var(--opening-split),
-        var(--opening-paper) var(--opening-split) 100%
-      );
+    background: #15131a;
   }
 
   .startup-intro-stage::after {
     background:
       linear-gradient(
         180deg,
-        transparent 0 37%,
-        rgba(23, 20, 18, .18) 42%,
-        transparent 49% 100%
+        rgba(21, 19, 26, .46) 0,
+        transparent 34% 66%,
+        rgba(21, 19, 26, .5) 100%
       );
   }
 
   .startup-intro-portrait {
-    top: calc(var(--opening-split) + 2px);
-    right: 8px;
-    bottom: 0;
-    left: 8px;
-    align-items: flex-end;
+    inset: 0;
+    align-items: center;
     justify-content: center;
   }
 
+  .startup-intro-portrait::before {
+    content: "";
+    position: absolute;
+    inset: -24px;
+    z-index: 0;
+    background: url("hitagi-opening.png") 70% center / cover no-repeat;
+    filter: blur(18px) brightness(.32) saturate(.8);
+    opacity: .9;
+    transform: scale(1.08);
+  }
+
   .startup-intro-portrait img {
-    width: 100%;
-    height: 100%;
-    object-position: center bottom;
-    transform-origin: center bottom;
+    position: relative;
+    z-index: 1;
+    width: calc(100% - 20px);
+    height: auto;
+    aspect-ratio: 1672 / 941;
+    border: 1px solid rgba(238, 231, 220, .68);
+    object-fit: contain;
+    object-position: center;
+    box-shadow: 0 18px 48px rgba(0, 0, 0, .32);
+    transform-origin: center;
   }
 
   .startup-intro-copy {
-    top: 19%;
+    top: 17%;
     left: 22px;
     width: calc(100vw - 44px);
+    color: var(--opening-paper);
     transform: translateY(-50%);
+  }
+
+  .startup-intro-copy span {
+    color: #e4aab0;
   }
 
   .startup-intro-copy span,
@@ -4814,7 +4816,12 @@ html.intro-pending .startup-intro.is-skipping {
 
   .startup-intro-copy strong {
     margin: 15px 0;
-    font-size: clamp(38px, 11.5vw, 54px);
+    font-size: clamp(36px, 10.8vw, 50px);
+  }
+
+  .startup-intro-copy small {
+    border-top-color: rgba(238, 231, 220, .3);
+    color: rgba(238, 231, 220, .62);
   }
 
   html.intro-pending .startup-intro-copy {
@@ -4822,15 +4829,16 @@ html.intro-pending .startup-intro.is-skipping {
   }
 
   .startup-intro-number {
-    top: 18px;
+    top: auto;
     right: 18px;
-    bottom: auto;
+    bottom: 58px;
     left: auto;
+    color: rgba(238, 231, 220, .07);
     font-size: clamp(58px, 20vw, 88px);
   }
 
   .startup-intro-redline {
-    top: var(--opening-split);
+    top: 66%;
     right: 0;
     bottom: auto;
     left: 0;
@@ -4840,17 +4848,13 @@ html.intro-pending .startup-intro.is-skipping {
     transform-origin: left center;
   }
 
-  html.intro-pending .startup-intro-redline {
-    animation-name: startup-hitagi-rule-x;
-  }
-
   .startup-intro-credit {
-    top: calc(var(--opening-split) + 11px);
-    right: 16px;
-    bottom: auto;
-    left: 16px;
+    top: auto;
+    right: auto;
+    bottom: max(18px, env(safe-area-inset-bottom));
+    left: 20px;
     max-width: calc(100vw - 32px);
-    color: rgba(23, 20, 18, .48);
+    color: rgba(238, 231, 220, .46);
     font-size: 6px;
   }
 

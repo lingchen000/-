@@ -11,7 +11,7 @@
   if (startupIntro) {
     if (root.classList.contains("intro-pending")) {
       const skipButton = startupIntro.querySelector("[data-startup-skip]");
-      const introStorageKey = "lingchen-opening-seen-v3";
+      const introStorageKey = "lingchen-opening-seen-v4";
       let introTimer;
       let introFinished = false;
 
