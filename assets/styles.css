@@ -4300,19 +4300,27 @@ html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-articl
   color: #171412;
 }
 
-html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .site-footer {
+html[data-theme="light"] body.monogatari-theme.worldline-inner .site-footer {
   border-color: #171412;
   background: rgba(245, 239, 228, .92);
   color: #665c54;
 }
 
-html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .footer-line,
-html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .footer-links a {
+html[data-theme="light"] body.monogatari-theme.worldline-inner .footer-line,
+html[data-theme="light"] body.monogatari-theme.worldline-inner .footer-links a {
   color: #211c18;
 }
 
-html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .footer-top {
+html[data-theme="light"] body.monogatari-theme.worldline-inner .footer-top {
   border-color: rgba(75, 56, 45, .22);
+}
+
+html[data-theme="light"] body.monogatari-theme.worldline-inner .footer-bottom {
+  color: #665c54;
+}
+
+html[data-theme="light"] body.monogatari-theme.worldline-inner .footer-bottom span:last-child {
+  color: #9a2335;
 }
 
 html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .floating-tool-rail .discussion-launcher {
