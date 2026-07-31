@@ -1883,7 +1883,7 @@ html[data-theme="dark"] .desk-nav a:hover, html[data-theme="dark"] .desk-nav a.i
 .wave.is-playing i { animation: sound-wave .8s ease-in-out infinite alternate; }
 .wave i:nth-child(2) { height: 15px; animation-delay: -.3s; }.wave i:nth-child(3) { height: 10px; animation-delay: -.55s;}.wave i:nth-child(4) { height: 18px; animation-delay: -.18s;}.wave i:nth-child(5) { height: 8px; animation-delay: -.7s;}
 
-.like-card button { display: flex; align-items: center; justify-content: center; gap: 7px; width: 100%; height: 100%; padding: 0 0 10px; border: 0; background: none; color: var(--desk-ink); }
+.like-card button { display: flex; align-items: center; justify-content: center; gap: 7px; width: 100%; height: 100%; padding: 0; border: 0; background: none; color: var(--desk-ink); }
 .like-card button span { font-size: 22px; line-height: 1; }.like-card button strong { font-family: var(--font-mono); font-size: 10px; }.like-card p { position: absolute; right: 0; bottom: 5px; left: 0; margin: 0; color: var(--desk-muted); font-size: 7px; text-align: center; }
 .like-card.is-liked button span { color: #b65c61; animation: heart-pop .35s ease; }
 .like-card button:disabled { cursor: wait; opacity: .62; }
