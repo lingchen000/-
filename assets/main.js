@@ -53,7 +53,7 @@
   function preferredTheme() {
     const saved = localStorage.getItem(storageKey);
     if (saved === "light" || saved === "dark") return saved;
-    return "dark";
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
   }
 
   function applyTheme(theme) {

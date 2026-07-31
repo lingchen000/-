@@ -4250,36 +4250,49 @@ html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-articl
     repeating-linear-gradient(90deg, transparent 0 119px, rgba(58, 43, 35, .075) 119px 120px);
 }
 
-html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .site-header {
+html[data-theme="light"] body.monogatari-theme.worldline-inner .site-header {
   border-bottom-color: var(--mono-red);
   background: rgba(245, 239, 228, .95);
   box-shadow: 0 9px 30px rgba(63, 45, 35, .09);
 }
 
-html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .brand-mark {
+html[data-theme="light"] body.monogatari-theme.worldline-inner .brand-mark {
   color: #171412;
 }
 
-html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .brand-sub {
+html[data-theme="light"] body.monogatari-theme.worldline-inner .brand-sub {
   color: #a91429;
 }
 
-html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .site-nav {
+html[data-theme="light"] body.monogatari-theme.worldline-inner .site-nav {
   background: #f5efe4;
 }
 
-html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .site-nav a {
+html[data-theme="light"] body.monogatari-theme.worldline-inner .site-nav a {
   color: #665c54;
 }
 
-html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .site-nav a:hover,
-html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .site-nav a[aria-current="page"] {
+html[data-theme="light"] body.monogatari-theme.worldline-inner .site-nav a:hover,
+html[data-theme="light"] body.monogatari-theme.worldline-inner .site-nav a[aria-current="page"] {
   color: #171412;
 }
 
-html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .icon-button,
-html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .menu-button {
+html[data-theme="light"] body.monogatari-theme.worldline-inner .icon-button,
+html[data-theme="light"] body.monogatari-theme.worldline-inner .menu-button {
   color: #171412;
+}
+
+html[data-theme="light"] body.monogatari-theme.worldline-inner .page-hero {
+  border-color: #171412;
+  background: #fffdf7;
+  box-shadow: 14px 14px 0 #171412;
+  color: #171412;
+}
+
+@media (max-width: 560px) {
+  html[data-theme="light"] body.monogatari-theme.worldline-inner .page-hero {
+    box-shadow: 7px 7px 0 #171412;
+  }
 }
 
 html[data-theme="light"] body.monogatari-theme.worldline-inner.monogatari-article-page .article-toc {

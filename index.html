@@ -11,13 +11,15 @@
   <title>陵辰｜怪异记录簿</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="alternate" type="application/rss+xml" title="陵辰订阅" href="feed.xml">
-  <link rel="stylesheet" href="assets/styles.css?v=20260731-light-footer">
+  <link rel="stylesheet" href="assets/styles.css?v=20260731-mobile-light">
   <script>
     try {
       const savedTheme = localStorage.getItem("lingchen-theme-worldline");
-      document.documentElement.dataset.theme = savedTheme === "light" || savedTheme === "dark" ? savedTheme : "dark";
+      document.documentElement.dataset.theme = savedTheme === "light" || savedTheme === "dark"
+        ? savedTheme
+        : (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
     } catch (_) {
-      document.documentElement.dataset.theme = "dark";
+      document.documentElement.dataset.theme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
     }
 
     (() => {
@@ -44,7 +46,7 @@
       }
     })();
   </script>
-  <script src="assets/main.js?v=20260730-mobile-tools" defer></script>
+  <script src="assets/main.js?v=20260731-mobile-light" defer></script>
 </head>
 <body class="dashboard-page dashboard-v2 worldline-theme monogatari-theme">
   <div class="startup-intro" data-startup-intro aria-label="片头动画">
