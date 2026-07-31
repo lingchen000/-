@@ -6,9 +6,72 @@ import worker, {
   buildResearchSummary,
   cleanSearchText,
   executeWebSearch,
+  hashVisitorId,
   makeResearchPlan,
   safeWebUrl
 } from "../src/index.js";
+
+function createLikeDatabase() {
+  const votes = new Set();
+
+  const execute = (statement) => {
+    const { sql, params } = statement;
+    if (sql.includes("INSERT OR IGNORE INTO site_likes")) {
+      votes.add(`${params[0]}:${params[1]}`);
+      return { success: true, results: [] };
+    }
+    if (sql.includes("DELETE FROM site_likes")) {
+      votes.delete(`${params[0]}:${params[1]}`);
+      return { success: true, results: [] };
+    }
+    if (sql.includes("COUNT(*) FROM site_likes")) {
+      const scope = params[0];
+      const visitorHash = params[2];
+      const prefix = `${scope}:`;
+      const count = [...votes].filter((key) => key.startsWith(prefix)).length;
+      return {
+        success: true,
+        results: [{ count, liked: votes.has(`${scope}:${visitorHash}`) ? 1 : 0 }]
+      };
+    }
+    throw new Error(`Unexpected SQL: ${sql}`);
+  };
+
+  const statement = (sql, params = []) => ({
+    sql,
+    params,
+    bind(...values) {
+      return statement(sql, values);
+    },
+    async first() {
+      return execute(this).results[0] || null;
+    }
+  });
+
+  return {
+    prepare(sql) {
+      return statement(sql);
+    },
+    async batch(statements) {
+      return statements.map(execute);
+    }
+  };
+}
+
+function likeRequest(method, visitorId, liked) {
+  const options = {
+    method,
+    headers: {
+      "Origin": "https://lingchen000.github.io",
+      "X-Lingchen-Visitor": visitorId
+    }
+  };
+  if (method === "PUT") {
+    options.headers["Content-Type"] = "application/json";
+    options.body = JSON.stringify({ liked });
+  }
+  return new Request("https://worker.example/likes/site", options);
+}
 
 test("safeWebUrl only accepts public link protocols without credentials", () => {
   assert.equal(safeWebUrl("javascript:alert(1)"), null);
@@ -204,4 +267,63 @@ test("chat flow executes web search and deterministically appends its cited URL"
     data.answer,
     "这是核实后的回答。[来源1]\n\n来源：\n[来源1] 中文来源 https://example.cn/report"
   );
+});
+
+test("global likes are shared, persistent, and idempotent per visitor", async () => {
+  const env = {
+    LIKES_DB: createLikeDatabase(),
+    LIKE_PEPPER: "test-only-like-pepper"
+  };
+  const visitorOne = "11111111-1111-4111-8111-111111111111";
+  const visitorTwo = "22222222-2222-4222-8222-222222222222";
+
+  let response = await worker.fetch(likeRequest("GET", visitorOne), env);
+  assert.equal(response.status, 200);
+  assert.deepEqual(await response.json(), { count: 0, liked: false });
+
+  response = await worker.fetch(likeRequest("PUT", visitorOne, true), env);
+  assert.deepEqual(await response.json(), { count: 1, liked: true });
+
+  response = await worker.fetch(likeRequest("PUT", visitorOne, true), env);
+  assert.deepEqual(await response.json(), { count: 1, liked: true });
+
+  response = await worker.fetch(likeRequest("PUT", visitorTwo, true), env);
+  assert.deepEqual(await response.json(), { count: 2, liked: true });
+
+  response = await worker.fetch(likeRequest("PUT", visitorOne, false), env);
+  assert.deepEqual(await response.json(), { count: 1, liked: false });
+
+  response = await worker.fetch(likeRequest("PUT", visitorOne, false), env);
+  assert.deepEqual(await response.json(), { count: 1, liked: false });
+
+  response = await worker.fetch(likeRequest("GET", visitorTwo), env);
+  assert.deepEqual(await response.json(), { count: 1, liked: true });
+});
+
+test("likes reject invalid visitors and untrusted origins", async () => {
+  const env = {
+    LIKES_DB: createLikeDatabase(),
+    LIKE_PEPPER: "test-only-like-pepper"
+  };
+
+  let response = await worker.fetch(likeRequest("GET", "not-a-uuid"), env);
+  assert.equal(response.status, 400);
+
+  response = await worker.fetch(new Request("https://worker.example/likes/site", {
+    method: "GET",
+    headers: {
+      "Origin": "https://evil.example",
+      "X-Lingchen-Visitor": "11111111-1111-4111-8111-111111111111"
+    }
+  }), env);
+  assert.equal(response.status, 403);
+});
+
+test("like visitor identifiers are HMACed before storage", async () => {
+  const visitor = "11111111-1111-4111-8111-111111111111";
+  const first = await hashVisitorId(visitor, "pepper-one");
+  const second = await hashVisitorId(visitor, "pepper-two");
+  assert.match(first, /^[0-9a-f]{64}$/);
+  assert.notEqual(first, visitor.replaceAll("-", ""));
+  assert.notEqual(first, second);
 });

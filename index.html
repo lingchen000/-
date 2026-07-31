@@ -11,7 +11,7 @@
   <title>陵辰｜怪异记录簿</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="alternate" type="application/rss+xml" title="陵辰订阅" href="feed.xml">
-  <link rel="stylesheet" href="assets/styles.css?v=20260731-mobile-light">
+  <link rel="stylesheet" href="assets/styles.css?v=20260731-global-likes">
   <script>
     try {
       const savedTheme = localStorage.getItem("lingchen-theme-worldline");
@@ -46,7 +46,7 @@
       }
     })();
   </script>
-  <script src="assets/main.js?v=20260731-mobile-light" defer></script>
+  <script src="assets/main.js?v=20260731-global-likes" defer></script>
 </head>
 <body class="dashboard-page dashboard-v2 worldline-theme monogatari-theme">
   <div class="startup-intro" data-startup-intro aria-label="片头动画">
@@ -159,7 +159,7 @@
     </section>
 
     <section class="glass-card like-card">
-      <button type="button" data-like aria-label="喜欢这个网站"><span>♡</span><strong data-like-count>128</strong></button>
+      <button type="button" data-like aria-label="喜欢这个网站" aria-pressed="false" aria-busy="true"><span>♡</span><strong data-like-count aria-live="polite" aria-atomic="true">—</strong></button>
       <p>读者留下的心跳</p>
     </section>
   </main>

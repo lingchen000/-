@@ -1886,6 +1886,8 @@ html[data-theme="dark"] .desk-nav a:hover, html[data-theme="dark"] .desk-nav a.i
 .like-card button { display: flex; align-items: center; justify-content: center; gap: 7px; width: 100%; height: 100%; padding: 0 0 10px; border: 0; background: none; color: var(--desk-ink); }
 .like-card button span { font-size: 22px; line-height: 1; }.like-card button strong { font-family: var(--font-mono); font-size: 10px; }.like-card p { position: absolute; right: 0; bottom: 5px; left: 0; margin: 0; color: var(--desk-muted); font-size: 7px; text-align: center; }
 .like-card.is-liked button span { color: #b65c61; animation: heart-pop .35s ease; }
+.like-card button:disabled { cursor: wait; opacity: .62; }
+.like-card.is-like-error button strong { color: var(--mono-red, #c51f33); }
 
 .dashboard-footer { position: relative; z-index: 1; display: flex; justify-content: space-between; width: min(1380px, calc(100vw - 70px)); margin: 0 auto 24px; color: rgba(47,67,60,.62); font-family: var(--font-mono); font-size: 8px; letter-spacing: .08em; }
 html[data-theme="dark"] .dashboard-footer { color: rgba(225,237,230,.5); }

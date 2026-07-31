@@ -6,9 +6,17 @@
   "workers_dev": true,
   "preview_urls": false,
   "vars": {
-    "ALLOWED_ORIGINS": "https://lingchen000.github.io,http://localhost:8000,http://127.0.0.1:8000",
+    "ALLOWED_ORIGINS": "https://lingchen000.github.io,http://localhost:8000,http://127.0.0.1:8000,http://localhost:4178,http://127.0.0.1:4178",
     "DEEPSEEK_MODEL": "deepseek-v4-flash"
   },
+  "d1_databases": [
+    {
+      "binding": "LIKES_DB",
+      "database_name": "lingchen-blog-likes",
+      "database_id": "74dc953c-4d58-41f3-a757-14761b29dac5",
+      "migrations_dir": "migrations"
+    }
+  ],
   "observability": {
     "enabled": true,
     "head_sampling_rate": 0.1

@@ -1,5 +1,16 @@
 const requestBuckets = new Map();
 
+const LIKE_SCOPE = "site";
+const LIKE_PATH = "/likes/site";
+const VISITOR_ID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const LIKE_STATE_SQL = `
+  SELECT
+    (SELECT COUNT(*) FROM site_likes WHERE scope = ?) AS count,
+    EXISTS(
+      SELECT 1 FROM site_likes WHERE scope = ? AND visitor_hash = ?
+    ) AS liked
+`;
+
 const DEFAULT_ORIGINS = [
   "https://lingchen000.github.io",
   "http://localhost:8000",
@@ -142,8 +153,8 @@ function corsHeaders(origin, env) {
   const allowed = allowedOrigins(env);
   return {
     "Access-Control-Allow-Origin": allowed.has(origin) ? origin : "https://lingchen000.github.io",
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Methods": "GET, PUT, POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type, X-Lingchen-Visitor",
     "Access-Control-Max-Age": "86400",
     "Vary": "Origin"
   };
@@ -158,6 +169,87 @@ function json(data, status, origin, env) {
       ...corsHeaders(origin, env)
     }
   });
+}
+
+function validVisitorId(value) {
+  return typeof value === "string" && VISITOR_ID_PATTERN.test(value.trim());
+}
+
+async function hashVisitorId(visitorId, pepper) {
+  const encoder = new TextEncoder();
+  const key = await crypto.subtle.importKey(
+    "raw",
+    encoder.encode(pepper),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"]
+  );
+  const signature = await crypto.subtle.sign("HMAC", key, encoder.encode(visitorId));
+  return [...new Uint8Array(signature)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
+function normalizeLikeState(row) {
+  const count = Number(row?.count);
+  return {
+    count: Number.isSafeInteger(count) && count >= 0 ? count : 0,
+    liked: Boolean(Number(row?.liked))
+  };
+}
+
+async function readLikeState(database, visitorHash) {
+  const row = await database
+    .prepare(LIKE_STATE_SQL)
+    .bind(LIKE_SCOPE, LIKE_SCOPE, visitorHash)
+    .first();
+  return normalizeLikeState(row);
+}
+
+async function writeLikeState(database, visitorHash, liked) {
+  const mutation = liked
+    ? database.prepare("INSERT OR IGNORE INTO site_likes (scope, visitor_hash) VALUES (?, ?)").bind(LIKE_SCOPE, visitorHash)
+    : database.prepare("DELETE FROM site_likes WHERE scope = ? AND visitor_hash = ?").bind(LIKE_SCOPE, visitorHash);
+  const read = database.prepare(LIKE_STATE_SQL).bind(LIKE_SCOPE, LIKE_SCOPE, visitorHash);
+  const [, stateResult] = await database.batch([mutation, read]);
+  return normalizeLikeState(stateResult?.results?.[0]);
+}
+
+async function handleLikeRequest(request, env, origin) {
+  if (!env.LIKES_DB || !env.LIKE_PEPPER) {
+    return json({ error: "点赞服务尚未完成配置" }, 503, origin, env);
+  }
+
+  const visitorId = request.headers.get("X-Lingchen-Visitor")?.trim() || "";
+  if (!validVisitorId(visitorId)) {
+    return json({ error: "访客标识格式不正确" }, 400, origin, env);
+  }
+
+  const visitorHash = await hashVisitorId(visitorId, env.LIKE_PEPPER);
+  if (request.method === "GET") {
+    return json(await readLikeState(env.LIKES_DB, visitorHash), 200, origin, env);
+  }
+
+  if (request.method !== "PUT") {
+    return json({ error: "请求方法不受支持" }, 405, origin, env);
+  }
+
+  const contentLength = Number(request.headers.get("Content-Length") || 0);
+  if (Number.isFinite(contentLength) && contentLength > 1024) {
+    return json({ error: "请求内容过大" }, 413, origin, env);
+  }
+
+  let body;
+  try {
+    const raw = await request.text();
+    if (raw.length > 1024) return json({ error: "请求内容过大" }, 413, origin, env);
+    body = JSON.parse(raw);
+  } catch (_) {
+    return json({ error: "请求格式不正确" }, 400, origin, env);
+  }
+  if (typeof body?.liked !== "boolean") {
+    return json({ error: "liked 必须是布尔值" }, 400, origin, env);
+  }
+
+  return json(await writeLikeState(env.LIKES_DB, visitorHash, body.liked), 200, origin, env);
 }
 
 function isRateLimited(request) {
@@ -563,8 +655,17 @@ export default {
     }
 
     const url = new URL(request.url);
-    if (request.method !== "POST" || url.pathname !== "/chat") return json({ error: "接口不存在" }, 404, origin, env);
     if (!allowed.has(origin)) return json({ error: "不允许的来源" }, 403, origin, env);
+
+    if (url.pathname === LIKE_PATH) {
+      try {
+        return await handleLikeRequest(request, env, origin);
+      } catch (_) {
+        return json({ error: "点赞服务暂时不可用" }, 500, origin, env);
+      }
+    }
+
+    if (request.method !== "POST" || url.pathname !== "/chat") return json({ error: "接口不存在" }, 404, origin, env);
     if (isRateLimited(request)) return json({ error: "问得太快啦，请一分钟后再试" }, 429, origin, env);
     if (!env.DEEPSEEK_API_KEY) return json({ error: "智能体密钥尚未配置" }, 503, origin, env);
 
@@ -667,6 +768,9 @@ export {
   buildResearchSummary,
   cleanSearchText,
   executeWebSearch,
+  handleLikeRequest,
+  hashVisitorId,
   makeResearchPlan,
+  readLikeState,
   safeWebUrl
 };

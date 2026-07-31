@@ -778,19 +778,110 @@
   const likeButton = document.querySelector("[data-like]");
   const likeCount = document.querySelector("[data-like-count]");
   if (likeButton && likeCount) {
-    const likeKey = "lingchen-liked";
-    const liked = localStorage.getItem(likeKey) === "yes";
-    likeButton.closest(".like-card")?.classList.toggle("is-liked", liked);
-    likeButton.querySelector("span").textContent = liked ? "♥" : "♡";
-    likeCount.textContent = liked ? "129" : "128";
-    likeButton.addEventListener("click", () => {
-      const card = likeButton.closest(".like-card");
-      const next = !card?.classList.contains("is-liked");
-      card?.classList.toggle("is-liked", next);
-      likeButton.querySelector("span").textContent = next ? "♥" : "♡";
-      likeCount.textContent = next ? "129" : "128";
-      localStorage.setItem(likeKey, next ? "yes" : "no");
+    const likeEndpoint = "https://lingchen-agent.653050197.workers.dev/likes/site";
+    const visitorStorageKey = "lingchen-like-visitor-v1";
+    const visitorPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+    const likeCard = likeButton.closest(".like-card");
+    const likeHeart = likeButton.querySelector("span");
+    let likeState = null;
+    let likePending = false;
+
+    const createVisitorId = () => {
+      if (typeof crypto.randomUUID === "function") return crypto.randomUUID();
+      const bytes = crypto.getRandomValues(new Uint8Array(16));
+      bytes[6] = (bytes[6] & 0x0f) | 0x40;
+      bytes[8] = (bytes[8] & 0x3f) | 0x80;
+      const hex = [...bytes].map((byte) => byte.toString(16).padStart(2, "0")).join("");
+      return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
+    };
+
+    let visitorId = createVisitorId();
+    try {
+      const savedVisitor = localStorage.getItem(visitorStorageKey);
+      if (visitorPattern.test(savedVisitor || "")) {
+        visitorId = savedVisitor;
+      } else {
+        localStorage.setItem(visitorStorageKey, visitorId);
+      }
+      localStorage.removeItem("lingchen-liked");
+    } catch (_) {
+      // Private browsing can disable storage; the current tab still gets a stable visitor ID.
+    }
+
+    const setLikePending = (pending) => {
+      likePending = pending;
+      likeButton.disabled = pending;
+      likeButton.setAttribute("aria-busy", String(pending));
+      likeCard?.classList.toggle("is-like-loading", pending);
+    };
+
+    const renderLikeState = (state) => {
+      likeState = state;
+      likeCard?.classList.remove("is-like-error");
+      likeCard?.classList.toggle("is-liked", state.liked);
+      likeHeart.textContent = state.liked ? "♥" : "♡";
+      likeCount.textContent = String(state.count);
+      likeButton.setAttribute("aria-pressed", String(state.liked));
+      likeButton.setAttribute("aria-label", state.liked ? "取消喜欢这个网站" : "喜欢这个网站");
+      likeButton.title = state.liked ? "取消点赞" : "给这个网站点赞";
+    };
+
+    const renderLikeError = () => {
+      likeCard?.classList.add("is-like-error");
+      likeCount.textContent = "—";
+      likeButton.title = "点赞服务暂时不可用，点击重试";
+    };
+
+    const requestLikeState = async (liked) => {
+      const controller = new AbortController();
+      const timeout = window.setTimeout(() => controller.abort(), 7000);
+      try {
+        const response = await fetch(likeEndpoint, {
+          method: typeof liked === "boolean" ? "PUT" : "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Lingchen-Visitor": visitorId
+          },
+          body: typeof liked === "boolean" ? JSON.stringify({ liked }) : undefined,
+          signal: controller.signal
+        });
+        if (!response.ok) throw new Error(`like request failed: ${response.status}`);
+        const data = await response.json();
+        if (!Number.isSafeInteger(data.count) || data.count < 0 || typeof data.liked !== "boolean") {
+          throw new Error("invalid like response");
+        }
+        return data;
+      } finally {
+        window.clearTimeout(timeout);
+      }
+    };
+
+    const syncLikeState = async () => {
+      if (likePending) return;
+      setLikePending(true);
+      try {
+        renderLikeState(await requestLikeState());
+      } catch (_) {
+        renderLikeError();
+      } finally {
+        setLikePending(false);
+      }
+    };
+
+    likeButton.addEventListener("click", async () => {
+      if (likePending) return;
+      const next = likeState ? !likeState.liked : true;
+      setLikePending(true);
+      try {
+        renderLikeState(await requestLikeState(next));
+      } catch (_) {
+        renderLikeError();
+      } finally {
+        setLikePending(false);
+      }
     });
+
+    void syncLikeState();
   }
 
   const mobileInteractionMedia = window.matchMedia("(max-width: 760px)");
