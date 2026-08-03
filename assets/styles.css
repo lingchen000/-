@@ -3393,6 +3393,14 @@ body.monogatari-theme.worldline-inner .button { border: 2px solid var(--mono-lin
   body.monogatari-theme.worldline-inner .brand-sub { display: none; }
   body.monogatari-theme.worldline-inner .page-hero { width: calc(100% - 24px); min-height: 350px; padding: 64px 24px 48px; box-shadow: 7px 7px 0 var(--mono-line); }
   body.monogatari-theme.worldline-inner .page-title { font-size: clamp(46px, 16vw, 70px); }
+  body.monogatari-theme.worldline-inner.fragment-archive-page .page-hero,
+  body.monogatari-theme.worldline-inner.log-terminal-page .page-hero { min-height: 310px; padding-block: 52px 40px; }
+  body.monogatari-theme.worldline-inner.fragment-archive-page .page-title,
+  body.monogatari-theme.worldline-inner.log-terminal-page .page-title {
+    font-size: clamp(32px, 10.5vw, 46px);
+    letter-spacing: -.06em;
+    line-height: 1.05;
+  }
   body.monogatari-theme.worldline-inner .page-lede { max-width: 85%; }
   body.monogatari-theme.worldline-inner .section { width: calc(100% - 24px); }
   body.monogatari-theme.worldline-inner .portrait-placeholder { min-height: 0; }
