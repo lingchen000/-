@@ -37,12 +37,25 @@
           <input id="notes-search" type="search" inputmode="search" autocomplete="off" placeholder="检索日期、标题或正文" data-notes-search>
         </label>
         <div class="notes-archive-actions">
-          <span class="notes-result-count" data-notes-result-count role="status" aria-live="polite" aria-atomic="true">共 14 条记录</span>
+          <span class="notes-result-count" data-notes-result-count role="status" aria-live="polite" aria-atomic="true">共 15 条记录</span>
           <button class="notes-toggle-all" type="button" data-notes-toggle-all>展开全部</button>
         </div>
       </div>
       <div class="observation-log-list" data-notes-list>
-        <article class="observation-log-entry" id="log-2026-07-31" data-notes-entry data-latest>
+        <article class="observation-log-entry" id="log-2026-08-03" data-notes-entry data-latest>
+          <div class="observation-log-meta"><time datetime="2026-08-03">2026.08.03</time><span>LOG 015</span></div>
+          <h3>AI 智能体框架、ReAct 与 Linux 调试</h3>
+          <p class="observation-log-project">ASSIGNMENT / AI AGENT FRAMEWORKS, REACT &amp; LINUX DEBUGGING</p>
+          <div class="observation-log-content">
+            <p>对比了解 smolagents、LlamaIndex 和 LangGraph 三种框架的特点：smolagents 轻量，适合代码智能体与工具调用；LlamaIndex 侧重数据接入、索引、检索和 RAG 应用；LangGraph 侧重有状态流程、节点关系与可控的任务编排。</p>
+            <p>深入学习 Thought、Action、Observation 循环与 ReAct 方法，理解智能体先分析任务并确定下一步操作，再调用工具执行动作，最后根据环境返回结果继续调整推理，直至完成目标的工作过程。</p>
+            <p>掌握智能体的核心组成和运行逻辑，理解模型、工具、提示词、记忆、输出解析、错误记录与重试机制之间的关系，为后续开发能够检索信息、调用工具并完成多步骤任务的智能体打下基础。</p>
+            <p>学习 GDB 调试工具的基本操作，了解运行程序、设置断点、单步执行、进入函数、继续运行和查看变量等调试方法；同时学习 ps、top 和 kill 等进程管理命令，用于查看进程状态、监控 CPU 与内存占用，并根据 PID 结束异常进程。</p>
+            <p>明日计划优化语言翻译系统，并继续学习 Linux 知识。</p>
+          </div>
+        </article>
+
+        <article class="observation-log-entry" id="log-2026-07-31" data-notes-entry>
           <div class="observation-log-meta"><time datetime="2026-07-31">2026.07.31</time><span>LOG 014</span></div>
           <h3>仓库整理、Linux 基础与 Agent 入门</h3>
           <p class="observation-log-project">ASSIGNMENT / WAREHOUSE ORGANIZATION, LINUX &amp; AI AGENTS</p>
