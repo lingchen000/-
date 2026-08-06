@@ -5460,13 +5460,16 @@ html.intro-pending .startup-intro.is-skipping {
 /* Transitions.dev-inspired homepage card tilt. Kept on precise pointers only:
    touch devices retain their native page scrolling and card layout. */
 @media (hover: hover) and (pointer: fine) {
-  body.dashboard-page .desktop-shell > .glass-card.tilt-ready {
+  body.dashboard-page .desktop-shell > .glass-card.tilt-ready,
+  body.worldline-inner .about-layout > .tilt-ready {
     --tilt-rx: 0deg;
     --tilt-ry: 0deg;
     --tilt-gx: 50%;
     --tilt-gy: 50%;
+    --tilt-base-x: 0px;
+    position: relative;
     isolation: isolate;
-    transform: perspective(1100px) rotateX(var(--tilt-rx)) rotateY(var(--tilt-ry));
+    transform: translateX(var(--tilt-base-x)) perspective(1100px) rotateX(var(--tilt-rx)) rotateY(var(--tilt-ry));
     transform-style: preserve-3d;
     transition:
       transform 800ms cubic-bezier(.22, 1, .36, 1),
@@ -5474,14 +5477,16 @@ html.intro-pending .startup-intro.is-skipping {
     will-change: transform;
   }
 
-  body.dashboard-page .desktop-shell > .glass-card.tilt-ready.is-tilting {
+  body.dashboard-page .desktop-shell > .glass-card.tilt-ready.is-tilting,
+  body.worldline-inner .about-layout > .tilt-ready.is-tilting {
     transition:
       transform 120ms cubic-bezier(.22, 1, .36, 1),
       box-shadow 220ms cubic-bezier(.22, 1, .36, 1);
   }
 
-  body.dashboard-page .desktop-shell > .glass-card.tilt-ready:hover {
-    transform: perspective(1100px) rotateX(var(--tilt-rx)) rotateY(var(--tilt-ry));
+  body.dashboard-page .desktop-shell > .glass-card.tilt-ready:hover,
+  body.worldline-inner .about-layout > .tilt-ready:hover {
+    transform: translateX(var(--tilt-base-x)) perspective(1100px) rotateX(var(--tilt-rx)) rotateY(var(--tilt-ry));
   }
 
   .card-tilt-glare {
@@ -5503,11 +5508,24 @@ html.intro-pending .startup-intro.is-skipping {
   .tilt-ready.is-tilt-hover > .card-tilt-glare { opacity: .3; }
 }
 
+@media (hover: hover) and (pointer: fine) and (min-width: 851px) {
+  body.worldline-inner .about-layout > .portrait-placeholder.tilt-ready {
+    --tilt-base-x: -16px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  body.dashboard-page .desktop-shell > .glass-card.tilt-ready {
+  body.dashboard-page .desktop-shell > .glass-card.tilt-ready,
+  body.worldline-inner .about-layout > .tilt-ready {
     transform: none !important;
     transition: none !important;
   }
 
   .card-tilt-glare { display: none !important; }
+}
+
+@media (prefers-reduced-motion: reduce) and (min-width: 851px) {
+  body.worldline-inner .about-layout > .portrait-placeholder.tilt-ready {
+    transform: translateX(-16px) !important;
+  }
 }
