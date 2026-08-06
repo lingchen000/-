@@ -5,8 +5,15 @@
     <link>https://lingchen000.github.io/-/</link>
     <description>陵辰公开的故事、日常切片与私人独白。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Tue, 28 Jul 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 06 Aug 2026 00:00:00 +0800</lastBuildDate>
     <atom:link href="https://lingchen000.github.io/-/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>从“会回答”到“会行动”：大语言模型智能体</title>
+      <link>https://lingchen000.github.io/-/articles/hugging-face-ai-agents-course/</link>
+      <guid isPermaLink="true">https://lingchen000.github.io/-/articles/hugging-face-ai-agents-course/</guid>
+      <pubDate>Thu, 06 Aug 2026 00:00:00 +0800</pubDate>
+      <description>基于 Hugging Face AI Agents Course，系统梳理智能体的目标驱动结构、工具调用、TAO 闭环、Agentic RAG 与工程治理。</description>
+    </item>
     <item>
       <title>《Attention Is All You Need》论文解读</title>
       <link>https://lingchen000.github.io/-/articles/attention-is-all-you-need/</link>
