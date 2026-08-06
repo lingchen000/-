@@ -5456,3 +5456,58 @@ html.intro-pending .startup-intro.is-skipping {
     transition: none;
   }
 }
+
+/* Transitions.dev-inspired homepage card tilt. Kept on precise pointers only:
+   touch devices retain their native page scrolling and card layout. */
+@media (hover: hover) and (pointer: fine) {
+  body.dashboard-page .desktop-shell > .glass-card.tilt-ready {
+    --tilt-rx: 0deg;
+    --tilt-ry: 0deg;
+    --tilt-gx: 50%;
+    --tilt-gy: 50%;
+    isolation: isolate;
+    transform: perspective(1100px) rotateX(var(--tilt-rx)) rotateY(var(--tilt-ry));
+    transform-style: preserve-3d;
+    transition:
+      transform 800ms cubic-bezier(.22, 1, .36, 1),
+      box-shadow 300ms cubic-bezier(.22, 1, .36, 1);
+    will-change: transform;
+  }
+
+  body.dashboard-page .desktop-shell > .glass-card.tilt-ready.is-tilting {
+    transition:
+      transform 120ms cubic-bezier(.22, 1, .36, 1),
+      box-shadow 220ms cubic-bezier(.22, 1, .36, 1);
+  }
+
+  body.dashboard-page .desktop-shell > .glass-card.tilt-ready:hover {
+    transform: perspective(1100px) rotateX(var(--tilt-rx)) rotateY(var(--tilt-ry));
+  }
+
+  .card-tilt-glare {
+    position: absolute;
+    z-index: 8;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    mix-blend-mode: screen;
+    background:
+      radial-gradient(circle 110px at var(--tilt-gx) var(--tilt-gy),
+        rgba(255, 250, 236, .42), rgba(255, 246, 224, .08) 54%, transparent 82%),
+      radial-gradient(circle 260px at var(--tilt-gx) var(--tilt-gy),
+        rgba(197, 31, 51, .14), transparent 76%);
+    transition: opacity 280ms cubic-bezier(.22, 1, .36, 1);
+  }
+
+  .tilt-ready.is-tilt-hover > .card-tilt-glare { opacity: .3; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.dashboard-page .desktop-shell > .glass-card.tilt-ready {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .card-tilt-glare { display: none !important; }
+}

@@ -1,6 +1,74 @@
 (function () {
   "use strict";
 
+  // Homepage card tilt: pointer tracking is desktop-only so mobile scrolling
+  // and touch gestures remain untouched.
+  const tiltCards = document.querySelectorAll(
+    ".dashboard-page .desktop-shell > .glass-card:not(.like-card)"
+  );
+  const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  if (tiltCards.length) {
+    tiltCards.forEach((card) => {
+      const glare = document.createElement("span");
+      glare.className = "card-tilt-glare";
+      glare.setAttribute("aria-hidden", "true");
+      card.appendChild(glare);
+      card.classList.add("tilt-ready");
+
+      let cardRect = null;
+      let frame = 0;
+      let pointerX = 0;
+      let pointerY = 0;
+
+      const resetTilt = () => {
+        window.cancelAnimationFrame(frame);
+        frame = 0;
+        cardRect = null;
+        card.classList.remove("is-tilting", "is-tilt-hover");
+        card.style.setProperty("--tilt-rx", "0deg");
+        card.style.setProperty("--tilt-ry", "0deg");
+        card.style.setProperty("--tilt-gx", "50%");
+        card.style.setProperty("--tilt-gy", "50%");
+      };
+
+      const paintTilt = () => {
+        frame = 0;
+        if (!cardRect) return;
+        const x = Math.min(1, Math.max(0, (pointerX - cardRect.left) / cardRect.width));
+        const y = Math.min(1, Math.max(0, (pointerY - cardRect.top) / cardRect.height));
+        const rotateX = (0.5 - y) * 7;
+        const rotateY = (x - 0.5) * 7;
+        card.style.setProperty("--tilt-rx", `${rotateX.toFixed(2)}deg`);
+        card.style.setProperty("--tilt-ry", `${rotateY.toFixed(2)}deg`);
+        card.style.setProperty("--tilt-gx", `${(x * 100).toFixed(1)}%`);
+        card.style.setProperty("--tilt-gy", `${(y * 100).toFixed(1)}%`);
+      };
+
+      card.addEventListener("pointerenter", (event) => {
+        if (!finePointer.matches || reducedMotion.matches) return;
+        cardRect = card.getBoundingClientRect();
+        card.classList.add("is-tilting", "is-tilt-hover");
+        pointerX = event.clientX;
+        pointerY = event.clientY;
+        paintTilt();
+      });
+
+      card.addEventListener("pointermove", (event) => {
+        if (!cardRect) return;
+        pointerX = event.clientX;
+        pointerY = event.clientY;
+        if (!frame) frame = window.requestAnimationFrame(paintTilt);
+      });
+
+      card.addEventListener("pointerleave", resetTilt);
+      card.addEventListener("pointercancel", resetTilt);
+      reducedMotion.addEventListener?.("change", resetTilt);
+      finePointer.addEventListener?.("change", resetTilt);
+    });
+  }
+
   const root = document.documentElement;
   const storageKey = "lingchen-theme-worldline";
   if (!document.body.classList.contains("dashboard-page")) {
