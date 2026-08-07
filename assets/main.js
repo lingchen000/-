@@ -780,6 +780,15 @@
     requestAnimationFrame(() => placeMusicDock(dockPosition.x, dockPosition.y, false));
   }
 
+  const expandMusicDock = () => {
+    if (!musicDock || !dockCollapsed) return;
+    dockCollapsed = false;
+    musicDock.classList.remove("is-collapsed");
+    if (dockPosition) requestAnimationFrame(() => placeMusicDock(dockPosition.x, dockPosition.y, false));
+    writePlayerState(!audio.paused || wantsToPlay);
+    dockPlayButton?.focus({ preventScroll: true });
+  };
+
   musicDock?.addEventListener("pointerdown", (event) => {
     if (event.button !== 0 || (!dockCollapsed && event.target.closest("button"))) return;
     const startRect = musicDock.getBoundingClientRect();
@@ -799,12 +808,15 @@
       placeMusicDock(startRect.left + deltaX, startRect.top + deltaY, false);
     };
 
-    const finishDrag = () => {
+    const finishDrag = (endEvent) => {
       musicDock.removeEventListener("pointermove", moveDock);
       musicDock.removeEventListener("pointerup", finishDrag);
       musicDock.removeEventListener("pointercancel", finishDrag);
       musicDock.classList.remove("is-dragging");
-      if (!moved) return;
+      if (!moved) {
+        if (endEvent.type === "pointerup" && dockCollapsed) expandMusicDock();
+        return;
+      }
       lastDockDragAt = Date.now();
       writePlayerState(!audio.paused || wantsToPlay);
     };
@@ -826,11 +838,7 @@
       event.preventDefault();
       return;
     }
-    dockCollapsed = false;
-    musicDock.classList.remove("is-collapsed");
-    if (dockPosition) requestAnimationFrame(() => placeMusicDock(dockPosition.x, dockPosition.y, false));
-    writePlayerState(!audio.paused || wantsToPlay);
-    dockPlayButton?.focus({ preventScroll: true });
+    expandMusicDock();
   });
   window.addEventListener("resize", () => {
     if (!musicDock || !dockPosition) return;
