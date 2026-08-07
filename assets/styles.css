@@ -1456,7 +1456,7 @@ html[data-theme="dark"] .theme-icon-sun {
     display: block;
   }
 
-  .footer-bottom span {
+  .footer-bottom > span {
     display: block;
     margin-bottom: 8px;
   }
@@ -5528,4 +5528,21 @@ html.intro-pending .startup-intro.is-skipping {
   body.worldline-inner .about-layout > .portrait-placeholder.tilt-ready {
     transform: translateX(-16px) !important;
   }
+}
+
+/* Inner-page footers own their padding, so the nested page shell must size
+   against the footer content box instead of the viewport. */
+body:not(.dashboard-page) .site-footer > .page-shell {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+body:not(.dashboard-page) .site-footer .footer-top > *,
+body:not(.dashboard-page) .site-footer .footer-bottom > * {
+  min-width: 0;
+}
+
+body:not(.dashboard-page) .site-footer .footer-links {
+  max-width: 100%;
 }
