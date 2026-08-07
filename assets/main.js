@@ -655,11 +655,15 @@
     musicDock.hidden = !playerStarted;
     musicDock.setAttribute("aria-label", "跨页面音乐播放器");
     musicDock.innerHTML = `
-      <button class="global-music-play" type="button" data-global-music-play aria-label="播放">▶</button>
-      <span class="global-music-copy"><small>NOW PLAYING / LOCAL</small><strong data-global-music-title></strong></span>
-      <button class="global-music-next" type="button" data-global-music-next aria-label="播放下一首">›</button>
-      <button class="global-music-close" type="button" data-global-music-close aria-label="收起播放器" title="收起播放器">×</button>
-      <button class="global-music-restore" type="button" data-global-music-restore aria-label="展开播放器" title="展开播放器">♫</button>`;
+      <div class="global-music-expanded">
+        <button class="global-music-play" type="button" data-global-music-play aria-label="播放">▶</button>
+        <span class="global-music-copy"><small>NOW PLAYING / LOCAL</small><strong data-global-music-title></strong></span>
+        <button class="global-music-next" type="button" data-global-music-next aria-label="播放下一首">›</button>
+        <button class="global-music-close" type="button" data-global-music-close aria-label="收起播放器" title="收起播放器">×</button>
+      </div>
+      <button class="global-music-restore" type="button" data-global-music-restore aria-label="展开播放器" title="展开播放器">
+        <img src="${new URL("music-disc-cover.jpg", assetRoot).href}" alt="" draggable="false">
+      </button>`;
     document.body.appendChild(musicDock);
     dockPlayButton = musicDock.querySelector("[data-global-music-play]");
     dockNextButton = musicDock.querySelector("[data-global-music-next]");
