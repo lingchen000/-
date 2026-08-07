@@ -5546,3 +5546,71 @@ body:not(.dashboard-page) .site-footer .footer-bottom > * {
 body:not(.dashboard-page) .site-footer .footer-links {
   max-width: 100%;
 }
+
+/* Cross-page music continuation for the static inner pages. */
+.global-music-dock {
+  position: fixed;
+  z-index: 72;
+  left: 18px;
+  bottom: 18px;
+  display: grid;
+  grid-template-columns: 42px minmax(0, 170px) 34px;
+  min-width: 270px;
+  min-height: 58px;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 9px;
+  border: 2px solid var(--mono-line, #171412);
+  background: color-mix(in srgb, var(--mono-panel, #f5efe4) 94%, transparent);
+  box-shadow: 6px 6px 0 var(--mono-red, #c51f33);
+  color: var(--mono-ink, #171412);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.global-music-dock[hidden] { display: none; }
+.global-music-play,
+.global-music-next {
+  display: grid;
+  height: 38px;
+  padding: 0;
+  place-items: center;
+  border: 1px solid currentColor;
+  background: transparent;
+  color: inherit;
+}
+.global-music-play { width: 42px; background: var(--mono-red, #c51f33); color: white; }
+.global-music-next { width: 34px; font-size: 24px; }
+.global-music-copy { display: block; min-width: 0; line-height: 1.2; }
+.global-music-copy small,
+.global-music-copy strong { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.global-music-copy small { color: var(--mono-red, #c51f33); font-family: var(--font-mono); font-size: 7px; letter-spacing: .12em; }
+.global-music-copy strong { margin-top: 5px; font-family: var(--font-title); font-size: 11px; }
+.global-music-dock.is-resume-needed .global-music-copy small { content: ""; color: var(--mono-red, #c51f33); }
+.global-music-dock.is-resume-needed .global-music-copy small::after { content: "CLICK TO RESUME / 点击继续"; }
+.global-music-dock.is-resume-needed .global-music-copy small { font-size: 0; }
+.global-music-dock.is-resume-needed .global-music-copy small::after { font-size: 7px; }
+
+html[data-theme="dark"] .global-music-dock {
+  border-color: #f3ede1;
+  background: rgba(17, 17, 17, .94);
+  color: #fffaf0;
+}
+
+@media (max-width: 560px) {
+  .global-music-dock {
+    right: 76px;
+    bottom: 12px;
+    left: 12px;
+    grid-template-columns: 38px minmax(0, 1fr) 32px;
+    min-width: 0;
+    min-height: 54px;
+    box-shadow: 4px 4px 0 var(--mono-red, #c51f33);
+  }
+  .global-music-play { width: 38px; height: 36px; }
+  .global-music-next { width: 32px; height: 36px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .global-music-dock { backdrop-filter: none; -webkit-backdrop-filter: none; }
+}

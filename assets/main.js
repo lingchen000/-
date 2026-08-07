@@ -605,54 +605,202 @@
 
   const playButton = document.querySelector("[data-play]");
   const wave = document.querySelector("[data-wave]");
-  const audio = document.querySelector("[data-audio]");
+  let audio = document.querySelector("[data-audio]");
   const nextTrackButton = document.querySelector("[data-next-track]");
   const trackStatus = document.querySelector("[data-track-status]");
   const trackTitle = document.querySelector("[data-track-title]");
+  const mainScript = document.querySelector('script[src*="assets/main.js"]');
+  const assetRoot = mainScript ? new URL(".", mainScript.src) : new URL("assets/", document.baseURI);
   const tracks = [
-    { title: "星愿 · off vocal", src: "assets/xingyuan-off-vocal.mp3" },
-    { title: "ある雨の日 · 神前暁", src: "assets/aru-ame-no-hi.mp3" }
+    { title: "星愿 · off vocal", src: new URL("xingyuan-off-vocal.mp3", assetRoot).href },
+    { title: "ある雨の日 · 神前暁", src: new URL("aru-ame-no-hi.mp3", assetRoot).href }
   ];
-  let trackIndex = 0;
-  const syncPlayer = (playing) => {
-    wave?.classList.toggle("is-playing", playing);
-    if (!playButton) return;
-    playButton.textContent = playing ? "Ⅱ" : "▶";
-    playButton.setAttribute("aria-label", playing ? "暂停" : "播放");
+  const playerStorageKey = "lingchen-cross-page-player-v1";
+  let savedPlayerState = null;
+  let playerStarted = false;
+  let wantsToPlay = false;
+  let isLeavingPage = false;
+  let lastPlayerSave = 0;
+
+  try {
+    const parsed = JSON.parse(sessionStorage.getItem(playerStorageKey) || "null");
+    if (parsed && Number.isInteger(parsed.trackIndex)) savedPlayerState = parsed;
+  } catch (_) {
+    savedPlayerState = null;
+  }
+
+  let trackIndex = Math.min(tracks.length - 1, Math.max(0, savedPlayerState?.trackIndex || 0));
+  playerStarted = Boolean(savedPlayerState?.started);
+  wantsToPlay = Boolean(savedPlayerState?.playing);
+
+  if (!audio) {
+    audio = document.createElement("audio");
+    audio.dataset.audio = "";
+    audio.hidden = true;
+    audio.preload = "metadata";
+    document.body.appendChild(audio);
+  }
+
+  let musicDock = null;
+  let dockPlayButton = null;
+  let dockNextButton = null;
+  let dockTrackTitle = null;
+  if (!document.body.classList.contains("dashboard-page")) {
+    musicDock = document.createElement("aside");
+    musicDock.className = "global-music-dock";
+    musicDock.hidden = !playerStarted;
+    musicDock.setAttribute("aria-label", "跨页面音乐播放器");
+    musicDock.innerHTML = `
+      <button class="global-music-play" type="button" data-global-music-play aria-label="播放">▶</button>
+      <span class="global-music-copy"><small>NOW PLAYING / LOCAL</small><strong data-global-music-title></strong></span>
+      <button class="global-music-next" type="button" data-global-music-next aria-label="播放下一首">›</button>`;
+    document.body.appendChild(musicDock);
+    dockPlayButton = musicDock.querySelector("[data-global-music-play]");
+    dockNextButton = musicDock.querySelector("[data-global-music-next]");
+    dockTrackTitle = musicDock.querySelector("[data-global-music-title]");
+  }
+
+  const writePlayerState = (playing = !audio.paused) => {
+    if (!playerStarted) return;
+    const currentTime = Number.isFinite(audio.currentTime) ? audio.currentTime : 0;
+    try {
+      sessionStorage.setItem(playerStorageKey, JSON.stringify({
+        started: true,
+        trackIndex,
+        currentTime,
+        playing,
+        updatedAt: Date.now()
+      }));
+    } catch (_) {
+      // Playback still works when session storage is unavailable.
+    }
   };
-  playButton?.addEventListener("click", async () => {
-    if (!audio) return;
+
+  const syncTrackCopy = () => {
+    const track = tracks[trackIndex];
+    if (trackStatus) trackStatus.textContent = `TRACK ${trackIndex + 1} / ${tracks.length}`;
+    if (trackTitle) trackTitle.textContent = track.title;
+    if (dockTrackTitle) dockTrackTitle.textContent = track.title;
+  };
+
+  const syncPlayer = (playing, resumeBlocked = false) => {
+    wave?.classList.toggle("is-playing", playing);
+    [playButton, dockPlayButton].forEach((button) => {
+      if (!button) return;
+      button.textContent = playing ? "Ⅱ" : "▶";
+      button.setAttribute("aria-label", playing ? "暂停" : (resumeBlocked ? "继续播放" : "播放"));
+    });
+    musicDock?.classList.toggle("is-playing", playing);
+    musicDock?.classList.toggle("is-resume-needed", resumeBlocked);
+    if (musicDock && playerStarted) musicDock.hidden = false;
+  };
+
+  const togglePlayback = async () => {
     if (audio.paused) {
+      playerStarted = true;
+      wantsToPlay = true;
+      if (musicDock) musicDock.hidden = false;
       try {
         await audio.play();
       } catch (_) {
-        syncPlayer(false);
+        wantsToPlay = false;
+        writePlayerState(false);
+        syncPlayer(false, true);
       }
     } else {
+      wantsToPlay = false;
       audio.pause();
     }
-  });
+  };
+
   const selectTrack = async (index, continuePlaying = false) => {
-    if (!audio) return;
     trackIndex = (index + tracks.length) % tracks.length;
-    const track = tracks[trackIndex];
+    wantsToPlay = continuePlaying;
     audio.pause();
-    audio.src = track.src;
+    audio.src = tracks[trackIndex].src;
     audio.load();
-    if (trackStatus) trackStatus.textContent = `TRACK ${trackIndex + 1} / ${tracks.length}`;
-    if (trackTitle) trackTitle.textContent = track.title;
+    syncTrackCopy();
+    writePlayerState(continuePlaying);
     if (continuePlaying) {
       try {
         await audio.play();
       } catch (_) {
-        syncPlayer(false);
+        wantsToPlay = false;
+        writePlayerState(false);
+        syncPlayer(false, true);
       }
     }
   };
-  nextTrackButton?.addEventListener("click", () => selectTrack(trackIndex + 1, Boolean(audio && !audio.paused)));
-  audio?.addEventListener("play", () => syncPlayer(true));
-  audio?.addEventListener("pause", () => syncPlayer(false));
-  audio?.addEventListener("ended", () => selectTrack(trackIndex + 1, true));
+
+  playButton?.addEventListener("click", togglePlayback);
+  dockPlayButton?.addEventListener("click", togglePlayback);
+  nextTrackButton?.addEventListener("click", () => selectTrack(trackIndex + 1, !audio.paused));
+  dockNextButton?.addEventListener("click", () => selectTrack(trackIndex + 1, !audio.paused));
+  audio.addEventListener("play", () => {
+    playerStarted = true;
+    wantsToPlay = true;
+    writePlayerState(true);
+    syncPlayer(true);
+  });
+  audio.addEventListener("pause", () => {
+    syncPlayer(false);
+    if (!isLeavingPage) {
+      wantsToPlay = false;
+      writePlayerState(false);
+    }
+  });
+  audio.addEventListener("timeupdate", () => {
+    if (!playerStarted || Date.now() - lastPlayerSave < 1000) return;
+    lastPlayerSave = Date.now();
+    writePlayerState(!audio.paused);
+  });
+  audio.addEventListener("ended", () => selectTrack(trackIndex + 1, true));
+
+  const restorePlayer = async () => {
+    if (savedPlayerState && Number.isFinite(savedPlayerState.currentTime) && savedPlayerState.currentTime > 0) {
+      const latestTime = Number.isFinite(audio.duration)
+        ? Math.min(savedPlayerState.currentTime, Math.max(0, audio.duration - 0.25))
+        : savedPlayerState.currentTime;
+      try {
+        audio.currentTime = latestTime;
+      } catch (_) {
+        // Some browsers only allow seeking after metadata becomes available.
+      }
+    }
+    if (wantsToPlay) {
+      try {
+        await audio.play();
+      } catch (_) {
+        wantsToPlay = false;
+        syncPlayer(false, true);
+      }
+    }
+  };
+
+  audio.src = tracks[trackIndex].src;
+  syncTrackCopy();
+  syncPlayer(false);
+  if (audio.readyState >= 1) {
+    restorePlayer();
+  } else {
+    audio.addEventListener("loadedmetadata", restorePlayer, { once: true });
+    audio.load();
+  }
+
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href]");
+    if (!link || !playerStarted) return;
+    try {
+      const destination = new URL(link.href, location.href);
+      if (destination.origin === location.origin) writePlayerState(!audio.paused || wantsToPlay);
+    } catch (_) {
+      // Ignore malformed or non-navigation links.
+    }
+  }, true);
+  window.addEventListener("pagehide", () => {
+    isLeavingPage = true;
+    writePlayerState(!audio.paused || wantsToPlay);
+  });
 
   const logForm = document.querySelector("[data-log-form]");
   if (logForm) {
