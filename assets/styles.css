@@ -5570,7 +5570,8 @@ body:not(.dashboard-page) .site-footer .footer-links {
 
 .global-music-dock[hidden] { display: none; }
 .global-music-play,
-.global-music-next {
+.global-music-next,
+.global-music-restore {
   display: grid;
   height: 38px;
   padding: 0;
@@ -5581,6 +5582,35 @@ body:not(.dashboard-page) .site-footer .footer-links {
 }
 .global-music-play { width: 42px; background: var(--mono-red, #c51f33); color: white; }
 .global-music-next { width: 34px; font-size: 24px; }
+.global-music-close {
+  position: absolute;
+  top: -11px;
+  right: -11px;
+  display: grid;
+  width: 24px;
+  height: 24px;
+  padding: 0 0 2px;
+  place-items: center;
+  border: 2px solid var(--mono-line, #171412);
+  border-radius: 50%;
+  background: var(--mono-panel, #f5efe4);
+  color: var(--mono-ink, #171412);
+  font-size: 16px;
+  line-height: 1;
+}
+.global-music-restore { display: none; width: 38px; height: 38px; background: var(--mono-red, #c51f33); color: white; font-size: 17px; }
+.global-music-dock.is-collapsed {
+  right: auto;
+  grid-template-columns: 38px;
+  width: 50px;
+  min-width: 0;
+  min-height: 50px;
+  padding: 4px;
+  border-radius: 50%;
+  box-shadow: 4px 4px 0 var(--mono-red, #c51f33);
+}
+.global-music-dock.is-collapsed > :not(.global-music-restore) { display: none; }
+.global-music-dock.is-collapsed .global-music-restore { display: grid; border-radius: 50%; }
 .global-music-copy { display: block; min-width: 0; line-height: 1.2; }
 .global-music-copy small,
 .global-music-copy strong { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -5596,6 +5626,7 @@ html[data-theme="dark"] .global-music-dock {
   background: rgba(17, 17, 17, .94);
   color: #fffaf0;
 }
+html[data-theme="dark"] .global-music-close { border-color: #f3ede1; background: #111; color: #fffaf0; }
 
 @media (max-width: 560px) {
   .global-music-dock {
@@ -5609,6 +5640,7 @@ html[data-theme="dark"] .global-music-dock {
   }
   .global-music-play { width: 38px; height: 36px; }
   .global-music-next { width: 32px; height: 36px; }
+  .global-music-dock.is-collapsed { right: auto; width: 48px; min-height: 48px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

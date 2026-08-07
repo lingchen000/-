@@ -632,6 +632,7 @@
   let trackIndex = Math.min(tracks.length - 1, Math.max(0, savedPlayerState?.trackIndex || 0));
   playerStarted = Boolean(savedPlayerState?.started);
   wantsToPlay = Boolean(savedPlayerState?.playing);
+  let dockCollapsed = Boolean(savedPlayerState?.dockCollapsed);
 
   if (!audio) {
     audio = document.createElement("audio");
@@ -645,19 +646,26 @@
   let dockPlayButton = null;
   let dockNextButton = null;
   let dockTrackTitle = null;
+  let dockCloseButton = null;
+  let dockRestoreButton = null;
   if (!document.body.classList.contains("dashboard-page")) {
     musicDock = document.createElement("aside");
     musicDock.className = "global-music-dock";
+    musicDock.classList.toggle("is-collapsed", dockCollapsed);
     musicDock.hidden = !playerStarted;
     musicDock.setAttribute("aria-label", "跨页面音乐播放器");
     musicDock.innerHTML = `
       <button class="global-music-play" type="button" data-global-music-play aria-label="播放">▶</button>
       <span class="global-music-copy"><small>NOW PLAYING / LOCAL</small><strong data-global-music-title></strong></span>
-      <button class="global-music-next" type="button" data-global-music-next aria-label="播放下一首">›</button>`;
+      <button class="global-music-next" type="button" data-global-music-next aria-label="播放下一首">›</button>
+      <button class="global-music-close" type="button" data-global-music-close aria-label="收起播放器" title="收起播放器">×</button>
+      <button class="global-music-restore" type="button" data-global-music-restore aria-label="展开播放器" title="展开播放器">♫</button>`;
     document.body.appendChild(musicDock);
     dockPlayButton = musicDock.querySelector("[data-global-music-play]");
     dockNextButton = musicDock.querySelector("[data-global-music-next]");
     dockTrackTitle = musicDock.querySelector("[data-global-music-title]");
+    dockCloseButton = musicDock.querySelector("[data-global-music-close]");
+    dockRestoreButton = musicDock.querySelector("[data-global-music-restore]");
   }
 
   const writePlayerState = (playing = !audio.paused) => {
@@ -669,6 +677,7 @@
         trackIndex,
         currentTime,
         playing,
+        dockCollapsed,
         updatedAt: Date.now()
       }));
     } catch (_) {
@@ -736,6 +745,18 @@
   dockPlayButton?.addEventListener("click", togglePlayback);
   nextTrackButton?.addEventListener("click", () => selectTrack(trackIndex + 1, !audio.paused));
   dockNextButton?.addEventListener("click", () => selectTrack(trackIndex + 1, !audio.paused));
+  dockCloseButton?.addEventListener("click", () => {
+    dockCollapsed = true;
+    musicDock.classList.add("is-collapsed");
+    writePlayerState(!audio.paused || wantsToPlay);
+    dockRestoreButton?.focus({ preventScroll: true });
+  });
+  dockRestoreButton?.addEventListener("click", () => {
+    dockCollapsed = false;
+    musicDock.classList.remove("is-collapsed");
+    writePlayerState(!audio.paused || wantsToPlay);
+    dockPlayButton?.focus({ preventScroll: true });
+  });
   audio.addEventListener("play", () => {
     playerStarted = true;
     wantsToPlay = true;
