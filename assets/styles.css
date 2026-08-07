@@ -5573,8 +5573,11 @@ body:not(.dashboard-page) .site-footer .footer-links {
     padding 360ms cubic-bezier(.22, 1, .36, 1),
     border-radius 360ms cubic-bezier(.22, 1, .36, 1),
     box-shadow 360ms cubic-bezier(.22, 1, .36, 1),
+    left 360ms cubic-bezier(.22, 1, .36, 1),
+    top 360ms cubic-bezier(.22, 1, .36, 1),
     background-color 220ms ease;
   will-change: width, height, border-radius;
+  touch-action: none;
 }
 
 .global-music-dock[hidden] { display: none; }
@@ -5594,6 +5597,14 @@ body:not(.dashboard-page) .site-footer .footer-links {
     filter 220ms ease 100ms,
     transform 360ms cubic-bezier(.22, 1, .36, 1),
     visibility 0s linear 0s;
+  cursor: grab;
+}
+.global-music-expanded button { cursor: pointer; }
+.global-music-dock.is-dragging,
+.global-music-dock.is-dragging .global-music-expanded { cursor: grabbing; }
+.global-music-dock.is-dragging {
+  transition: none;
+  user-select: none;
 }
 .global-music-play,
 .global-music-next,
@@ -5698,7 +5709,9 @@ body:not(.dashboard-page) .site-footer .footer-links {
     transform 400ms cubic-bezier(.22, 1, .36, 1) 70ms,
     visibility 0s linear 0s;
   visibility: visible;
+  cursor: grab;
 }
+.global-music-dock.is-collapsed.is-dragging .global-music-restore { cursor: grabbing; }
 @keyframes music-disc-spin { to { transform: rotate(1turn); } }
 .global-music-copy { display: block; min-width: 0; line-height: 1.2; }
 .global-music-copy small,

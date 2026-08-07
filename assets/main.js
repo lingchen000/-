@@ -633,6 +633,8 @@
   playerStarted = Boolean(savedPlayerState?.started);
   wantsToPlay = Boolean(savedPlayerState?.playing);
   let dockCollapsed = Boolean(savedPlayerState?.dockCollapsed);
+  let dockPosition = savedPlayerState?.dockPosition;
+  if (!Number.isFinite(dockPosition?.x) || !Number.isFinite(dockPosition?.y)) dockPosition = null;
 
   if (!audio) {
     audio = document.createElement("audio");
@@ -682,6 +684,7 @@
         currentTime,
         playing,
         dockCollapsed,
+        dockPosition,
         updatedAt: Date.now()
       }));
     } catch (_) {
@@ -749,17 +752,89 @@
   dockPlayButton?.addEventListener("click", togglePlayback);
   nextTrackButton?.addEventListener("click", () => selectTrack(trackIndex + 1, !audio.paused));
   dockNextButton?.addEventListener("click", () => selectTrack(trackIndex + 1, !audio.paused));
+  let lastDockDragAt = 0;
+
+  const clampDockPosition = (x, y) => {
+    if (!musicDock) return { x, y };
+    const rect = musicDock.getBoundingClientRect();
+    const edge = 8;
+    return {
+      x: Math.min(Math.max(edge, x), Math.max(edge, window.innerWidth - rect.width - edge)),
+      y: Math.min(Math.max(edge, y), Math.max(edge, window.innerHeight - rect.height - edge))
+    };
+  };
+
+  const placeMusicDock = (x, y, save = true) => {
+    if (!musicDock) return;
+    const next = clampDockPosition(x, y);
+    musicDock.classList.add("is-positioned");
+    musicDock.style.left = `${next.x}px`;
+    musicDock.style.top = `${next.y}px`;
+    musicDock.style.right = "auto";
+    musicDock.style.bottom = "auto";
+    dockPosition = next;
+    if (save) writePlayerState(!audio.paused || wantsToPlay);
+  };
+
+  if (musicDock && dockPosition) {
+    requestAnimationFrame(() => placeMusicDock(dockPosition.x, dockPosition.y, false));
+  }
+
+  musicDock?.addEventListener("pointerdown", (event) => {
+    if (event.button !== 0 || (!dockCollapsed && event.target.closest("button"))) return;
+    const startRect = musicDock.getBoundingClientRect();
+    const startX = event.clientX;
+    const startY = event.clientY;
+    let moved = false;
+
+    musicDock.setPointerCapture(event.pointerId);
+    musicDock.classList.add("is-dragging");
+
+    const moveDock = (moveEvent) => {
+      const deltaX = moveEvent.clientX - startX;
+      const deltaY = moveEvent.clientY - startY;
+      if (!moved && Math.hypot(deltaX, deltaY) < 5) return;
+      moved = true;
+      moveEvent.preventDefault();
+      placeMusicDock(startRect.left + deltaX, startRect.top + deltaY, false);
+    };
+
+    const finishDrag = () => {
+      musicDock.removeEventListener("pointermove", moveDock);
+      musicDock.removeEventListener("pointerup", finishDrag);
+      musicDock.removeEventListener("pointercancel", finishDrag);
+      musicDock.classList.remove("is-dragging");
+      if (!moved) return;
+      lastDockDragAt = Date.now();
+      writePlayerState(!audio.paused || wantsToPlay);
+    };
+
+    musicDock.addEventListener("pointermove", moveDock);
+    musicDock.addEventListener("pointerup", finishDrag);
+    musicDock.addEventListener("pointercancel", finishDrag);
+  });
+
   dockCloseButton?.addEventListener("click", () => {
     dockCollapsed = true;
     musicDock.classList.add("is-collapsed");
+    if (dockPosition) requestAnimationFrame(() => placeMusicDock(dockPosition.x, dockPosition.y, false));
     writePlayerState(!audio.paused || wantsToPlay);
     dockRestoreButton?.focus({ preventScroll: true });
   });
-  dockRestoreButton?.addEventListener("click", () => {
+  dockRestoreButton?.addEventListener("click", (event) => {
+    if (Date.now() - lastDockDragAt < 250) {
+      event.preventDefault();
+      return;
+    }
     dockCollapsed = false;
     musicDock.classList.remove("is-collapsed");
+    if (dockPosition) requestAnimationFrame(() => placeMusicDock(dockPosition.x, dockPosition.y, false));
     writePlayerState(!audio.paused || wantsToPlay);
     dockPlayButton?.focus({ preventScroll: true });
+  });
+  window.addEventListener("resize", () => {
+    if (!musicDock || !dockPosition) return;
+    placeMusicDock(dockPosition.x, dockPosition.y);
   });
   audio.addEventListener("play", () => {
     playerStarted = true;
