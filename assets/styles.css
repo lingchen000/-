@@ -3213,7 +3213,7 @@ body.monogatari-theme.worldline-theme .latest-card { background: #111; color: #f
 body.monogatari-theme.worldline-theme .latest-art {
   border: 1px solid #fffaf0;
   border-radius: 0;
-  background-image: linear-gradient(rgba(197,31,51,.28), rgba(0,0,0,.45)), url("ichika-profile.jpg");
+  background-image: linear-gradient(rgba(197,31,51,.28), rgba(0,0,0,.45)), url("player-cover-noose.jpg");
   background-position: 52% 42%;
   filter: none;
   clip-path: polygon(0 0, 100% 8%, 92% 100%, 0 92%);
