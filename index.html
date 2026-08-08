@@ -11,7 +11,7 @@
   <title>陵辰｜怪异记录簿</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="alternate" type="application/rss+xml" title="陵辰订阅" href="feed.xml">
-  <link rel="stylesheet" href="assets/styles.css?v=20260808-recent-updates">
+  <link rel="stylesheet" href="assets/styles.css?v=20260808-volume-control">
   <script>
     try {
       const savedTheme = localStorage.getItem("lingchen-theme-worldline");
@@ -46,7 +46,7 @@
       }
     })();
   </script>
-  <script src="assets/main.js?v=20260808-recent-updates" defer></script>
+  <script src="assets/main.js?v=20260808-volume-control" defer></script>
 </head>
 <body class="dashboard-page dashboard-v2 worldline-theme monogatari-theme">
   <div class="startup-intro" data-startup-intro aria-label="片头动画">
@@ -164,6 +164,11 @@
         <strong data-track-title>星愿 · off vocal</strong>
       </div>
       <button class="track-next" type="button" data-next-track aria-label="播放下一首" title="下一首">›</button>
+      <label class="volume-control">
+        <span aria-hidden="true">VOL</span>
+        <input type="range" min="0" max="100" step="1" value="70" data-volume aria-label="音量">
+        <output data-volume-value>70%</output>
+      </label>
       <div class="wave" data-wave aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
       <audio data-audio preload="metadata" hidden>
         <source src="assets/xingyuan-off-vocal.mp3" type="audio/mpeg">

@@ -595,6 +595,8 @@
   const nextTrackButton = document.querySelector("[data-next-track]");
   const trackStatus = document.querySelector("[data-track-status]");
   const trackTitle = document.querySelector("[data-track-title]");
+  const volumeInput = document.querySelector("[data-volume]");
+  const volumeValue = document.querySelector("[data-volume-value]");
   const mainScript = document.querySelector('script[src*="assets/main.js"]');
   const assetRoot = mainScript ? new URL(".", mainScript.src) : new URL("assets/", document.baseURI);
   const tracks = [
@@ -602,6 +604,7 @@
     { title: "ある雨の日 · 神前暁", src: new URL("aru-ame-no-hi.mp3", assetRoot).href }
   ];
   const playerStorageKey = "lingchen-cross-page-player-v1";
+  const volumeStorageKey = "lingchen-player-volume-v1";
   let savedPlayerState = null;
   let playerStarted = false;
   let wantsToPlay = false;
@@ -630,6 +633,18 @@
     document.body.appendChild(audio);
   }
 
+  let playerVolume = 0.7;
+  try {
+    const storedVolume = localStorage.getItem(volumeStorageKey);
+    const savedVolume = Number(storedVolume);
+    if (storedVolume !== null && Number.isFinite(savedVolume)) {
+      playerVolume = Math.min(1, Math.max(0, savedVolume));
+    }
+  } catch (_) {
+    // The default volume is used when local storage is unavailable.
+  }
+  audio.volume = playerVolume;
+
   let musicDock = null;
   let dockPlayButton = null;
   let dockNextButton = null;
@@ -646,6 +661,10 @@
       <div class="global-music-expanded">
         <button class="global-music-play" type="button" data-global-music-play aria-label="播放">▶</button>
         <span class="global-music-copy"><small>NOW PLAYING / LOCAL</small><strong data-global-music-title></strong></span>
+        <label class="global-volume-control" aria-label="音量">
+          <span aria-hidden="true">VOL</span>
+          <input type="range" min="0" max="100" step="1" value="70" data-global-volume aria-label="音量">
+        </label>
         <button class="global-music-next" type="button" data-global-music-next aria-label="播放下一首">›</button>
         <button class="global-music-close" type="button" data-global-music-close aria-label="收起播放器" title="收起播放器">×</button>
       </div>
@@ -659,6 +678,35 @@
     dockCloseButton = musicDock.querySelector("[data-global-music-close]");
     dockRestoreButton = musicDock.querySelector("[data-global-music-restore]");
   }
+  const dockVolumeInput = musicDock?.querySelector("[data-global-volume]");
+
+  const syncVolumeControls = () => {
+    const percentage = Math.round(audio.volume * 100);
+    [volumeInput, dockVolumeInput].forEach((input) => {
+      if (!input) return;
+      input.value = String(percentage);
+      input.style.setProperty("--volume-level", `${percentage}%`);
+      input.setAttribute("aria-valuetext", `${percentage}%`);
+    });
+    if (volumeValue) volumeValue.textContent = `${percentage}%`;
+  };
+
+  const setPlayerVolume = (value) => {
+    const percentage = Math.min(100, Math.max(0, Number(value) || 0));
+    audio.volume = percentage / 100;
+    playerVolume = audio.volume;
+    syncVolumeControls();
+    try {
+      localStorage.setItem(volumeStorageKey, String(playerVolume));
+    } catch (_) {
+      // Volume adjustment still works when local storage is unavailable.
+    }
+  };
+
+  volumeInput?.addEventListener("input", (event) => setPlayerVolume(event.currentTarget.value));
+  dockVolumeInput?.addEventListener("input", (event) => setPlayerVolume(event.currentTarget.value));
+  audio.addEventListener("volumechange", syncVolumeControls);
+  syncVolumeControls();
 
   const writePlayerState = (playing = !audio.paused) => {
     if (!playerStarted) return;
@@ -776,7 +824,7 @@
   };
 
   musicDock?.addEventListener("pointerdown", (event) => {
-    if (event.button !== 0 || (!dockCollapsed && event.target.closest("button"))) return;
+    if (event.button !== 0 || (!dockCollapsed && event.target.closest("button, input, .global-volume-control"))) return;
     const startRect = musicDock.getBoundingClientRect();
     const startX = event.clientX;
     const startY = event.clientY;
