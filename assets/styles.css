@@ -1886,7 +1886,9 @@ html[data-theme="dark"] .desk-nav a:hover, html[data-theme="dark"] .desk-nav a.i
 .track-copy span, .track-copy strong { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .track-copy span { color: var(--desk-accent); font-family: var(--font-mono); font-size: 8px; letter-spacing: .12em; }
 .track-copy strong { max-width: 130px; margin-top: 4px; font-family: var(--font-title); font-size: 11px; font-weight: 600; }
-.track-next { display: grid; width: 30px; height: 30px; flex: 0 0 auto; padding: 0 0 3px; place-items: center; border: 1px solid var(--desk-line); border-radius: 50%; background: transparent; color: var(--desk-ink); font-size: 24px; line-height: 1; transition: border-color .2s ease, color .2s ease, transform .2s ease; }
+.track-next { position: relative; display: grid; width: 30px; height: 30px; flex: 0 0 auto; padding: 0; place-items: center; border: 1px solid var(--desk-line); border-radius: 50%; background: transparent; color: var(--desk-ink); font-size: 0; line-height: 1; transition: border-color .2s ease, color .2s ease, transform .2s ease; }
+.track-next::before,
+.global-music-next::before { position: absolute; top: 50%; left: calc(50% - .5px); width: 7px; height: 7px; border-top: 2px solid currentColor; border-right: 2px solid currentColor; content: ""; transform: translate(-65%, -50%) rotate(45deg); }
 .track-next:hover { border-color: var(--desk-accent); color: var(--desk-accent); transform: translateX(2px); }
 .volume-control { display: grid; grid-template-columns: auto 84px 30px; flex: 0 0 auto; align-items: center; gap: 7px; margin-left: auto; color: var(--desk-accent); font-family: var(--font-mono); font-size: 8px; letter-spacing: .08em; }
 .volume-control output { color: var(--desk-muted); font-size: 8px; text-align: right; }
@@ -5570,11 +5572,12 @@ body:not(.dashboard-page) .site-footer .footer-links {
 }
 .global-music-play { width: 42px; background: var(--mono-red, #c51f33); color: white; }
 .global-music-next {
+  position: relative;
   width: 30px;
   height: 30px;
   border-width: 1.5px;
   border-radius: 50%;
-  font-size: 22px;
+  font-size: 0;
   line-height: 1;
   transition:
     color 180ms ease,
