@@ -1519,14 +1519,11 @@ html[data-theme="dark"] .theme-icon-sun {
 .worldline-theme .profile-avatar img { object-position: 60% 52%; }
 .worldline-theme .profile-kicker,
 .worldline-theme .welcome-topline,
-.worldline-theme .card-label,
 .worldline-theme .clock-label { color: var(--desk-green); text-shadow: 0 0 10px rgba(123,214,128,.3); }
 .worldline-theme .profile-copy h1,
-.worldline-theme .welcome-card h2,
-.worldline-theme .latest-copy h2 { color: #e4d5b5; }
+.worldline-theme .welcome-card h2 { color: #e4d5b5; }
 .worldline-theme .profile-copy > p:last-child,
-.worldline-theme .welcome-card > p,
-.worldline-theme .latest-summary { color: #9c9079; }
+.worldline-theme .welcome-card > p { color: #9c9079; }
 .worldline-theme .desk-nav a { border: 1px solid transparent; border-radius: 8px; color: #94866d; }
 .worldline-theme .desk-nav a:hover,
 .worldline-theme .desk-nav a.is-current {
@@ -1575,38 +1572,20 @@ html[data-theme="dark"] .theme-icon-sun {
 .worldline-theme .clock-card > p { color: #6d826c; }
 .worldline-theme .live-dot { background: #8bd28c; box-shadow: 0 0 0 5px rgba(91,202,99,.1),0 0 15px #60bb6b; }
 
-.worldline-theme .calendar-card,
-.worldline-theme .thought-card,
-.worldline-theme .latest-card {
+.worldline-theme .calendar-card {
   color: #2a2118;
   border-color: rgba(231,202,148,.3);
   background: rgba(201,181,141,.92);
   box-shadow: inset 0 0 45px rgba(76,45,19,.12),0 24px 48px -36px #000;
 }
-.worldline-theme .calendar-card::before,
-.worldline-theme .thought-card::before,
-.worldline-theme .latest-card::before { opacity: .12; }
+.worldline-theme .calendar-card::before { opacity: .12; }
 .worldline-theme .calendar-head span:first-child,
-.worldline-theme .calendar-head strong,
-.worldline-theme .latest-copy h2,
-.worldline-theme .thought-card blockquote { color: #2a2118; }
+.worldline-theme .calendar-head strong { color: #2a2118; }
 .worldline-theme .calendar-mark { background: rgba(76,50,29,.12); color: #7e3b28; }
 .worldline-theme .mini-calendar span { color: #685641; }
 .worldline-theme .mini-calendar .weekday { color: #833c28; }
 .worldline-theme .mini-calendar .today { background: #2a241c; color: #a8d69d; box-shadow: 0 0 14px rgba(66,123,65,.35); }
 .worldline-theme .lunar-note { border-top-color: rgba(71,50,31,.2); color: #675640; }
-.worldline-theme .latest-art {
-  background-image: linear-gradient(120deg,rgba(13,14,10,.15),rgba(161,52,22,.12));
-  background-position: 49% 54%;
-  filter: sepia(.08) contrast(1.08);
-}
-.worldline-theme .latest-copy > p:first-child,
-.worldline-theme .read-link,
-.worldline-theme .thought-card .card-label,
-.worldline-theme .thought-card .card-label button { color: #8b3f28; text-shadow: none; }
-.worldline-theme .latest-summary { color: #64523e; }
-.worldline-theme .thought-card > a { color: #755f45; }
-
 .worldline-theme .player-card { background: #15120e; }
 .worldline-theme .play-button { border: 1px solid rgba(128,199,127,.35); background: #0d130f; color: #9dd49b; box-shadow: 0 0 20px rgba(77,180,85,.1); }
 .worldline-theme .track-copy span { color: #92c58f; }
@@ -1680,7 +1659,6 @@ body.worldline-inner .site-footer { border-color: rgba(187,124,64,.24); backgrou
 @media (max-width: 560px) {
   .worldline-theme .welcome-card { min-height: 365px; }
   .worldline-theme .scene-card > img { object-position: 52% center; }
-  .worldline-theme .latest-art { background-position: 43% 54%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1750,7 +1728,7 @@ html[data-theme="dark"] .dashboard-page {
     "profile scene welcome clock"
     "profile scene welcome calendar"
     "profile latest latest calendar"
-    "profile thought player player";
+    "profile updates updates updates";
   gap: 18px;
   width: min(1380px, calc(100vw - 56px));
   min-height: 720px;
@@ -1779,8 +1757,7 @@ html[data-theme="dark"] .dashboard-page {
 .welcome-card { grid-area: welcome; padding: 28px 30px; }
 .clock-card { grid-area: clock; padding: 22px 26px; }
 .calendar-card { grid-area: calendar; padding: 24px; }
-.latest-card { grid-area: player; display: grid; grid-template-columns: 42% 1fr; padding: 24px; }
-.thought-card { grid-area: thought; padding: 20px 24px; }
+.recent-updates-card { grid-area: updates; padding: 16px 20px 18px; }
 .player-card { grid-area: latest; display: flex; align-items: center; gap: 15px; padding: 20px; }
 .like-card { grid-area: latest; align-self: end; justify-self: end; width: 96px; height: 54px; transform: translate(-16px, -12px); border-radius: 24px; }
 .like-card:hover { transform: translate(-16px, -15px); }
@@ -1855,7 +1832,7 @@ html[data-theme="dark"] .desk-nav a:hover, html[data-theme="dark"] .desk-nav a.i
 .ridge-front::after { position: absolute; top: -26px; left: 156px; width: 3px; height: 82px; border-radius: 3px; background: #192f2a; box-shadow: 12px 18px 0 -1px #192f2a, -10px 30px 0 -1px #192f2a; content: ""; transform: rotate(-12deg); }
 .scene-card p { position: absolute; right: 26px; bottom: 18px; z-index: 2; margin: 0; color: rgba(255,255,255,.76); font-family: var(--font-title); font-size: 11px; letter-spacing: .14em; writing-mode: vertical-rl; }
 
-.welcome-topline, .card-label, .clock-label { display: flex; align-items: center; justify-content: space-between; color: var(--desk-accent); font-family: var(--font-mono); font-size: 9px; letter-spacing: .13em; }
+.welcome-topline, .clock-label { display: flex; align-items: center; justify-content: space-between; color: var(--desk-accent); font-family: var(--font-mono); font-size: 9px; letter-spacing: .13em; }
 .status-dot { padding: 6px 10px; border-radius: 999px; background: rgba(64,109,94,.11); letter-spacing: .04em; }
 .welcome-card h2 { margin: 18px 0 15px; font-family: var(--font-title); font-size: clamp(30px, 2.4vw, 42px); font-weight: 600; letter-spacing: -.04em; line-height: 1.22; }
 .welcome-card h2 em { color: var(--desk-accent); font-style: normal; }
@@ -1882,27 +1859,23 @@ html[data-theme="dark"] .desk-nav a:hover, html[data-theme="dark"] .desk-nav a.i
 .mini-calendar .muted-day { opacity: .25; }
 .lunar-note { margin: 16px 0 0; padding-top: 13px; border-top: 1px solid rgba(100,125,115,.16); color: var(--desk-muted); font-family: var(--font-title); font-size: 10px; text-align: center; }
 
-.latest-card > .card-label { position: absolute; top: 20px; right: 24px; left: 24px; z-index: 3; }
-.latest-art { position: relative; overflow: hidden; margin: 25px 18px 0 0; border-radius: 26px; background: linear-gradient(145deg,#203e37,#567e70); }
-.latest-art::before, .latest-art::after { position: absolute; border: 1px solid rgba(247,230,176,.4); border-radius: 50%; content: ""; }
-.latest-art::before { inset: 28px; }
-.latest-art::after { inset: 52px; }
-.latest-art span { position: absolute; top: 50%; left: 50%; z-index: 1; color: #f3dfaa; font-family: var(--font-title); font-size: 54px; transform: translate(-50%,-50%); }
-.latest-art i { position: absolute; right: -30px; bottom: -40px; width: 180px; height: 120px; border-radius: 60% 0 0; background: #162e29; transform: rotate(-9deg); }
-.latest-copy { align-self: center; padding: 30px 10px 0 10px; }
-.latest-copy > p:first-child { margin: 0 0 8px; color: var(--desk-accent); font-size: 10px; letter-spacing: .08em; }
-.latest-copy h2 { margin: 0; font-family: var(--font-title); font-size: clamp(23px, 2.2vw, 34px); font-weight: 600; letter-spacing: -.025em; line-height: 1.34; }
-.latest-copy h2 a { text-decoration: none; }
-.latest-summary { margin: 10px 0; color: var(--desk-muted); font-size: 11px; }
-.music-downloads { display: flex; flex-wrap: wrap; gap: 7px 14px; }
-.read-link { color: var(--desk-accent); font-size: 11px; font-weight: 650; text-decoration: none; }
-.read-link span { display: inline-block; transition: transform .2s ease; }
-.read-link:hover span { transform: translateX(4px); }
-
-.thought-card .card-label button { padding: 0; border: 0; background: none; color: var(--desk-accent); font-size: 17px; transition: transform .25s ease; }
-.thought-card .card-label button:hover { transform: rotate(90deg); }
-.thought-card blockquote { margin: 18px 0 10px; color: var(--desk-ink); font-family: var(--font-title); font-size: 16px; line-height: 1.6; }
-.thought-card > a { color: var(--desk-muted); font-size: 9px; text-decoration: none; }
+.recent-updates-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.recent-updates-head h2 { margin: 0; color: var(--desk-accent); font-family: var(--font-mono); font-size: 9px; font-weight: 500; letter-spacing: .13em; }
+.recent-updates-head a { color: var(--desk-muted); font-size: 9px; text-decoration: none; }
+.recent-updates-links { display: flex; gap: 14px; }
+.recent-updates-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 11px; }
+.recent-update-item { display: grid; grid-template-columns: 52px minmax(0, 1fr) 24px; min-width: 0; min-height: 74px; align-items: center; gap: 12px; padding: 8px 10px; border: 1px solid var(--desk-line); color: var(--desk-ink); text-decoration: none; transition: border-color .2s ease, background .2s ease, transform .2s ease; }
+.recent-update-item:hover { border-color: var(--desk-accent); background: rgba(255,255,255,.32); transform: translateY(-2px); }
+.recent-update-meta, .recent-update-copy { display: block; min-width: 0; }
+.recent-update-meta { padding-right: 10px; border-right: 1px solid var(--desk-line); font-family: var(--font-mono); }
+.recent-update-meta b, .recent-update-meta time { display: block; }
+.recent-update-meta b { color: var(--desk-accent); font-size: 9px; letter-spacing: .12em; }
+.recent-update-meta time { margin-top: 5px; color: var(--desk-muted); font-size: 9px; }
+.recent-update-copy strong, .recent-update-copy small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.recent-update-copy strong { font-family: var(--font-title); font-size: 14px; }
+.recent-update-copy small { margin-top: 5px; color: var(--desk-muted); font-size: 9px; }
+.recent-update-arrow { color: var(--desk-accent); font-size: 17px; transition: transform .2s ease; }
+.recent-update-item:hover .recent-update-arrow { transform: translateX(3px); }
 
 .player-art { position: relative; width: 190px; aspect-ratio: 1; flex: 0 0 190px; overflow: hidden; border: 1px solid var(--desk-line); background: #111; clip-path: polygon(0 0, 100% 5%, 94% 100%, 0 96%); transform: rotate(-1.5deg); }
 .player-art::after { position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent 0 3px, rgba(255,255,255,.035) 3px 4px); content: ""; pointer-events: none; }
@@ -1941,7 +1914,7 @@ html[data-theme="dark"] .dashboard-footer { color: rgba(225,237,230,.5); }
       "profile scene clock"
       "profile welcome calendar"
       "profile latest calendar"
-      "profile thought player";
+      "profile updates updates";
   }
   .welcome-card { padding: 22px 24px; }
   .welcome-card h2 { margin: 12px 0 10px; font-size: 28px; }
@@ -1960,8 +1933,8 @@ html[data-theme="dark"] .dashboard-footer { color: rgba(225,237,230,.5); }
       "welcome welcome"
       "scene clock"
       "latest latest"
-      "calendar thought"
-      "player player";
+      "calendar calendar"
+      "updates updates";
     gap: 14px;
     width: min(100% - 28px, 700px);
     min-height: 0;
@@ -1984,9 +1957,8 @@ html[data-theme="dark"] .dashboard-footer { color: rgba(225,237,230,.5); }
   .scene-card { min-height: 190px; }
   .clock-card { min-height: 190px; }
   .welcome-card { min-height: 285px; }
-  .latest-card { min-height: 320px; }
   .calendar-card { min-height: 330px; }
-  .thought-card { min-height: 170px; }
+  .recent-updates-card { min-height: 210px; }
   .player-card { min-height: 190px; }
   .player-art { width: 140px; flex-basis: 140px; }
   .like-card { top: auto; right: 8px; bottom: 6px; transform: none; }
@@ -2004,13 +1976,10 @@ html[data-theme="dark"] .dashboard-footer { color: rgba(225,237,230,.5); }
   .profile-card { order: 0; }
   .welcome-card { order: 1; min-height: 330px; padding: 27px 24px; }
   .scene-card { order: 2; min-height: 245px; }
-  .latest-card { order: 7; min-height: 470px; grid-template-columns: 1fr; padding: 20px; }
-  .latest-art { min-height: 190px; margin: 28px 0 0; }
-  .latest-copy { padding: 18px 4px 0; }
-  .latest-copy h2 { font-size: 26px; }
   .clock-card { order: 4; min-height: 160px; }
   .calendar-card { order: 5; min-height: 390px; }
-  .thought-card { order: 6; min-height: 175px; }
+  .recent-updates-card { order: 6; min-height: 0; padding: 20px; }
+  .recent-updates-list { grid-template-columns: 1fr; }
   .player-card { order: 3; min-height: 152px; padding: 16px; gap: 10px; }
   .player-art { width: 96px; flex-basis: 96px; }
   .player-art span { width: 34px; height: 34px; font-size: 14px; }
@@ -2140,40 +2109,13 @@ html[data-theme="dark"] .dashboard-footer { color: rgba(225,237,230,.5); }
 
 .dashboard-v2 .clock-card,
 .dashboard-v2 .calendar-card,
-.dashboard-v2 .latest-card,
-.dashboard-v2 .thought-card,
+.dashboard-v2 .recent-updates-card,
 .dashboard-v2 .player-card,
 .dashboard-v2 .like-card { border-radius: 30px; }
 .dashboard-v2 .clock-card { background: rgba(255,255,255,.62); }
 .dashboard-v2 .digital-clock { color: #33453f; }
 .dashboard-v2 .calendar-card { background: rgba(250,250,245,.63); }
-.dashboard-v2 .latest-card { background: rgba(255,255,255,.56); }
-.dashboard-v2 .latest-art {
-  background-image: linear-gradient(120deg, rgba(31,59,50,.1), rgba(46,86,72,.14)), url("lingchen-night.png");
-  background-position: 16% 55%;
-  background-size: cover;
-}
-.dashboard-v2 .latest-art::before,
-.dashboard-v2 .latest-art::after,
-.dashboard-v2 .latest-art i { display: none; }
-.dashboard-v2 .latest-art span {
-  top: auto;
-  right: 15px;
-  bottom: 12px;
-  left: auto;
-  display: grid;
-  width: 46px;
-  height: 46px;
-  place-items: center;
-  border: 1px solid rgba(255,255,255,.6);
-  border-radius: 50%;
-  background: rgba(31,59,50,.55);
-  color: #f6e9b9;
-  font-size: 20px;
-  backdrop-filter: blur(8px);
-  transform: none;
-}
-.dashboard-v2 .thought-card { background: rgba(255,252,244,.58); }
+.dashboard-v2 .recent-updates-card { background: rgba(255,252,244,.58); }
 .dashboard-v2 .player-card { background: rgba(255,255,255,.54); }
 .dashboard-v2 .like-card { background: rgba(255,255,255,.72); }
 
@@ -2202,7 +2144,6 @@ html[data-theme="dark"] .dashboard-v2 {
   .dashboard-v2 .welcome-card { min-height: 355px; }
   .dashboard-v2 .scene-card { min-height: 250px; }
   .dashboard-v2 .scene-card > img { object-position: 53% center; }
-  .dashboard-v2 .latest-art { background-position: 14% 55%; }
   .scene-caption { right: 20px; bottom: 18px; left: 20px; }
   .scene-caption span { display: none; }
   .social-chips { margin-top: 15px; }
@@ -2341,7 +2282,6 @@ body.worldline-theme .profile-avatar { border-color:rgba(200,133,66,.35);border-
 body.worldline-theme .profile-avatar img { object-position:60% 52%; }
 body.worldline-theme .profile-kicker,
 body.worldline-theme .welcome-topline,
-body.worldline-theme .card-label,
 body.worldline-theme .clock-label { color:#9bc997;text-shadow:0 0 10px rgba(123,214,128,.3); }
 body.worldline-theme .profile-copy h1 { color:#e4d5b5; }
 body.worldline-theme .profile-copy > p:last-child { color:#9c9079; }
@@ -2366,24 +2306,13 @@ body.worldline-theme .social-chips a { background:rgba(45,39,28,.08);color:#604a
 body.worldline-theme .clock-card { background:#0d120f;box-shadow:inset 0 0 40px rgba(59,133,70,.1),0 20px 45px -32px #000; }
 body.worldline-theme .digital-clock { color:#a1d69d;text-shadow:0 0 8px rgba(89,222,102,.35),0 0 24px rgba(89,222,102,.12); }
 body.worldline-theme .clock-card > p { color:#6d826c; }
-body.worldline-theme .calendar-card,
-body.worldline-theme .thought-card,
-body.worldline-theme .latest-card { color:#2a2118;border-color:rgba(231,202,148,.3);background:rgba(201,181,141,.95);box-shadow:inset 0 0 45px rgba(76,45,19,.12),0 24px 48px -36px #000; }
+body.worldline-theme .calendar-card { color:#2a2118;border-color:rgba(231,202,148,.3);background:rgba(201,181,141,.95);box-shadow:inset 0 0 45px rgba(76,45,19,.12),0 24px 48px -36px #000; }
 body.worldline-theme .calendar-head span:first-child,
-body.worldline-theme .calendar-head strong,
-body.worldline-theme .latest-copy h2,
-body.worldline-theme .thought-card blockquote { color:#2a2118; }
+body.worldline-theme .calendar-head strong { color:#2a2118; }
 body.worldline-theme .mini-calendar span { color:#685641; }
 body.worldline-theme .mini-calendar .weekday { color:#833c28; }
 body.worldline-theme .mini-calendar .today { background:#2a241c;color:#a8d69d; }
 body.worldline-theme .lunar-note { border-top-color:rgba(71,50,31,.2);color:#675640; }
-body.worldline-theme .latest-art { background-image:linear-gradient(120deg,rgba(13,14,10,.15),rgba(161,52,22,.12));background-position:49% 54%;filter:sepia(.08) contrast(1.08); }
-body.worldline-theme .latest-copy > p:first-child,
-body.worldline-theme .read-link,
-body.worldline-theme .thought-card .card-label,
-body.worldline-theme .thought-card .card-label button { color:#8b3f28;text-shadow:none; }
-body.worldline-theme .latest-summary { color:#64523e; }
-body.worldline-theme .thought-card > a { color:#755f45; }
 body.worldline-theme .player-card { background:#15120e; }
 body.worldline-theme .play-button { border:1px solid rgba(128,199,127,.35);background:#0d130f;color:#9dd49b; }
 body.worldline-theme .track-copy span { color:#92c58f; }
@@ -2417,17 +2346,6 @@ body.worldline-inner .site-footer { border-color:rgba(187,124,64,.24);background
   body.worldline-theme .welcome-card { border-radius:18px; }
 }
 
-.music-feature-card .latest-copy h2 {
-  font-family: var(--font-mono);
-  font-size: clamp(30px,3vw,46px);
-  letter-spacing:.04em;
-}
-.music-feature-card .latest-art span {
-  color:#a6d29d;
-  font-family:var(--font-mono);
-  font-size:17px;
-  text-shadow:0 0 10px rgba(100,220,110,.45);
-}
 .music-embed-card {
   display:block;
   padding:10px 118px 10px 10px;
@@ -2448,7 +2366,6 @@ body.worldline-inner .site-footer { border-color:rgba(187,124,64,.24);background
 .music-embed-card noscript a { color:#a9cba1; }
 @media (max-width:560px) {
   .music-embed-card { min-height:172px;padding:10px 104px 10px 10px; }
-  .music-feature-card .latest-copy h2 { font-size:34px; }
 }
 
 /* GitHub Discussions overlay: fixed to the viewport so the original layout never reflows. */
@@ -3022,9 +2939,9 @@ body.monogatari-theme .ambient-two {
 /* Home chapter board */
 body.monogatari-theme.worldline-theme .desktop-shell {
   gap: 14px;
-  grid-template-rows: 205px 205px 230px 270px;
+  grid-template-rows: 205px 205px 230px 190px;
   width: min(1380px, calc(100vw - 64px));
-  min-height: 952px;
+  min-height: 872px;
   margin-top: 32px;
 }
 
@@ -3034,8 +2951,7 @@ body.monogatari-theme.worldline-theme .scene-card,
 body.monogatari-theme.worldline-theme .welcome-card,
 body.monogatari-theme.worldline-theme .clock-card,
 body.monogatari-theme.worldline-theme .calendar-card,
-body.monogatari-theme.worldline-theme .latest-card,
-body.monogatari-theme.worldline-theme .thought-card,
+body.monogatari-theme.worldline-theme .recent-updates-card,
 body.monogatari-theme.worldline-theme .player-card,
 body.monogatari-theme.worldline-theme .like-card {
   border: 2px solid var(--mono-line);
@@ -3056,8 +2972,7 @@ body.monogatari-theme .profile-card::after,
 body.monogatari-theme .welcome-card::before,
 body.monogatari-theme .clock-card::before,
 body.monogatari-theme .calendar-card::before,
-body.monogatari-theme .latest-card::before,
-body.monogatari-theme .thought-card::before {
+body.monogatari-theme .recent-updates-card::before {
   position: absolute;
   z-index: 5;
   color: var(--mono-red);
@@ -3072,8 +2987,7 @@ body.monogatari-theme .profile-card::after { right: 12px; bottom: 9px; content: 
 body.monogatari-theme .welcome-card::before { top: 11px; right: 14px; content: "INTRO / 01"; }
 body.monogatari-theme .clock-card::before { right: 12px; bottom: 8px; content: "時"; }
 body.monogatari-theme .calendar-card::before { right: 12px; bottom: 8px; content: "暦"; }
-body.monogatari-theme .latest-card::before { right: 12px; bottom: 8px; content: "音"; }
-body.monogatari-theme .thought-card::before { right: 12px; bottom: 8px; content: "語"; }
+body.monogatari-theme .recent-updates-card::before { right: 12px; bottom: 8px; content: "新"; }
 
 body.monogatari-theme.worldline-theme .profile-card {
   padding: 16px;
@@ -3184,7 +3098,6 @@ body.monogatari-theme.worldline-theme .welcome-card {
     var(--mono-panel);
 }
 body.monogatari-theme.worldline-theme .welcome-topline,
-body.monogatari-theme.worldline-theme .card-label,
 body.monogatari-theme.worldline-theme .clock-label { color: var(--mono-red); text-shadow: none; }
 body.monogatari-theme.worldline-theme .welcome-card h2 { color: var(--mono-ink); font-weight: 900; line-height: 1.15; }
 body.monogatari-theme.worldline-theme .welcome-card h2 em { color: var(--mono-red); }
@@ -3209,29 +3122,21 @@ body.monogatari-theme.worldline-theme .mini-calendar .weekday { color: var(--mon
 body.monogatari-theme.worldline-theme .mini-calendar .today { background: var(--mono-red); color: white; box-shadow: 3px 3px 0 var(--mono-line); }
 body.monogatari-theme.worldline-theme .lunar-note { border-color: var(--mono-line); color: var(--mono-muted); }
 
-body.monogatari-theme.worldline-theme .latest-card { background: #111; color: #fffaf0; }
-body.monogatari-theme.worldline-theme .latest-art {
-  border: 1px solid #fffaf0;
-  border-radius: 0;
-  background-image: linear-gradient(rgba(197,31,51,.28), rgba(0,0,0,.45)), url("player-cover-noose.jpg");
-  background-position: 52% 42%;
-  filter: none;
-  clip-path: polygon(0 0, 100% 8%, 92% 100%, 0 92%);
+body.monogatari-theme.worldline-theme .recent-updates-card {
+  background:
+    linear-gradient(115deg, transparent 0 75%, rgba(197,31,51,.08) 75%),
+    var(--mono-panel);
 }
-body.monogatari-theme.worldline-theme .latest-art::before,
-body.monogatari-theme.worldline-theme .latest-art::after { display: none; }
-body.monogatari-theme.worldline-theme .latest-art span { border-radius: 0; background: var(--mono-red); color: white; }
-body.monogatari-theme.worldline-theme .latest-copy h2 { color: #fffaf0; }
-body.monogatari-theme.worldline-theme .latest-copy > p:first-child,
-body.monogatari-theme.worldline-theme .read-link { color: var(--mono-pink); }
-body.monogatari-theme.worldline-theme .latest-summary { color: #aaa09a; }
-
-body.monogatari-theme.worldline-theme .thought-card { background: var(--mono-red); }
-body.monogatari-theme.worldline-theme .thought-card .card-label,
-body.monogatari-theme.worldline-theme .thought-card .card-label button,
-body.monogatari-theme.worldline-theme .thought-card blockquote,
-body.monogatari-theme.worldline-theme .thought-card > a { color: white; }
-body.monogatari-theme.worldline-theme .thought-card blockquote { font-weight: 800; }
+body.monogatari-theme.worldline-theme .recent-updates-head { padding-bottom: 10px; border-bottom: 1px solid var(--mono-line); }
+body.monogatari-theme.worldline-theme .recent-updates-head h2,
+body.monogatari-theme.worldline-theme .recent-updates-head a,
+body.monogatari-theme.worldline-theme .recent-update-meta b,
+body.monogatari-theme.worldline-theme .recent-update-arrow { color: var(--mono-red); }
+body.monogatari-theme.worldline-theme .recent-update-item { border-color: var(--mono-line); color: var(--mono-ink); }
+body.monogatari-theme.worldline-theme .recent-update-item:hover { border-color: var(--mono-red); background: rgba(197,31,51,.06); }
+body.monogatari-theme.worldline-theme .recent-update-meta { border-color: var(--mono-line); }
+body.monogatari-theme.worldline-theme .recent-update-meta time,
+body.monogatari-theme.worldline-theme .recent-update-copy small { color: var(--mono-muted); }
 
 body.monogatari-theme.worldline-theme .player-card { background: var(--mono-panel); }
 body.monogatari-theme.worldline-theme .play-button { border: 0; border-radius: 0; background: var(--mono-red); color: white; }
@@ -3245,7 +3150,6 @@ body.monogatari-theme.worldline-theme .dashboard-footer { color: var(--mono-mute
 
 /* The inverted chapter cards follow the selected theme instead of staying black. */
 html[data-theme="light"] body.monogatari-theme.worldline-theme .profile-card,
-html[data-theme="light"] body.monogatari-theme.worldline-theme .latest-card,
 html[data-theme="light"] body.monogatari-theme.worldline-theme .like-card {
   background:
     repeating-linear-gradient(0deg, rgba(17,17,17,.025) 0 1px, transparent 1px 4px),
@@ -3253,7 +3157,6 @@ html[data-theme="light"] body.monogatari-theme.worldline-theme .like-card {
   color: var(--mono-ink);
 }
 html[data-theme="light"] body.monogatari-theme.worldline-theme .profile-copy h1,
-html[data-theme="light"] body.monogatari-theme.worldline-theme .latest-copy h2,
 html[data-theme="light"] body.monogatari-theme.worldline-theme .like-card button {
   color: var(--mono-ink);
 }
@@ -3262,14 +3165,11 @@ html[data-theme="light"] body.monogatari-theme.worldline-theme .profile-name-shi
   --profile-name-accent: #c51f33;
   --profile-name-glint: #fff0c7;
 }
-html[data-theme="light"] body.monogatari-theme.worldline-theme .profile-kicker,
-html[data-theme="light"] body.monogatari-theme.worldline-theme .latest-copy > p:first-child,
-html[data-theme="light"] body.monogatari-theme.worldline-theme .read-link {
+html[data-theme="light"] body.monogatari-theme.worldline-theme .profile-kicker {
   color: var(--mono-red);
 }
 html[data-theme="light"] body.monogatari-theme.worldline-theme .profile-copy > p:last-child,
 html[data-theme="light"] body.monogatari-theme.worldline-theme .desk-nav a,
-html[data-theme="light"] body.monogatari-theme.worldline-theme .latest-summary,
 html[data-theme="light"] body.monogatari-theme.worldline-theme .like-card p {
   color: var(--mono-muted);
 }
@@ -3281,10 +3181,6 @@ html[data-theme="light"] body.monogatari-theme.worldline-theme .round-control {
   border-color: var(--mono-line);
   color: var(--mono-ink);
 }
-html[data-theme="light"] body.monogatari-theme.worldline-theme .latest-art {
-  border-color: var(--mono-line);
-}
-
 /* Inner chapter pages */
 body.monogatari-theme.worldline-inner {
   background:
@@ -3462,10 +3358,7 @@ body.monogatari-theme.worldline-inner .button { border: 2px solid var(--mono-lin
   body.monogatari-theme.worldline-theme .scene-card > img { object-position: 52% center; }
   body.monogatari-theme .scene-caption { right: 10px; bottom: 10px; left: 10px; display: block; padding: 10px 11px; }
   body.monogatari-theme .scene-caption strong { font-size: 12px; line-height: 1.5; }
-  body.monogatari-theme.worldline-theme .latest-art { min-height: 240px; }
-  body.monogatari-theme.worldline-theme .latest-copy { padding-top: 24px; }
-  body.monogatari-theme.worldline-theme .thought-card { min-height: 210px; }
-  body.monogatari-theme.worldline-theme .thought-card blockquote { font-size: 20px; }
+  body.monogatari-theme.worldline-theme .recent-updates-card { min-height: 0; }
   body.monogatari-theme.worldline-theme .clock-card { min-height: 175px; }
   body.monogatari-theme.worldline-theme .calendar-card { min-height: 410px; }
   body.monogatari-theme.worldline-theme .like-card { order: 3; width: 100%; height: 74px; transform: none; }

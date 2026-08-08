@@ -589,20 +589,6 @@
     }
   }
 
-  const noteButton = document.querySelector("[data-random-note]");
-  const noteText = document.querySelector("[data-note-text]");
-  const notes = [
-    "“忘记不是消失，只是故事暂时没有轮到它出场。”",
-    "“所谓日常，大概就是怪异还没来得及自我介绍。”",
-    "“没有说出口的话不会消失，它们只是换成了别的语气。”",
-    "“成长不是成为别人，而是终于能替过去的自己补完旁白。”"
-  ];
-  noteButton?.addEventListener("click", () => {
-    if (!noteText) return;
-    const current = notes.indexOf(noteText.textContent);
-    noteText.textContent = notes[(current + 1) % notes.length];
-  });
-
   const playButton = document.querySelector("[data-play]");
   const wave = document.querySelector("[data-wave]");
   let audio = document.querySelector("[data-audio]");
