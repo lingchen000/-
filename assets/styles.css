@@ -5837,3 +5837,37 @@ html[data-theme="dark"] .global-music-close { border-color: #f3ede1; background:
   .global-music-dock { backdrop-filter: none; -webkit-backdrop-filter: none; }
   .global-music-restore img { animation: none !important; }
 }
+
+/* Preserve the former chapter-two cover proportion and treatment after the image swap. */
+body.monogatari-theme.worldline-theme .player-card .player-art {
+  width: 320px;
+  aspect-ratio: 1.52 / 1;
+  flex: 0 0 320px;
+}
+body.monogatari-theme.worldline-theme .player-card .player-art::before {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(rgba(197,31,51,.28), rgba(0,0,0,.45));
+  content: "";
+  pointer-events: none;
+}
+body.monogatari-theme.worldline-theme .player-card .player-art img {
+  object-position: 52% 42%;
+  filter: none;
+}
+body.monogatari-theme.worldline-theme .player-card .player-art span { z-index: 2; }
+
+@media (max-width: 1180px) {
+  body.monogatari-theme.worldline-theme .player-card .player-art {
+    width: 270px;
+    flex-basis: 270px;
+  }
+}
+
+@media (max-width: 560px) {
+  body.monogatari-theme.worldline-theme .player-card .player-art {
+    width: 138px;
+    flex-basis: 138px;
+  }
+}
