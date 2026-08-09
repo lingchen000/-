@@ -1854,6 +1854,38 @@ html[data-theme="dark"] .desk-nav a:hover, html[data-theme="dark"] .desk-nav a.i
 }
 .profile-social-link:hover svg,
 .profile-social-link:focus-visible svg { transform: rotate(-8deg) scale(1.1); }
+.profile-skills {
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(127,145,137,.2);
+}
+.profile-skills h2 {
+  margin: 0 0 12px;
+  color: var(--desk-muted);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .12em;
+}
+.profile-skills ul {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.profile-skills li {
+  min-width: 0;
+  padding: 7px 5px;
+  border: 1px solid currentColor;
+  color: var(--desk-muted);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+}
 .profile-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; padding: 16px 4px 0; border-top: 1px solid rgba(127,145,137,.2); color: var(--desk-muted); font-size: 9px; }
 .round-control { display: grid; width: 34px; height: 34px; padding: 0; place-items: center; border: 1px solid var(--desk-line); border-radius: 50%; background: rgba(255,255,255,.3); color: var(--desk-ink); }
 
@@ -2059,6 +2091,7 @@ html[data-theme="dark"] .dashboard-footer { color: rgba(225,237,230,.5); }
   .desk-nav a strong { display: none; }
   .profile-socials { grid-template-columns: repeat(2, minmax(86px, 1fr)); margin: 8px 0 0 auto; }
   .profile-social-link { min-height: 36px; padding-inline: 9px; }
+  .profile-skills { order: 5; width: 100%; }
   .scene-card { min-height: 190px; }
   .clock-card { min-height: 190px; }
   .welcome-card { min-height: 285px; }
@@ -3169,6 +3202,9 @@ body.monogatari-theme.worldline-theme .desk-nav a.is-current {
 body.monogatari-theme.worldline-theme .desk-nav a span { color: var(--mono-pink); font-size: 13px; font-weight: 800; }
 body.monogatari-theme.worldline-theme .desk-nav a.is-current span { color: white; }
 body.monogatari-theme.worldline-theme .profile-footer { border-color: #41383a; color: #9f9590; }
+body.monogatari-theme.worldline-theme .profile-skills { border-color: #41383a; }
+body.monogatari-theme.worldline-theme .profile-skills h2 { color: var(--mono-pink); }
+body.monogatari-theme.worldline-theme .profile-skills li { color: #c8beb3; }
 body.monogatari-theme.worldline-theme .round-control { border: 1px solid #fffaf0; border-radius: 0; background: transparent; color: #fffaf0; }
 
 body.monogatari-theme.worldline-theme .scene-card { background: var(--mono-red); }
@@ -3283,6 +3319,15 @@ html[data-theme="light"] body.monogatari-theme.worldline-theme .like-card p {
 html[data-theme="light"] body.monogatari-theme.worldline-theme .profile-footer {
   border-color: rgba(17,17,17,.22);
   color: var(--mono-muted);
+}
+html[data-theme="light"] body.monogatari-theme.worldline-theme .profile-skills {
+  border-color: rgba(17,17,17,.22);
+}
+html[data-theme="light"] body.monogatari-theme.worldline-theme .profile-skills h2 {
+  color: var(--mono-red);
+}
+html[data-theme="light"] body.monogatari-theme.worldline-theme .profile-skills li {
+  color: var(--mono-ink);
 }
 html[data-theme="light"] body.monogatari-theme.worldline-theme .round-control {
   border-color: var(--mono-line);
@@ -3448,6 +3493,8 @@ body.monogatari-theme.worldline-inner .button { border: 2px solid var(--mono-lin
   body.monogatari-theme.worldline-theme .profile-avatar { width: 66px; height: 66px; flex-basis: 66px; }
   body.monogatari-theme.worldline-theme .welcome-card { min-height: 370px; padding: 30px 22px; }
   body.monogatari-theme.worldline-theme .profile-copy { max-width: calc(100% - 78px); }
+  body.monogatari-theme.worldline-theme .profile-skills { margin-top: 20px; padding-top: 14px; }
+  body.monogatari-theme.worldline-theme .profile-skills ul { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   body.monogatari-theme.worldline-theme .desk-nav {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
