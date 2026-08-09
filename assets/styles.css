@@ -1869,24 +1869,27 @@ html[data-theme="dark"] .desk-nav a:hover, html[data-theme="dark"] .desk-nav a.i
   letter-spacing: .16em;
 }
 .internship-card .internship-website {
-  position: absolute;
-  top: 24px;
-  right: 30px;
-  z-index: 6;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 0 5px;
-  border-bottom: 1px solid var(--mono-red, #c51f33);
+  justify-content: center;
+  width: .58em;
+  height: .58em;
+  margin-left: .24em;
   color: var(--mono-red, #c51f33);
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: .1em;
   text-decoration: none;
+  vertical-align: .18em;
 }
-.internship-card .internship-website span { transition: transform .2s ease; }
-.internship-card .internship-website:hover span { transform: translate(2px, -2px); }
+.internship-card .internship-website svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+  stroke-width: 2;
+  transition: transform .2s ease;
+}
+.internship-card .internship-website:hover svg { transform: translate(2px, -2px); }
 .internship-card .internship-website:focus-visible { outline: 2px solid var(--mono-red, #c51f33); outline-offset: 4px; }
 .internship-card h2 { margin: 0; }
 .internship-card .internship-role {
@@ -3520,11 +3523,6 @@ body.monogatari-theme.worldline-inner .button { border: 2px solid var(--mono-lin
   html body.monogatari-theme.worldline-theme .internship-card {
     min-height:230px;
     padding:26px 22px;
-  }
-  html body.monogatari-theme.worldline-theme .internship-card .internship-website {
-    top:20px;
-    right:22px;
-    font-size:9px;
   }
   html body.monogatari-theme.worldline-theme .internship-card h2 {
     margin:0;
