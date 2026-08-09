@@ -13,6 +13,7 @@
 
   if (tiltCards.length) {
     tiltCards.forEach((card) => {
+      const tiltStrength = card.matches(".worldline-inner .about-layout > .prose") ? 4 : 12;
       const glare = document.createElement("span");
       glare.className = "card-tilt-glare";
       glare.setAttribute("aria-hidden", "true");
@@ -40,8 +41,8 @@
         if (!cardRect) return;
         const x = Math.min(1, Math.max(0, (pointerX - cardRect.left) / cardRect.width));
         const y = Math.min(1, Math.max(0, (pointerY - cardRect.top) / cardRect.height));
-        const rotateX = (0.5 - y) * 12;
-        const rotateY = (x - 0.5) * 12;
+        const rotateX = (0.5 - y) * tiltStrength;
+        const rotateY = (x - 0.5) * tiltStrength;
         card.style.setProperty("--tilt-rx", `${rotateX.toFixed(2)}deg`);
         card.style.setProperty("--tilt-ry", `${rotateY.toFixed(2)}deg`);
         card.style.setProperty("--tilt-gx", `${(x * 100).toFixed(1)}%`);
