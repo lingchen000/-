@@ -261,6 +261,19 @@
     const email = emailCopyButton.dataset.email;
     const label = emailCopyButton.querySelector("[data-copy-email-label]");
     const icon = emailCopyButton.querySelector("[data-copy-email-icon]");
+    const copyToast = document.createElement("div");
+    copyToast.className = "copy-toast";
+    copyToast.setAttribute("role", "status");
+    copyToast.setAttribute("aria-live", "polite");
+    document.body.appendChild(copyToast);
+    let copyToastTimer = 0;
+    const showCopyToast = (message, isError = false) => {
+      window.clearTimeout(copyToastTimer);
+      copyToast.textContent = message;
+      copyToast.classList.toggle("is-error", isError);
+      copyToast.classList.add("is-visible");
+      copyToastTimer = window.setTimeout(() => copyToast.classList.remove("is-visible"), 2600);
+    };
     const copyEmail = async () => {
       if (navigator.clipboard?.writeText) {
         try {
@@ -287,9 +300,11 @@
         await copyEmail();
         label.textContent = "邮箱已复制";
         icon.textContent = "✓";
+        showCopyToast(`邮箱已复制：${email}`);
       } catch (_error) {
         label.textContent = email;
         icon.textContent = "Ctrl+C";
+        showCopyToast(`复制失败，请手动复制：${email}`, true);
       }
       window.setTimeout(() => {
         label.textContent = "复制邮箱";

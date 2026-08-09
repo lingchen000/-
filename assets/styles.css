@@ -965,6 +965,31 @@ button.contact-link {
   cursor: pointer;
 }
 
+.copy-toast {
+  position: fixed;
+  z-index: 1000;
+  top: max(76px, calc(env(safe-area-inset-top) + 16px));
+  left: 50%;
+  width: max-content;
+  max-width: calc(100vw - 32px);
+  padding: 12px 16px;
+  border: 2px solid var(--mono-red, #c51f33);
+  background: #111;
+  box-shadow: 5px 5px 0 var(--mono-red, #c51f33);
+  color: #fffaf0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.45;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -14px);
+  transition: opacity .2s ease, transform .2s ease;
+}
+.copy-toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
+.copy-toast.is-error { border-color: #d97b2e; box-shadow: 5px 5px 0 #d97b2e; }
+
 .contact-link:hover {
   border-color: var(--accent);
   background: var(--accent-soft);
