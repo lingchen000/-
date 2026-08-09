@@ -1859,6 +1859,36 @@ html[data-theme="dark"] .desk-nav a:hover, html[data-theme="dark"] .desk-nav a.i
 .mini-calendar .muted-day { opacity: .25; }
 .lunar-note { margin: 16px 0 0; padding-top: 13px; border-top: 1px solid rgba(100,125,115,.16); color: var(--desk-muted); font-family: var(--font-title); font-size: 10px; text-align: center; }
 
+.internship-card { display: flex; flex-direction: column; justify-content: center; }
+.internship-card .internship-kicker {
+  margin: 0 0 12px;
+  color: var(--mono-red, #c51f33);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .16em;
+}
+.internship-card h2 { margin: 0; }
+.internship-card .internship-role {
+  margin: 8px 0 0;
+  color: var(--mono-red, #c51f33);
+  font-family: var(--font-title);
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+.internship-card .internship-date {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 22px 0 0;
+  color: var(--mono-muted, #756e68);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: .04em;
+}
+.internship-card .internship-date > span:first-child { color: var(--mono-red, #c51f33); }
+
 .recent-updates-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .recent-updates-head h2 { margin: 0; color: var(--desk-accent); font-family: var(--font-mono); font-size: 9px; font-weight: 500; letter-spacing: .13em; }
 .recent-updates-head a { color: var(--desk-muted); font-size: 9px; text-decoration: none; }
@@ -3004,6 +3034,7 @@ body.monogatari-theme .recent-updates-card::before {
 
 body.monogatari-theme .profile-card::after { right: 12px; bottom: 9px; content: "壹"; }
 body.monogatari-theme .welcome-card::before { top: 11px; right: 14px; content: "INTRO / 01"; }
+body.monogatari-theme .internship-card::before { content: "经历"; }
 body.monogatari-theme .clock-card::before { right: 12px; bottom: 8px; content: "時"; }
 body.monogatari-theme .calendar-card::before { right: 12px; bottom: 8px; content: "暦"; }
 body.monogatari-theme .recent-updates-card::before { right: 12px; bottom: 8px; content: "新"; }
@@ -3465,6 +3496,24 @@ body.monogatari-theme.worldline-inner .button { border: 2px solid var(--mono-lin
   }
   html body.monogatari-theme .calendar-card::before {
     content:none;
+  }
+  html body.monogatari-theme.worldline-theme .internship-card {
+    min-height:230px;
+    padding:26px 22px;
+  }
+  html body.monogatari-theme.worldline-theme .internship-card h2 {
+    margin:0;
+    font-size:30px;
+    line-height:1.2;
+    letter-spacing:-.05em;
+  }
+  html body.monogatari-theme.worldline-theme .internship-card .internship-role {
+    margin-top:8px;
+    font-size:19px;
+  }
+  html body.monogatari-theme.worldline-theme .internship-card .internship-date {
+    margin-top:20px;
+    font-size:11px;
   }
   html body.worldline-theme .player-card.music-embed-card {
     min-height:172px;
