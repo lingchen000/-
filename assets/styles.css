@@ -3432,6 +3432,40 @@ body.monogatari-theme.worldline-inner .button { border: 2px solid var(--mono-lin
     min-width:0;
     overflow:hidden;
   }
+  html body.monogatari-theme.worldline-theme .calendar-card {
+    min-height:0;
+    padding:18px 18px 20px;
+  }
+  html body.worldline-theme .calendar-head {
+    align-items:center;
+  }
+  html body.worldline-theme .calendar-head span:first-child {
+    font-size:22px;
+  }
+  html body.worldline-theme .calendar-mark {
+    width:32px;
+    height:32px;
+  }
+  html body.worldline-theme .mini-calendar {
+    gap:4px;
+    margin-top:14px;
+  }
+  html body.worldline-theme .mini-calendar .calendar-day:not(.current-week) {
+    display:none;
+  }
+  html body.worldline-theme .mini-calendar span {
+    min-height:32px;
+    aspect-ratio:auto;
+  }
+  html body.worldline-theme .mini-calendar .weekday {
+    margin-bottom:0;
+  }
+  html body.worldline-theme .lunar-note {
+    display:none;
+  }
+  html body.monogatari-theme .calendar-card::before {
+    content:none;
+  }
   html body.worldline-theme .player-card.music-embed-card {
     min-height:172px;
     padding:10px 104px 10px 10px;

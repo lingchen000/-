@@ -570,23 +570,28 @@
     const previousDays = new Date(year, month, 0).getDate();
     for (let offset = firstDay - 1; offset >= 0; offset -= 1) {
       const item = document.createElement("span");
-      item.className = "muted-day";
+      item.className = "calendar-day muted-day";
       item.textContent = previousDays - offset;
       calendar.appendChild(item);
     }
     for (let day = 1; day <= days; day += 1) {
       const item = document.createElement("span");
+      item.className = "calendar-day";
       item.textContent = day;
-      if (day === now.getDate()) item.className = "today";
+      if (day === now.getDate()) item.classList.add("today");
       calendar.appendChild(item);
     }
     const cells = firstDay + days;
     for (let day = 1; day <= (7 - (cells % 7)) % 7; day += 1) {
       const item = document.createElement("span");
-      item.className = "muted-day";
+      item.className = "calendar-day muted-day";
       item.textContent = day;
       calendar.appendChild(item);
     }
+    const currentWeek = Math.floor((firstDay + now.getDate() - 1) / 7);
+    [...calendar.querySelectorAll(".calendar-day")]
+      .slice(currentWeek * 7, currentWeek * 7 + 7)
+      .forEach((item) => item.classList.add("current-week"));
   }
 
   const playButton = document.querySelector("[data-play]");
