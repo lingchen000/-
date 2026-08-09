@@ -897,6 +897,7 @@ html[data-theme="dark"] .theme-icon-sun {
 .profile-facts dt { color: var(--mono-red, var(--accent)); font-family: var(--font-mono); font-size: 10px; font-weight: 800; letter-spacing: .1em; }
 .profile-facts dd { margin: 7px 0 0; color: var(--mono-muted, var(--ink)); font-size: 14px; line-height: 1.55; overflow-wrap: anywhere; }
 .profile-facts dd a { color: var(--mono-red, var(--accent)); }
+.profile-facts .education-details span { display: block; }
 .prose .skill-line {
   margin: 0 0 34px;
   color: var(--mono-ink, var(--ink));
