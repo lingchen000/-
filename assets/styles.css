@@ -956,6 +956,15 @@ html[data-theme="dark"] .theme-icon-sun {
   transition: border-color 180ms ease, background-color 180ms ease;
 }
 
+button.contact-link {
+  width: 100%;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
 .contact-link:hover {
   border-color: var(--accent);
   background: var(--accent-soft);
