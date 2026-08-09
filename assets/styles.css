@@ -1860,12 +1860,25 @@ html[data-theme="dark"] .desk-nav a:hover, html[data-theme="dark"] .desk-nav a.i
   border-top: 1px solid rgba(127,145,137,.2);
 }
 .profile-skills h2 {
+  position: relative;
   margin: 0 0 12px;
+  padding-bottom: 9px;
   color: var(--desk-muted);
   font-family: var(--font-mono);
   font-size: 9px;
   font-weight: 800;
   letter-spacing: .12em;
+}
+.profile-skills h2::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--mono-red, var(--desk-accent));
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left;
 }
 .profile-skills ul {
   display: grid;
@@ -1876,7 +1889,9 @@ html[data-theme="dark"] .desk-nav a:hover, html[data-theme="dark"] .desk-nav a.i
   list-style: none;
 }
 .profile-skills li {
+  position: relative;
   min-width: 0;
+  overflow: hidden;
   padding: 7px 5px;
   border: 1px solid currentColor;
   color: var(--desk-muted);
@@ -1885,6 +1900,62 @@ html[data-theme="dark"] .desk-nav a:hover, html[data-theme="dark"] .desk-nav a.i
   font-weight: 700;
   line-height: 1;
   text-align: center;
+}
+.profile-skills li::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 20%, rgba(255,255,255,.5) 48%, transparent 76%);
+  content: "";
+  pointer-events: none;
+  transform: translateX(-140%);
+}
+html:not(.intro-pending) .profile-skills h2::after {
+  animation: profile-skill-rule .65s .08s cubic-bezier(.22, 1, .36, 1) forwards;
+}
+html:not(.intro-pending) .profile-skills li {
+  animation: profile-skill-enter .55s cubic-bezier(.22, 1, .36, 1) both;
+}
+html:not(.intro-pending) .profile-skills li:nth-child(1) { animation-delay: .12s; }
+html:not(.intro-pending) .profile-skills li:nth-child(2) { animation-delay: .18s; }
+html:not(.intro-pending) .profile-skills li:nth-child(3) { animation-delay: .24s; }
+html:not(.intro-pending) .profile-skills li:nth-child(4) { animation-delay: .3s; }
+html:not(.intro-pending) .profile-skills li:nth-child(5) { animation-delay: .36s; }
+html:not(.intro-pending) .profile-skills li:nth-child(6) { animation-delay: .42s; }
+html:not(.intro-pending) .profile-skills li:nth-child(7) { animation-delay: .48s; }
+
+@keyframes profile-skill-rule {
+  to { transform: scaleX(1); }
+}
+
+@keyframes profile-skill-enter {
+  from { opacity: 0; transform: translateY(10px) scale(.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .profile-skills li {
+    transition: color 180ms ease, background-color 180ms ease, box-shadow 220ms cubic-bezier(.22, 1, .36, 1), transform 220ms cubic-bezier(.22, 1, .36, 1);
+  }
+  .profile-skills li:hover {
+    z-index: 1;
+    background: var(--mono-red, var(--desk-accent));
+    box-shadow: 3px 3px 0 var(--mono-line, currentColor);
+    color: #fff;
+    transform: translate(-2px, -2px);
+  }
+  .profile-skills li:hover::after {
+    transform: translateX(140%);
+    transition: transform 520ms cubic-bezier(.22, 1, .36, 1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:not(.intro-pending) .profile-skills h2::after,
+  html:not(.intro-pending) .profile-skills li {
+    animation: none;
+  }
+  .profile-skills h2::after { transform: scaleX(1); }
+  .profile-skills li { opacity: 1; transform: none; }
 }
 .profile-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; padding: 16px 4px 0; border-top: 1px solid rgba(127,145,137,.2); color: var(--desk-muted); font-size: 9px; }
 .round-control { display: grid; width: 34px; height: 34px; padding: 0; place-items: center; border: 1px solid var(--desk-line); border-radius: 50%; background: rgba(255,255,255,.3); color: var(--desk-ink); }
@@ -3328,6 +3399,14 @@ html[data-theme="light"] body.monogatari-theme.worldline-theme .profile-skills h
 }
 html[data-theme="light"] body.monogatari-theme.worldline-theme .profile-skills li {
   color: var(--mono-ink);
+}
+@media (hover: hover) and (pointer: fine) {
+  body.monogatari-theme.worldline-theme .profile-skills li:hover,
+  html[data-theme="light"] body.monogatari-theme.worldline-theme .profile-skills li:hover {
+    background: var(--mono-red);
+    box-shadow: 3px 3px 0 var(--mono-line);
+    color: #fff;
+  }
 }
 html[data-theme="light"] body.monogatari-theme.worldline-theme .round-control {
   border-color: var(--mono-line);
