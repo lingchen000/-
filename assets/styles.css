@@ -897,14 +897,40 @@ html[data-theme="dark"] .theme-icon-sun {
 .profile-facts dt { color: var(--mono-red, var(--accent)); font-family: var(--font-mono); font-size: 10px; font-weight: 800; letter-spacing: .1em; }
 .profile-facts dd { margin: 7px 0 0; color: var(--mono-muted, var(--ink)); font-size: 14px; line-height: 1.55; overflow-wrap: anywhere; }
 .profile-facts dd a { color: var(--mono-red, var(--accent)); }
-.prose .skill-line {
-  margin: 0 0 34px;
+.skill-panel {
+  margin-top: 42px;
+  padding: 20px;
+  border: 1px solid var(--line-strong);
+}
+
+.prose .skill-panel h2 {
+  margin: 0 0 16px;
+  border: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .14em;
+}
+
+.prose .skill-tags {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.prose .skill-tags li {
+  margin: 0;
+  padding: 9px 8px;
+  border: 1px solid var(--line-strong);
   color: var(--mono-ink, var(--ink));
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
-  line-height: 1.8;
-  word-spacing: .14em;
+  line-height: 1;
+  text-align: center;
 }
 
 .prose a {
@@ -3373,6 +3399,16 @@ body.monogatari-theme.worldline-inner .prose strong { color: var(--mono-ink); }
 body.monogatari-theme.worldline-inner .prose blockquote { border-left: 8px solid var(--mono-red); background: rgba(197,31,51,.08); color: var(--mono-ink); font-weight: 800; }
 body.monogatari-theme.worldline-inner .contact-link { border-color: var(--mono-line); color: var(--mono-ink); }
 body.monogatari-theme.worldline-inner .contact-link:hover { border-color: var(--mono-red); background: var(--mono-red); color: white; }
+body.monogatari-theme.worldline-inner .skill-panel,
+body.monogatari-theme.worldline-inner .skill-tags li { border-color: var(--mono-line); }
+body.monogatari-theme.worldline-inner .prose .skill-panel h2 {
+  margin: 0 0 16px;
+  border: 0;
+  color: var(--mono-red);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .14em;
+}
 
 body.monogatari-theme.worldline-inner .archive-empty-terminal,
 body.monogatari-theme.worldline-inner .log-console {
@@ -3490,6 +3526,8 @@ body.monogatari-theme.worldline-inner .button { border: 2px solid var(--mono-lin
   body.monogatari-theme.worldline-inner .profile-intro { font-size: 16px; }
   body.monogatari-theme.worldline-inner .profile-facts { grid-template-columns: 1fr; }
   body.monogatari-theme.worldline-inner .profile-facts div { padding: 15px 16px; }
+  body.monogatari-theme.worldline-inner .skill-panel { margin-top: 30px; padding: 16px; }
+  body.monogatari-theme.worldline-inner .skill-tags { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   body.monogatari-theme.worldline-inner .archive-empty-terminal,
   body.monogatari-theme.worldline-inner .log-console { box-shadow: 7px 7px 0 var(--mono-line); }
   body.monogatari-theme.worldline-inner .site-footer { width: calc(100% - 24px); box-shadow: 6px 6px 0 var(--mono-red); }
