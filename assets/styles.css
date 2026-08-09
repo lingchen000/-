@@ -1913,7 +1913,7 @@ html:not(.intro-pending) .profile-skills h2::after {
   animation: profile-skill-rule .65s .08s cubic-bezier(.22, 1, .36, 1) forwards;
 }
 html:not(.intro-pending) .profile-skills li {
-  animation: profile-skill-enter .55s cubic-bezier(.22, 1, .36, 1) both;
+  animation: profile-skill-enter .55s cubic-bezier(.22, 1, .36, 1) backwards;
 }
 html:not(.intro-pending) .profile-skills li:nth-child(1) { animation-delay: .12s; }
 html:not(.intro-pending) .profile-skills li:nth-child(2) { animation-delay: .18s; }
