@@ -897,23 +897,14 @@ html[data-theme="dark"] .theme-icon-sun {
 .profile-facts dt { color: var(--mono-red, var(--accent)); font-family: var(--font-mono); font-size: 10px; font-weight: 800; letter-spacing: .1em; }
 .profile-facts dd { margin: 7px 0 0; color: var(--mono-muted, var(--ink)); font-size: 14px; line-height: 1.55; overflow-wrap: anywhere; }
 .profile-facts dd a { color: var(--mono-red, var(--accent)); }
-.prose .skill-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+.prose .skill-line {
   margin: 0 0 34px;
-  padding: 0;
-  list-style: none;
-}
-.prose .skill-list li {
-  margin: 0;
-  padding: 9px 14px;
-  border: 1px solid var(--line-strong);
   color: var(--mono-ink, var(--ink));
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
-  line-height: 1.4;
+  line-height: 1.8;
+  word-spacing: .14em;
 }
 
 .prose a {
