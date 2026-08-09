@@ -1868,6 +1868,26 @@ html[data-theme="dark"] .desk-nav a:hover, html[data-theme="dark"] .desk-nav a.i
   font-weight: 800;
   letter-spacing: .16em;
 }
+.internship-card .internship-website {
+  position: absolute;
+  top: 24px;
+  right: 30px;
+  z-index: 6;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 0 5px;
+  border-bottom: 1px solid var(--mono-red, #c51f33);
+  color: var(--mono-red, #c51f33);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-decoration: none;
+}
+.internship-card .internship-website span { transition: transform .2s ease; }
+.internship-card .internship-website:hover span { transform: translate(2px, -2px); }
+.internship-card .internship-website:focus-visible { outline: 2px solid var(--mono-red, #c51f33); outline-offset: 4px; }
 .internship-card h2 { margin: 0; }
 .internship-card .internship-role {
   margin: 8px 0 0;
@@ -3034,7 +3054,7 @@ body.monogatari-theme .recent-updates-card::before {
 
 body.monogatari-theme .profile-card::after { right: 12px; bottom: 9px; content: "壹"; }
 body.monogatari-theme .welcome-card::before { top: 11px; right: 14px; content: "INTRO / 01"; }
-body.monogatari-theme .internship-card::before { content: "经历"; }
+body.monogatari-theme .internship-card::before { content: none; }
 body.monogatari-theme .clock-card::before { right: 12px; bottom: 8px; content: "時"; }
 body.monogatari-theme .calendar-card::before { right: 12px; bottom: 8px; content: "暦"; }
 body.monogatari-theme .recent-updates-card::before { right: 12px; bottom: 8px; content: "新"; }
@@ -3500,6 +3520,11 @@ body.monogatari-theme.worldline-inner .button { border: 2px solid var(--mono-lin
   html body.monogatari-theme.worldline-theme .internship-card {
     min-height:230px;
     padding:26px 22px;
+  }
+  html body.monogatari-theme.worldline-theme .internship-card .internship-website {
+    top:20px;
+    right:22px;
+    font-size:9px;
   }
   html body.monogatari-theme.worldline-theme .internship-card h2 {
     margin:0;
