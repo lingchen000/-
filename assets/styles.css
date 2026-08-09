@@ -961,6 +961,18 @@ html[data-theme="dark"] .theme-icon-sun {
   background: var(--accent-soft);
 }
 
+.contact-link-label { display: inline-flex; align-items: center; gap: 10px; }
+.contact-link-label svg {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
 .reading-progress {
   position: fixed;
   top: 0;
