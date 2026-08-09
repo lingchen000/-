@@ -885,6 +885,23 @@ html[data-theme="dark"] .theme-icon-sun {
   color: var(--ink);
 }
 
+.profile-intro { font-size: 18px; line-height: 1.9; }
+.profile-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 34px 0 0;
+  border-top: 1px solid var(--line-strong);
+  border-left: 1px solid var(--line-strong);
+}
+.profile-facts div { min-width: 0; padding: 18px; border-right: 1px solid var(--line-strong); border-bottom: 1px solid var(--line-strong); }
+.profile-facts dt { color: var(--mono-red, var(--accent)); font-family: var(--font-mono); font-size: 10px; font-weight: 800; letter-spacing: .1em; }
+.profile-facts dd { margin: 7px 0 0; color: var(--mono-muted, var(--ink)); font-size: 14px; line-height: 1.55; overflow-wrap: anywhere; }
+.profile-facts dd a { color: var(--mono-red, var(--accent)); }
+.tech-stack { display: grid; gap: 12px; margin-bottom: 34px; }
+.tech-stack-group { padding: 18px 20px; border: 1px solid var(--line-strong); }
+.prose .tech-stack-group h3 { margin: 0 0 10px; color: var(--mono-ink, var(--ink)); font-size: 20px; }
+.prose .tech-stack-group p { margin: 6px 0 0; font-size: 14px; line-height: 1.75; }
+
 .prose a {
   color: var(--accent);
 }
@@ -3453,6 +3470,10 @@ body.monogatari-theme.worldline-inner .button { border: 2px solid var(--mono-lin
   body.monogatari-theme.worldline-inner .portrait-placeholder { min-height: 0; }
   body.monogatari-theme .portrait-photo img { min-height: 0; }
   body.monogatari-theme.worldline-inner .prose { padding: 28px 22px; box-shadow: 7px 7px 0 var(--mono-line); }
+  body.monogatari-theme.worldline-inner .profile-intro { font-size: 16px; }
+  body.monogatari-theme.worldline-inner .profile-facts { grid-template-columns: 1fr; }
+  body.monogatari-theme.worldline-inner .profile-facts div { padding: 15px 16px; }
+  body.monogatari-theme.worldline-inner .tech-stack-group { padding: 15px 16px; }
   body.monogatari-theme.worldline-inner .archive-empty-terminal,
   body.monogatari-theme.worldline-inner .log-console { box-shadow: 7px 7px 0 var(--mono-line); }
   body.monogatari-theme.worldline-inner .site-footer { width: calc(100% - 24px); box-shadow: 6px 6px 0 var(--mono-red); }
