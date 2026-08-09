@@ -256,63 +256,6 @@
     wrap.appendChild(button);
   });
 
-  const emailCopyButton = document.querySelector("[data-copy-email]");
-  if (emailCopyButton) {
-    const email = emailCopyButton.dataset.email;
-    const label = emailCopyButton.querySelector("[data-copy-email-label]");
-    const icon = emailCopyButton.querySelector("[data-copy-email-icon]");
-    const copyToast = document.createElement("div");
-    copyToast.className = "copy-toast";
-    copyToast.setAttribute("role", "status");
-    copyToast.setAttribute("aria-live", "polite");
-    document.body.appendChild(copyToast);
-    let copyToastTimer = 0;
-    const showCopyToast = (message, isError = false) => {
-      window.clearTimeout(copyToastTimer);
-      copyToast.textContent = message;
-      copyToast.classList.toggle("is-error", isError);
-      copyToast.classList.add("is-visible");
-      copyToastTimer = window.setTimeout(() => copyToast.classList.remove("is-visible"), 2600);
-    };
-    const copyEmail = async () => {
-      if (navigator.clipboard?.writeText) {
-        try {
-          await navigator.clipboard.writeText(email);
-          return;
-        } catch (_clipboardError) {
-          // Fall through to the selection-based copy method.
-        }
-      }
-      const input = document.createElement("textarea");
-      input.value = email;
-      input.setAttribute("readonly", "");
-      input.style.position = "fixed";
-      input.style.opacity = "0";
-      document.body.appendChild(input);
-      input.select();
-      const copied = document.execCommand("copy");
-      input.remove();
-      if (!copied) throw new Error("Copy failed");
-    };
-
-    emailCopyButton.addEventListener("click", async () => {
-      try {
-        await copyEmail();
-        label.textContent = "邮箱已复制";
-        icon.textContent = "✓";
-        showCopyToast(`邮箱已复制：${email}`);
-      } catch (_error) {
-        label.textContent = email;
-        icon.textContent = "Ctrl+C";
-        showCopyToast(`复制失败，请手动复制：${email}`, true);
-      }
-      window.setTimeout(() => {
-        label.textContent = "复制邮箱";
-        icon.textContent = "⧉";
-      }, 1800);
-    });
-  }
-
   const searchInput = document.querySelector("[data-article-search]");
   const filterButtons = Array.from(document.querySelectorAll("[data-filter]"));
   const archiveItems = Array.from(document.querySelectorAll("[data-archive-item]"));
