@@ -3556,9 +3556,10 @@ body.monogatari-theme.worldline-inner .button { border: 2px solid var(--mono-lin
 
 @media (min-width: 851px) and (max-width: 1180px) {
   body.monogatari-theme.worldline-theme .desktop-shell {
-    grid-template-rows: 220px 230px 180px 250px;
-    min-height: 922px;
+    grid-template-rows: 220px 230px 250px 250px;
+    min-height: 992px;
   }
+  body.monogatari-theme.worldline-theme .recent-updates-list { grid-template-columns: 1fr; }
 }
 
 @media (min-width: 851px) {
