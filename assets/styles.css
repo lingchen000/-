@@ -1761,8 +1761,8 @@ html[data-theme="dark"] .dashboard-page {
   grid-template-areas:
     "profile scene welcome clock"
     "profile scene welcome calendar"
-    "profile latest latest calendar"
-    "profile updates updates updates";
+    "profile updates updates calendar"
+    "profile latest latest latest";
   gap: 18px;
   width: min(1380px, calc(100vw - 56px));
   min-height: 720px;
@@ -2121,8 +2121,8 @@ html[data-theme="dark"] .dashboard-footer { color: rgba(225,237,230,.5); }
     grid-template-areas:
       "profile scene clock"
       "profile welcome calendar"
-      "profile latest calendar"
-      "profile updates updates";
+      "profile updates calendar"
+      "profile latest latest";
   }
   .welcome-card { padding: 22px 24px; }
   .welcome-card h2 { margin: 12px 0 10px; font-size: 28px; }
@@ -2140,9 +2140,9 @@ html[data-theme="dark"] .dashboard-footer { color: rgba(225,237,230,.5); }
       "profile profile"
       "welcome welcome"
       "scene clock"
+      "updates updates"
       "latest latest"
-      "calendar calendar"
-      "updates updates";
+      "calendar calendar";
     gap: 14px;
     width: min(100% - 28px, 700px);
     min-height: 0;
@@ -2185,17 +2185,17 @@ html[data-theme="dark"] .dashboard-footer { color: rgba(225,237,230,.5); }
   .profile-card { order: 0; }
   .welcome-card { order: 1; min-height: 330px; padding: 27px 24px; }
   .scene-card { order: 2; min-height: 245px; }
-  .clock-card { order: 4; min-height: 160px; }
-  .calendar-card { order: 5; min-height: 390px; }
-  .recent-updates-card { order: 6; min-height: 0; padding: 20px; }
+  .clock-card { order: 5; min-height: 160px; }
+  .calendar-card { order: 6; min-height: 390px; }
+  .recent-updates-card { order: 3; min-height: 0; padding: 20px; }
   .recent-updates-list { grid-template-columns: 1fr; }
-  .player-card { order: 3; min-height: 152px; padding: 16px; gap: 10px; }
+  .player-card { order: 4; min-height: 152px; padding: 16px; gap: 10px; }
   .player-art { width: 96px; flex-basis: 96px; }
   .player-art span { width: 34px; height: 34px; font-size: 14px; }
   .player-card .wave { display: none; }
   .player-card .track-copy strong { max-width: 78px; }
   .player-card .volume-control { position: absolute; right: 18px; bottom: 14px; grid-template-columns: auto 72px 27px; margin: 0; }
-  .like-card { order: 3; }
+  .like-card { order: 4; }
   .profile-copy { padding-left: 12px; }
   .desk-nav a { padding: 0 8px; }
   .profile-socials { order: 4; width: 100%; margin-top: 10px; }
