@@ -53,12 +53,24 @@
           <input id="notes-search" type="search" inputmode="search" autocomplete="off" placeholder="检索日期、标题或正文" data-notes-search>
         </label>
         <div class="notes-archive-actions">
-          <span class="notes-result-count" data-notes-result-count role="status" aria-live="polite" aria-atomic="true">共 19 条记录</span>
+          <span class="notes-result-count" data-notes-result-count role="status" aria-live="polite" aria-atomic="true">共 20 条记录</span>
           <button class="notes-toggle-all" type="button" data-notes-toggle-all>展开全部</button>
         </div>
       </div>
       <div class="observation-log-list" data-notes-list>
-        <article class="observation-log-entry" id="log-2026-08-07" data-notes-entry data-latest>
+        <article class="observation-log-entry" id="log-2026-08-10" data-notes-entry data-latest>
+          <div class="observation-log-meta"><time datetime="2026-08-10">2026.08.10</time><span>LOG 020</span></div>
+          <h3>云服务器部署与博客动态化</h3>
+          <p class="observation-log-project">ASSIGNMENT / CLOUD SERVER DEPLOYMENT &amp; DYNAMIC BLOG MIGRATION</p>
+          <div class="observation-log-content">
+            <p>使用阿里云300元学生优惠额度购买了一台云服务器，规格为2核CPU、2 GiB内存和40 GiB系统盘。随后配置公网IP，将公网带宽调整为100 Mbps，并在安全组中开放80、443等网站访问端口。</p>
+            <p>安装Docker，并使用Docker Compose管理博客项目。网站后端采用FastAPI，Caddy负责反向代理和自动配置HTTPS。随后将原有静态博客改造为动态网站，使其具备后端接口和数据交互能力，并为后续接入数据库预留扩展空间。</p>
+            <p>注册并购买域名，完成域名解析，将域名指向服务器公网IP，使用户可以通过域名访问博客。目前域名仍在备案审核中。</p>
+            <p>明日计划继续学习Java等知识。</p>
+          </div>
+        </article>
+
+        <article class="observation-log-entry" id="log-2026-08-07" data-notes-entry>
           <div class="observation-log-meta"><time datetime="2026-08-07">2026.08.07</time><span>LOG 019</span></div>
           <h3>有线电视配置与个人博客优化</h3>
           <p class="observation-log-project">ASSIGNMENT / DVB-C CONFIGURATION &amp; PERSONAL BLOG OPTIMIZATION</p>
