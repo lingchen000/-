@@ -53,12 +53,25 @@
           <input id="notes-search" type="search" inputmode="search" autocomplete="off" placeholder="检索日期、标题或正文" data-notes-search>
         </label>
         <div class="notes-archive-actions">
-          <span class="notes-result-count" data-notes-result-count role="status" aria-live="polite" aria-atomic="true">共 20 条记录</span>
+          <span class="notes-result-count" data-notes-result-count role="status" aria-live="polite" aria-atomic="true">共 21 条记录</span>
           <button class="notes-toggle-all" type="button" data-notes-toggle-all>展开全部</button>
         </div>
       </div>
       <div class="observation-log-list" data-notes-list>
-        <article class="observation-log-entry" id="log-2026-08-10" data-notes-entry data-latest>
+        <article class="observation-log-entry" id="log-2026-08-11" data-notes-entry data-latest>
+          <div class="observation-log-meta"><time datetime="2026-08-11">2026.08.11</time><span>LOG 021</span></div>
+          <h3>Akashic Agent部署与QQ机器人配置</h3>
+          <p class="observation-log-project">ASSIGNMENT / AKASHIC AGENT DEPLOYMENT &amp; QQ BOT CONFIGURATION</p>
+          <div class="observation-log-content">
+            <p>主要学习了Akashic Agent项目的功能和整体结构。该项目属于智能代理系统，能够接入大语言模型，并通过记忆、插件和消息通道实现持续对话。</p>
+            <p>完成项目源码获取和运行环境检查，重点了解Docker、Python、数据库及插件目录的作用。随后根据项目文档配置运行参数并启动服务。在搭建过程中遇到依赖和网络解析问题，通过检查容器状态、端口占用情况和运行日志逐步定位问题，为后续部署积累了经验。</p>
+            <p>对比DeepSeek、OpenAI兼容接口及阿里云提供的模型服务，了解API地址、模型名称和密钥的配置方式。配置完成后进行请求测试，并根据返回结果排查认证失败、模型名称错误和接口地址不匹配等问题。</p>
+            <p>在QQ开放平台创建机器人应用，并将AppID和AppSecret配置到QQBot插件中。随后检查WebSocket连接状态和插件启动日志，确认机器人能够接收私聊事件。出于安全考虑，敏感凭据仅保存在服务器配置文件中，并限制文件访问权限。</p>
+            <p>明日计划继续观察Akashic Agent项目的运行情况，并尝试使用QQ机器人的基础功能。</p>
+          </div>
+        </article>
+
+        <article class="observation-log-entry" id="log-2026-08-10" data-notes-entry>
           <div class="observation-log-meta"><time datetime="2026-08-10">2026.08.10</time><span>LOG 020</span></div>
           <h3>云服务器部署与博客动态化</h3>
           <p class="observation-log-project">ASSIGNMENT / CLOUD SERVER DEPLOYMENT &amp; DYNAMIC BLOG MIGRATION</p>
