@@ -6,14 +6,19 @@
   const tiltCards = document.querySelectorAll(
     ".dashboard-page .desktop-shell > .glass-card:not(.like-card), " +
     ".worldline-inner .about-layout > .portrait-placeholder, " +
-    ".worldline-inner .about-layout > .prose"
+    ".worldline-inner .about-layout > .prose, " +
+    ".worldline-inner .page-hero[data-tilt-card]"
   );
   const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   if (tiltCards.length) {
     tiltCards.forEach((card) => {
-      const tiltStrength = card.matches(".worldline-inner .about-layout > .prose") ? 4 : 12;
+      const tiltStrength = card.matches(".worldline-inner .page-hero[data-tilt-card]")
+        ? 3.6
+        : card.matches(".worldline-inner .about-layout > .prose")
+          ? 4
+          : 12;
       const glare = document.createElement("span");
       glare.className = "card-tilt-glare";
       glare.setAttribute("aria-hidden", "true");

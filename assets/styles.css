@@ -5739,7 +5739,8 @@ html.intro-pending .startup-intro.is-skipping {
    touch devices retain their native page scrolling and card layout. */
 @media (hover: hover) and (pointer: fine) {
   body.dashboard-page .desktop-shell > .glass-card.tilt-ready,
-  body.worldline-inner .about-layout > .tilt-ready {
+  body.worldline-inner .about-layout > .tilt-ready,
+  body.worldline-inner .page-hero[data-tilt-card].tilt-ready {
     --tilt-rx: 0deg;
     --tilt-ry: 0deg;
     --tilt-gx: 50%;
@@ -5756,14 +5757,16 @@ html.intro-pending .startup-intro.is-skipping {
   }
 
   body.dashboard-page .desktop-shell > .glass-card.tilt-ready.is-tilting,
-  body.worldline-inner .about-layout > .tilt-ready.is-tilting {
+  body.worldline-inner .about-layout > .tilt-ready.is-tilting,
+  body.worldline-inner .page-hero[data-tilt-card].tilt-ready.is-tilting {
     transition:
       transform 120ms cubic-bezier(.22, 1, .36, 1),
       box-shadow 220ms cubic-bezier(.22, 1, .36, 1);
   }
 
   body.dashboard-page .desktop-shell > .glass-card.tilt-ready:hover,
-  body.worldline-inner .about-layout > .tilt-ready:hover {
+  body.worldline-inner .about-layout > .tilt-ready:hover,
+  body.worldline-inner .page-hero[data-tilt-card].tilt-ready:hover {
     transform: translateX(var(--tilt-base-x)) perspective(1100px) rotateX(var(--tilt-rx)) rotateY(var(--tilt-ry));
   }
 
@@ -5794,7 +5797,8 @@ html.intro-pending .startup-intro.is-skipping {
 
 @media (prefers-reduced-motion: reduce) {
   body.dashboard-page .desktop-shell > .glass-card.tilt-ready,
-  body.worldline-inner .about-layout > .tilt-ready {
+  body.worldline-inner .about-layout > .tilt-ready,
+  body.worldline-inner .page-hero[data-tilt-card].tilt-ready {
     transform: none !important;
     transition: none !important;
   }
