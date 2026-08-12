@@ -315,6 +315,7 @@
     const searchIndexes = new Map();
     const openStates = new Map();
     const detailsByEntry = new Map();
+    const entryAnimations = new Map();
     const monthGroups = new Map();
     const usedNotesIds = new Set();
 
@@ -325,8 +326,82 @@
       const details = detailsByEntry.get(entry);
       const state = entry.querySelector("[data-notes-entry-state]");
       const icon = entry.querySelector(".notes-entry-state-icon");
-      if (details && state) state.textContent = details.open ? "收起" : "展开";
-      if (details && icon) icon.textContent = details.open ? "−" : "+";
+      const isOpen = details ? Boolean(openStates.get(entry)) : false;
+      if (details && state) state.textContent = isOpen ? "收起" : "展开";
+      if (details && icon) icon.textContent = "";
+      entry.classList.toggle("is-expanded", isOpen);
+    };
+
+    const reduceNotesMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const setDetailsOpen = (entry, shouldOpen, { animate = false } = {}) => {
+      const details = detailsByEntry.get(entry);
+      const summary = details?.querySelector(".notes-entry-summary");
+      const body = details?.querySelector(".notes-entry-body");
+      if (!details || !summary || !body) return Promise.resolve();
+
+      const running = entryAnimations.get(details);
+      const interruptedHeight = running ? details.getBoundingClientRect().height : null;
+      const interruptedBodyStyle = running ? window.getComputedStyle(body) : null;
+      const interruptedBodyFrame = interruptedBodyStyle
+        ? {
+            opacity: interruptedBodyStyle.opacity,
+            transform: interruptedBodyStyle.transform,
+            clipPath: interruptedBodyStyle.clipPath
+          }
+        : null;
+      running?.forEach((animation) => animation.cancel());
+      entryAnimations.delete(details);
+      if (interruptedHeight !== null) details.style.height = `${interruptedHeight}px`;
+
+      const finishImmediately = !animate || reduceNotesMotion() || !details.animate || (!running && details.open === shouldOpen);
+      if (finishImmediately) {
+        details.open = shouldOpen;
+        details.style.height = "";
+        details.style.overflow = "";
+        details.classList.remove("is-notes-opening", "is-notes-closing");
+        openStates.set(entry, shouldOpen);
+        updateEntryState(entry);
+        updateToggleAll();
+        return Promise.resolve();
+      }
+
+      const startHeight = details.getBoundingClientRect().height;
+      if (shouldOpen) details.open = true;
+      const endHeight = shouldOpen
+        ? summary.getBoundingClientRect().height + body.getBoundingClientRect().height
+        : summary.getBoundingClientRect().height;
+
+      details.classList.toggle("is-notes-opening", shouldOpen);
+      details.classList.toggle("is-notes-closing", !shouldOpen);
+      details.style.height = `${startHeight}px`;
+      details.style.overflow = "clip";
+      openStates.set(entry, shouldOpen);
+
+      const heightAnimation = details.animate(
+        [{ height: `${startHeight}px` }, { height: `${endHeight}px` }],
+        { duration: shouldOpen ? 520 : 400, easing: "cubic-bezier(.22, 1, .36, 1)" }
+      );
+      const bodyAnimation = body.animate(
+        shouldOpen
+          ? [interruptedBodyFrame || { opacity: 0, transform: "translateY(-12px)", clipPath: "inset(0 0 18% 0)" }, { opacity: 1, transform: "translateY(0)", clipPath: "inset(0 0 0 0)" }]
+          : [interruptedBodyFrame || { opacity: 1, transform: "translateY(0)", clipPath: "inset(0 0 0 0)" }, { opacity: 0, transform: "translateY(-8px)", clipPath: "inset(0 0 24% 0)" }],
+        { duration: shouldOpen ? 430 : 260, delay: shouldOpen ? 70 : 0, easing: "cubic-bezier(.22, 1, .36, 1)", fill: "both" }
+      );
+      entryAnimations.set(details, [heightAnimation, bodyAnimation]);
+      updateEntryState(entry);
+
+      return heightAnimation.finished.catch(() => undefined).then(() => {
+        if (entryAnimations.get(details)?.[0] !== heightAnimation) return;
+        bodyAnimation.cancel();
+        if (!shouldOpen) details.open = false;
+        details.style.height = "";
+        details.style.overflow = "";
+        details.classList.remove("is-notes-opening", "is-notes-closing");
+        entryAnimations.delete(details);
+        updateEntryState(entry);
+        updateToggleAll();
+      });
     };
 
     const visibleEntries = () => notesEntries.filter((entry) => !entry.hidden);
@@ -389,7 +464,7 @@
       stateLabel.dataset.notesEntryState = "";
       const stateIcon = document.createElement("span");
       stateIcon.className = "notes-entry-state-icon";
-      stateIcon.textContent = details.open ? "−" : "+";
+      stateIcon.textContent = "";
       state.append(stateLabel, stateIcon);
       summaryHeading.append(summaryMain, state);
       summary.append(summaryHeading);
@@ -410,8 +485,10 @@
       entry.replaceChildren(details);
       updateEntryState(entry);
 
-      summary.addEventListener("click", () => {
-        openStates.set(entry, !details.open);
+      summary.addEventListener("click", (event) => {
+        event.preventDefault();
+        const shouldOpen = details.classList.contains("is-notes-closing") || !details.open;
+        setDetailsOpen(entry, shouldOpen, { animate: true });
       });
       details.addEventListener("toggle", () => {
         updateEntryState(entry);
@@ -465,8 +542,8 @@
         entry.hidden = !matches;
         const details = detailsByEntry.get(entry);
         if (details) {
-          details.open = query && matchCount === 1 && matches ? true : Boolean(openStates.get(entry));
-          updateEntryState(entry);
+          const shouldOpen = query && matchCount === 1 && matches ? true : Boolean(openStates.get(entry));
+          setDetailsOpen(entry, shouldOpen);
         }
       });
 
@@ -493,14 +570,9 @@
     notesToggleAll?.addEventListener("click", () => {
       const visible = visibleEntries();
       const shouldOpen = visible.some((entry) => !detailsByEntry.get(entry)?.open);
-      visible.forEach((entry) => {
-        const details = detailsByEntry.get(entry);
-        if (!details) return;
-        openStates.set(entry, shouldOpen);
-        details.open = shouldOpen;
-        updateEntryState(entry);
+      visible.forEach((entry, index) => {
+        window.setTimeout(() => setDetailsOpen(entry, shouldOpen, { animate: true }), Math.min(index, 6) * 45);
       });
-      updateToggleAll();
     });
 
     const showHashTarget = () => {
@@ -511,7 +583,7 @@
       openStates.set(target, true);
       applyNotesFilter();
       const details = detailsByEntry.get(target);
-      if (details) details.open = true;
+      if (details) setDetailsOpen(target, true);
       const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       window.requestAnimationFrame(() => target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" }));
     };

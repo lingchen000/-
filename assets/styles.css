@@ -5419,7 +5419,9 @@ html.intro-pending .startup-intro.is-skipping {
 }
 
 .log-terminal-page .observation-log-entry {
+  position: relative;
   scroll-margin-top: 92px;
+  overflow: clip;
   padding: 0;
   border: 2px solid var(--mono-line);
   border-radius: 0;
@@ -5430,6 +5432,25 @@ html.intro-pending .startup-intro.is-skipping {
 
 .log-terminal-page .observation-log-entry.is-latest {
   border-left: 8px solid var(--mono-red);
+}
+
+.log-terminal-page .observation-log-entry::before {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 6px;
+  background: var(--mono-red);
+  content: "";
+  pointer-events: none;
+  transform: scaleY(.16);
+  transform-origin: top;
+  transition: transform 520ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.log-terminal-page .observation-log-entry.is-expanded::before {
+  transform: scaleY(1);
 }
 
 .log-terminal-page .observation-log-entry::after {
@@ -5510,19 +5531,48 @@ html.intro-pending .startup-intro.is-skipping {
   color: var(--mono-red);
   font: 700 10px/1 var(--font-mono);
   letter-spacing: .08em;
+  transition: background-color 260ms ease, color 260ms ease, transform 360ms cubic-bezier(.22, 1, .36, 1), box-shadow 360ms cubic-bezier(.22, 1, .36, 1);
 }
 
 .log-terminal-page .notes-entry-state-icon {
+  position: relative;
+  width: 14px;
+  height: 14px;
   font-size: 16px;
   line-height: 1;
 }
 
+.log-terminal-page .notes-entry-state-icon::before,
+.log-terminal-page .notes-entry-state-icon::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 2px;
+  background: currentColor;
+  content: "";
+  transform: translate(-50%, -50%);
+  transition: transform 420ms cubic-bezier(.22, 1, .36, 1), opacity 260ms ease;
+}
+
+.log-terminal-page .notes-entry-state-icon::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.log-terminal-page .notes-entry-details[open] .notes-entry-state-icon::after {
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(180deg) scaleX(.2);
+}
+
 .log-terminal-page .notes-entry-details[open] .notes-entry-state {
   background: var(--mono-red);
+  box-shadow: 4px 4px 0 var(--mono-line);
   color: #fff;
+  transform: translate(-2px, -2px);
 }
 
 .log-terminal-page .notes-entry-body {
+  transform-origin: top;
   padding: 24px 22px 22px;
   border-top: 1px solid color-mix(in srgb, var(--mono-line) 24%, transparent);
 }
@@ -5675,6 +5725,12 @@ html.intro-pending .startup-intro.is-skipping {
   .log-terminal-page .notes-toggle-all,
   .log-terminal-page .notes-archive-empty button,
   .log-terminal-page .notes-entry-summary {
+    transition: none;
+  }
+  .log-terminal-page .observation-log-entry::before,
+  .log-terminal-page .notes-entry-state,
+  .log-terminal-page .notes-entry-state-icon::before,
+  .log-terminal-page .notes-entry-state-icon::after {
     transition: none;
   }
 }
