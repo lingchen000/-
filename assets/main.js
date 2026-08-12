@@ -83,6 +83,19 @@
     document.body.classList.add("worldline-inner");
   }
 
+  const githubHeatmapScroller = document.querySelector("[data-github-heatmap-scroll]");
+  if (githubHeatmapScroller) {
+    const heatmapImage = githubHeatmapScroller.querySelector("img");
+    const showRecentContributions = () => {
+      githubHeatmapScroller.scrollLeft = githubHeatmapScroller.scrollWidth;
+    };
+    if (heatmapImage?.complete) {
+      window.requestAnimationFrame(showRecentContributions);
+    } else {
+      heatmapImage?.addEventListener("load", showRecentContributions, { once: true });
+    }
+  }
+
   const startupIntro = document.querySelector("[data-startup-intro]");
   if (startupIntro) {
     if (root.classList.contains("intro-pending")) {

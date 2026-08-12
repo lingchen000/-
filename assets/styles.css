@@ -3345,17 +3345,27 @@ body.monogatari-theme.worldline-theme .github-activity-card::before {
   min-width: 0;
   flex: 1;
   align-items: center;
-  justify-content: center;
-  overflow: hidden;
+  justify-content: flex-start;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  overscroll-behavior-inline: contain;
+  touch-action: pan-x;
+}
+
+.github-heatmap-link::-webkit-scrollbar {
+  display: none;
 }
 
 .github-heatmap {
   position: relative;
   z-index: 1;
   display: block;
-  width: 100%;
+  width: 225%;
   height: auto;
+  max-width: none;
   max-height: 100%;
+  flex: 0 0 225%;
   object-fit: contain;
   object-position: left center;
   background: var(--mono-panel);
@@ -3368,6 +3378,7 @@ body.monogatari-theme.worldline-theme .github-activity-card::before {
   z-index: 0;
   display: flex;
   align-items: center;
+  justify-content: center;
   color: var(--mono-red);
   font: 700 11px/1.5 var(--font-mono);
 }
