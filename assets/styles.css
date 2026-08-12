@@ -3465,6 +3465,33 @@ body.monogatari-theme.worldline-inner .eyebrow { color: var(--mono-red); }
 body.monogatari-theme.worldline-inner .page-title { max-width: 760px; color: var(--mono-ink); font-size: clamp(52px, 8vw, 104px); font-weight: 900; letter-spacing: -.08em; line-height: .98; }
 body.monogatari-theme.worldline-inner .page-lede { max-width: 620px; color: var(--mono-muted); }
 
+body.monogatari-theme.worldline-inner .page-title-reveal > span {
+  display: block;
+  opacity: 0;
+  clip-path: inset(0 0 100% 0);
+  transform: translateY(.68em) skewY(2deg);
+  animation: archive-title-reveal 900ms cubic-bezier(.22, 1, .36, 1) forwards;
+  will-change: transform, opacity, clip-path;
+}
+
+body.monogatari-theme.worldline-inner .page-title-reveal > span:nth-child(2) {
+  animation-delay: 130ms;
+}
+
+@keyframes archive-title-reveal {
+  0% {
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(.68em) skewY(2deg);
+  }
+  55% { opacity: 1; }
+  100% {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    transform: translateY(0) skewY(0);
+  }
+}
+
 body.monogatari-theme.worldline-inner .about-layout {
   grid-template-columns: minmax(280px, 340px) minmax(0, 680px);
   align-items: start;
@@ -5722,6 +5749,13 @@ html.intro-pending .startup-intro.is-skipping {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  body.monogatari-theme.worldline-inner .page-title-reveal > span {
+    opacity: 1;
+    clip-path: none;
+    transform: none;
+    animation: none;
+  }
+
   .log-terminal-page .notes-toggle-all,
   .log-terminal-page .notes-archive-empty button,
   .log-terminal-page .notes-entry-summary {
