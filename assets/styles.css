@@ -3327,6 +3327,89 @@ body.monogatari-theme.worldline-theme .clock-card > p { color: #ffdce1; }
 body.monogatari-theme.worldline-theme .digital-clock { color: white; font-weight: 700; text-shadow: none; }
 body.monogatari-theme.worldline-theme .live-dot { border-radius: 0; background: white; box-shadow: 4px 4px 0 #810f1f; }
 
+body.monogatari-theme.worldline-theme .github-activity-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px 20px 16px;
+  background: var(--mono-panel);
+  color: var(--mono-ink);
+}
+
+body.monogatari-theme.worldline-theme .github-activity-card::before {
+  right: 12px;
+  bottom: 8px;
+  content: "Git";
+}
+
+.github-activity-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.github-activity-head p {
+  margin: 0 0 4px;
+  color: var(--mono-red);
+  font: 800 9px/1.2 var(--font-mono);
+  letter-spacing: .14em;
+}
+
+.github-activity-head h2 {
+  margin: 0;
+  color: var(--mono-ink);
+  font-family: var(--font-serif);
+  font-size: 20px;
+  line-height: 1.1;
+}
+
+.github-activity-head a {
+  flex: 0 0 auto;
+  border-bottom: 1px solid var(--mono-red);
+  color: var(--mono-red);
+  font: 700 9px/1.4 var(--font-mono);
+  letter-spacing: .04em;
+}
+
+.github-heatmap-link {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  align-items: center;
+  overflow: hidden;
+  border-top: 1px solid color-mix(in srgb, var(--mono-line) 25%, transparent);
+}
+
+.github-heatmap {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 88px;
+  object-fit: contain;
+  object-position: left center;
+  background: var(--mono-panel);
+  filter: saturate(.9) contrast(1.04);
+}
+
+.github-heatmap-fallback {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  color: var(--mono-red);
+  font: 700 11px/1.5 var(--font-mono);
+}
+
+.github-heatmap:not([src]),
+.github-heatmap[src=""],
+.github-heatmap[hidden] { display: none; }
+
 body.monogatari-theme.worldline-theme .calendar-card { background: var(--mono-panel); }
 body.monogatari-theme.worldline-theme .calendar-head span:first-child,
 body.monogatari-theme.worldline-theme .calendar-head strong { color: var(--mono-ink); }
