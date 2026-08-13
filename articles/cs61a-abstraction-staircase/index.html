@@ -3,25 +3,25 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content">
-  <meta name="description" content="从高阶函数、递归和数据抽象一路走到解释器，梳理 CS61A 如何借助 Python、Scheme 与 SQL 训练抽象和管理程序复杂度的能力。">
+  <meta name="description" content="从闭包、递归和抽象屏障，到 Scheme 解释器与 SQL：一篇带具体例子、项目分析和中文视频指南的 CS61A 学习长文。">
   <meta name="author" content="陵辰">
   <meta name="theme-color" content="#c51f33">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="陵辰">
   <meta property="og:url" content="https://lingchen000.github.io/-/articles/cs61a-abstraction-staircase/">
-  <meta property="og:title" content="抽象的阶梯：CS61A 如何训练程序思维｜陵辰">
-  <meta property="og:description" content="CS61A 真正训练的不是 Python 语法，而是选择抽象层次、建立接口并管理程序复杂度的能力。">
+  <meta property="og:title" content="抽象的阶梯：从高阶函数、递归到解释器｜陵辰">
+  <meta property="og:description" content="从闭包与环境模型，到递归、生成器、Scheme 解释器和 SQL，梳理 CS61A 的抽象学习主线。">
   <meta property="og:image" content="https://lingchen000.github.io/-/assets/lingchen-social-cover.jpg">
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="陵辰的金发动漫角色与深夜街景封面">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="抽象的阶梯：CS61A 如何训练程序思维｜陵辰">
-  <meta name="twitter:description" content="从高阶函数、递归和数据抽象一路走到解释器，理解抽象如何管理程序复杂度。">
+  <meta name="twitter:title" content="抽象的阶梯：从高阶函数、递归到解释器｜陵辰">
+  <meta name="twitter:description" content="一篇带具体例子、项目分析和中文视频指南的 CS61A 学习长文。">
   <meta name="twitter:image" content="https://lingchen000.github.io/-/assets/lingchen-social-cover.jpg">
   <meta property="article:published_time" content="2026-08-13">
-  <title>抽象的阶梯：CS61A 如何训练程序思维｜陵辰</title>
+  <title>抽象的阶梯：从高阶函数、递归到解释器｜陵辰</title>
   <link rel="icon" href="../../assets/lingchen-site-icon.png" type="image/png">
   <link rel="apple-touch-icon" href="../../assets/lingchen-site-icon.png">
   <link rel="canonical" href="https://lingchen000.github.io/-/articles/cs61a-abstraction-staircase/">
@@ -37,251 +37,302 @@
 <body class="worldline-inner monogatari-theme monogatari-article-page">
   <div class="reading-progress" data-reading-progress aria-hidden="true"></div>
   <a class="skip-link" href="#article">跳至文章正文</a>
-
-  <header class="site-header" data-header>
-    <div class="page-shell nav-wrap">
-      <a class="brand" href="../../index.html" aria-label="返回陵辰首页">
-        <span class="brand-mark">陵辰</span>
-        <span class="brand-sub">STRANGE RECORD / 003</span>
-      </a>
-      <nav class="site-nav" id="site-nav" data-site-nav aria-label="章节导航">
-        <a href="../../index.html">序章</a>
-        <a href="../index.html" aria-current="page">笔记</a>
-        <a href="../../notes/index.html">日常记录</a>
-        <a href="../../about/index.html">人物侧写</a>
-        <button class="icon-button" type="button" data-theme-toggle aria-label="切换终端显示模式">
-          <svg class="theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.1A8.5 8.5 0 0 1 8.9 4a7.8 7.8 0 1 0 11.1 11.1Z" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
-          <svg class="theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
-        </button>
-      </nav>
-      <button class="menu-button" type="button" data-menu-toggle aria-controls="site-nav" aria-expanded="false" aria-label="展开终端导航">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14M5 16h14" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
-      </button>
-    </div>
-  </header>
-
+  <header class="site-header" data-header><div class="page-shell nav-wrap">
+    <a class="brand" href="../../index.html" aria-label="返回陵辰首页"><span class="brand-mark">陵辰</span><span class="brand-sub">STRANGE RECORD / 003</span></a>
+    <nav class="site-nav" id="site-nav" data-site-nav aria-label="章节导航"><a href="../../index.html">序章</a><a href="../index.html" aria-current="page">笔记</a><a href="../../notes/index.html">日常记录</a><a href="../../about/index.html">人物侧写</a><button class="icon-button" type="button" data-theme-toggle aria-label="切换终端显示模式"><svg class="theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.1A8.5 8.5 0 0 1 8.9 4a7.8 7.8 0 1 0 11.1 11.1Z" fill="none" stroke="currentColor" stroke-width="1.7"/></svg><svg class="theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></button></nav>
+    <button class="menu-button" type="button" data-menu-toggle aria-controls="site-nav" aria-expanded="false" aria-label="展开终端导航"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14M5 16h14" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+  </div></header>
   <main>
-    <header class="page-shell post-hero">
-      <p class="post-kicker">COURSE REVIEW / CHAPTER 003</p>
-      <h1 class="post-title">抽象的阶梯</h1>
-      <p class="post-deck">从高阶函数、递归和数据抽象一路走到解释器：CS61A 真正在训练什么？</p>
-      <div class="post-meta">
-        <span>陵辰</span>
-        <time datetime="2026-08-13">2026.08.13</time>
-        <span>约 18 分钟阅读</span>
-      </div>
-    </header>
-
+    <header class="page-shell post-hero"><p class="post-kicker">COURSE REVIEW / CHAPTER 003</p><h1 class="post-title">抽象的阶梯</h1><p class="post-deck">从高阶函数、递归到解释器的 CS61A 学习主线。</p><div class="post-meta"><span>陵辰</span><time datetime="2026-08-13">2026.08.13</time><span>约 35 分钟阅读</span></div></header>
     <div class="page-shell article-layout">
       <article class="article-body prose" id="article" data-article>
-        <p class="article-lead">如果只看课程开头使用的语言，CS61A 很容易被误解成一门 Python 入门课。然而，这门课真正反复训练的，是选择抽象层次、建立接口，以及管理程序复杂度的能力。</p>
+<h2 id="abstract">摘要</h2>
+<p class="article-lead">如果只看课程开头使用的语言，CS61A 很容易被误解为一门 Python 入门课。然而，官方对课程目标的描述并不是“掌握 Python”，而是学习抽象以及管理程序复杂度的方法。本文以 2026 年夏季课程页面、<em>Composing Programs</em>、SICP 思想脉络、项目说明，以及 B 站上的字幕、配音与自学整理资源为材料，把 CS61A 理解为一条逐级上升的认知路线：先用函数抽象计算过程，再用环境模型解释名称与闭包；用递归贴合问题结构，用数据抽象隔离表示，用可变状态和对象组织随时间变化的系统；随后借助迭代器、Scheme、解释器与 SQL，重新思考“何时计算”“程序如何获得意义”以及“谁来决定执行过程”。课程最可迁移的收获并不是记住语法，而是学会选择表示层次、建立抽象边界，并判断复杂度应由哪一部分系统承担。</p>
+<p><strong>关键词：</strong> CS61A；函数抽象；递归；数据抽象；编程范式；解释器</p>
+<blockquote>
+<p>资料范围：课程安排与政策以截至 2026 年 8 月 13 日的 CS61A Summer 2026 官网为准；B 站材料包括 Fall 2019、Spring 2021、Fall 2022、Fall 2025，以及页面标注“2024”但原课程学期未完全核实的整理版，只用于补充讲解顺序和中文观看体验。本文是一篇课程学习综述与观点文章，不是包含对照实验或学习效果数据的实证论文，也不会虚构作者的成绩、耗时或项目经历。</p>
+</blockquote>
+<h2 id="hook">引子：一个函数离开以后，为什么还记得过去？</h2>
+<p>先看一段很短的 Python：</p>
+<pre><code class="language-python">def make_adder(n):
+    def add(k):
+        return n + k
+    return add
 
-        <p>本文以 CS61A Summer 2026 官网、配套教材 <em>Composing Programs</em> 和四个项目说明为依据，将课程内容归纳为一条逐级上升的认知路径：先用函数抽象计算过程，再用递归表达问题结构；继而借助数据抽象与面向对象组织状态，通过 Scheme 和 SQL 比较不同编程范式，最后在解释器项目中，把“程序如何获得意义”本身变成可以实现的程序。</p>
-
-        <blockquote>
-          <p>CS61A 最可迁移的收获，不是记住某种语言的语法，而是判断复杂度应由哪一层系统承担。</p>
-        </blockquote>
-
-        <p><strong>资料说明：</strong>本文依据截至 2026 年 8 月 13 日公开的 CS61A Summer 2026 材料写成，属于课程综述与观点文章，不是包含对照实验或学习效果数据的实证研究。课程安排会随学期变化。</p>
-
-        <h2 id="premise">一、把 CS61A 理解成 Python 课，是一个错误前提</h2>
-
-        <p>许多编程入门路径从语法表开始：变量如何声明，循环如何书写，列表有哪些方法。这些知识当然必要，但也容易制造一种错觉——会写更多语法，就等于更懂程序。</p>
-
-        <p>CS61A 的课程定位恰好在纠正这个前提。官方大纲将课程重点概括为“抽象”：让程序员按照适合问题的层次思考，而不是始终受底层操作支配。大纲同时明确指出，课程希望教授的是编程思想，而不是某一种特定语言。当前版本主要使用 Python 3，同时涉及 Scheme 和 SQL，并以函数式编程、面向对象编程等方式讨论如何管理复杂度。</p>
-
-        <p>这解释了一个看似反常的安排：如果目标只是熟练使用 Python，那么切换到 Scheme、SQL，甚至亲手实现解释器，都会显得偏离主线；只有当目标是理解程序的结构与意义时，这些内容才会连成一体。</p>
-
-        <p>配套教材 <em>Composing Programs</em> 也采用了相同骨架：先讨论函数抽象，再讨论数据抽象，继而进入程序解释和数据处理。教材延续 SICP 的思想传统，但主要使用 Python 3 阐释概念，因此把它简单称作“SICP 的 Python 逐字翻译版”并不准确。</p>
-
-        <p>由此可以提出本文的核心判断：<strong>CS61A 的学习过程，是不断上移抽象边界的过程。</strong>抽象并非简单地“忽略细节”，而是规定哪些细节由实现者负责，哪些承诺可以被使用者依赖，以及不同模块如何在不知晓彼此全部内部结构的情况下组合。</p>
-
-        <h2 id="functions">二、函数抽象：从执行步骤到计算单元</h2>
-
-        <p>学习者最初看程序，往往会逐行追踪：这一行赋值，下一行判断，再下一行返回。函数抽象带来的第一个变化，是给一段计算过程赋予名称，并用输入、输出和行为约定来描述它。调用者不必每次展开函数体，只要依赖它的契约即可。</p>
-
-        <p>普通函数隐藏一段步骤，高阶函数则进一步把“计算过程”本身当作数据：函数可以作为参数传入，也可以作为结果返回。这样，被抽象的就不再只是某一次计算，而是反复出现的控制模式。例如，“持续更新状态直到满足条件”或“按某种规则比较若干策略”等骨架，可以与具体的更新方式、评价标准分离。</p>
-
-        <p>函数也不只是静态代码。CS61A 在高阶函数之后安排环境模型，是因为名称绑定、词法作用域和闭包共同决定了函数调用的实际含义。两个函数即使拥有相同的源代码，也可能因为创建时所在的环境不同而表现不同。程序由此不再只是一串文本，而成为表达式、名称与环境共同参与的求值过程。</p>
-
-        <p>课程的第一个项目 <a href="https://cs61a.org/proj/hog/" rel="noopener noreferrer">Hog</a> 要求实现骰子游戏模拟器和多种策略，把控制语句与高阶函数结合起来。它的教学意义不只在于完成一个小游戏，而在于迫使学习者区分规则、策略、模拟过程和评价机制：哪些部分应当固定，哪些部分应该成为可替换的函数参数？当答案发生变化时，抽象边界也随之显现。</p>
-
-        <h2 id="recursion">三、递归：让程序结构服从问题结构</h2>
-
-        <p>递归常被描述成“函数调用自己”，但这只是表面现象。真正重要的是递归契约：先假定一个更小规模的同类问题已经能够正确解决，再说明如何利用它构造当前问题的答案。</p>
-
-        <p>一个可靠的递归设计至少要回答三个问题：最小情形是什么；每次调用是否确实缩小了问题；较小问题的答案怎样被组合成当前答案。这样的思考方式把注意力从“计算机下一步执行哪一行”转向“问题的结构如何保持不变”。当问题天然由子问题组成时，递归不是为了回避循环，而是让程序的形状贴合数据或定义的形状。</p>
-
-        <p>树递归进一步展示了这种对应关系：一次求解可能分裂为多个子问题，执行过程因而形成一棵计算树。它让组合计数、路径搜索与树形数据处理变得自然，却也带来必须正视的成本——同一子问题可能被重复计算，调用深度和空间使用也可能增长。</p>
-
-        <p>因此，“递归比循环高级”是错误结论。表达清晰度、正确性证明和运行成本属于不同维度；最贴合数学定义的递归版本，不一定是生产环境中效率最高的版本。CS61A 后续安排效率分析，正是在提醒学习者：抽象可以降低人的认知负担，却不会自动消除机器的时间与空间成本。</p>
-
-        <p><a href="https://cs61a.org/proj/cats/" rel="noopener noreferrer">Cats</a> 项目把抽象与递归放进一个可交互场景：程序需要测量打字速度、实现自动纠错，并支持多人模式。这里值得学习的不是某一道题的答案，而是如何从需求中识别子问题、明确函数契约、构造边界案例，再用测试验证组合后的行为。</p>
-
-        <h2 id="data">四、数据抽象：隔离表示，而不是迷信某种容器</h2>
-
-        <p>函数抽象隐藏“怎样计算”，数据抽象则隐藏“怎样表示”。一个数据对象可以在内部使用列表、元组、链表或自定义对象，但使用它的程序应尽量只依赖构造器、选择器和公开操作。这道边界通常被称为表示屏障。</p>
-
-        <p>表示屏障的价值，可以通过一次反事实检验看出来：如果内部表示从列表改为对象，调用方是否需要大面积修改？如果答案是肯定的，那么所谓的模块很可能仍把实现细节泄漏到了外部。</p>
-
-        <p>可变数据让问题变得更复杂。对于不可变值，表达式的结果主要由输入决定；一旦存在共享状态和别名，同一个对象在不同时间可能具有不同内容，程序结果也会依赖操作顺序。此时，理解程序不仅要问“这个值是什么”，还要问“谁持有它的引用、谁能修改它、修改发生在何时”。抽象从空间上的模块边界，扩展到了时间上的状态约束。</p>
-
-        <p>面向对象编程提供了一种组织身份、状态与行为的办法。类、继承和方法调用可以把相关责任聚合起来，但面向对象不是数据抽象的唯一形式，更不是所有问题的必然终点。层次过深的继承、含混的共享状态和过大的对象，同样会制造新的复杂度。</p>
-
-        <p><a href="https://cs61a.org/proj/ants/" rel="noopener noreferrer">Ants Vs. SomeBees</a> 项目要求学习者扩展一个面向对象的塔防游戏。与填写孤立函数相比，这要求学习者先辨认对象之间的协议：地点如何连接，昆虫如何行动，子类应当复用什么、覆盖什么。难点也从“写出一段正确代码”转变为“在不破坏现有契约的前提下加入新行为”。</p>
-
-        <h2 id="languages">五、切换语言：改变问题的表达坐标</h2>
-
-        <p>CS61A 从 Python 转向 Scheme 和 SQL，不是为了增加语言收藏，而是为了暴露不同的表达模型。</p>
-
-        <p>Python 可以容纳过程式、函数式和面向对象写法，适合在课程前半段逐步引入多种抽象。Scheme 的核心语法更小、更统一，代码与列表结构之间的关系也更直接，因此学习者更难继续依赖熟悉的 Python 语法直觉，只能回到表达式、环境和求值规则本身。SQL 则把重点从“按什么步骤遍历数据”转向“希望得到什么关系”，由数据库系统承担相当一部分执行计划的选择。</p>
-
-        <div class="table-scroll" role="region" aria-label="三种编程视角的比较" tabindex="0">
-          <table>
-            <thead><tr><th>视角</th><th>强调的对象</th><th>重新分配的复杂度</th></tr></thead>
-            <tbody>
-              <tr><td>函数式</td><td>值、组合与表达式求值</td><td>减少显式状态，把过程组织为可组合函数</td></tr>
-              <tr><td>面向对象</td><td>身份、状态变化与消息协作</td><td>把数据和行为聚合到具有协议的对象中</td></tr>
-              <tr><td>声明式查询</td><td>结果应满足的关系</td><td>把部分执行策略交给数据库系统</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <p>这三种视角不能简单排成高低等级。声明式不等于“没有算法”：算法仍然存在，只是部分选择被转交给数据库实现。类似地，面向对象不会自动产生良好设计，函数式写法也不会自动高效。范式的价值在于重新分配复杂度，而不是消灭复杂度。</p>
-
-        <p>语言切换因此构成一种迁移测试：如果一个人只会在 Python 的固定写法中做题，他掌握的可能是模板；如果他能在 Scheme 中重新解释作用域，在 SQL 中重新描述数据关系，那么原先的概念才更可能真正脱离语法表面。</p>
-
-        <h2 id="interpreter">六、解释器：当语言的意义也成为程序的对象</h2>
-
-        <p>解释器是这条学习路线的认知高潮。此前，学习者在语言规则之内写程序；此时，语言规则本身成为要实现的对象。</p>
-
-        <p><a href="https://cs61a.org/proj/scheme/" rel="noopener noreferrer">Scheme Interpreter</a> 项目要求使用 Python 实现一个 Scheme 子集的解释器。简化来看，这个过程包括：读取源代码，将其转换为结构化表达式；在环境中求值；对普通调用执行过程应用，对特殊形式采用各自规则；最后产生值并在交互循环中显示。名称查找、作用域、过程调用和特殊形式不再只是文档里的规定，而成为能够检查和测试的程序机制。</p>
-
-        <div class="table-scroll" role="region" aria-label="课程概念在解释器中的新角色" tabindex="0">
-          <table>
-            <thead><tr><th>已学概念</th><th>在解释器中的新角色</th></tr></thead>
-            <tbody>
-              <tr><td>递归</td><td>表达式包含子表达式，求值器按结构递归</td></tr>
-              <tr><td>链表与树</td><td>源程序被表示为可遍历的数据结构</td></tr>
-              <tr><td>环境模型</td><td>帧与父环境决定名称如何查找</td></tr>
-              <tr><td>高阶函数</td><td>过程本身成为可表示、可传递和可应用的值</td></tr>
-              <tr><td>对象与数据抽象</td><td>表达式、过程和环境通过稳定接口协作</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <p>最重要的认知变化是：语言并非不可追问的黑箱。所谓“这段代码的意思”，最终可以被拆成一组读取、求值、查找与应用规则，并由另一门语言实现。</p>
-
-        <p>但这里也要避免夸大。项目实现的是教学用 Scheme 子集的解释器，不是完整的工业语言，更不等于掌握了编译器优化、运行时系统和语言工程。它提供的是一扇理解语言机制的窗口，而不是终点。</p>
-
-        <h2 id="projects">七、四个项目背后的抽象递进</h2>
-
-        <p>2026 年暑期版设置了四个正式项目。若按它们要求学习者管理的复杂度来观察，可以得到以下路径：</p>
-
-        <div class="table-scroll" role="region" aria-label="CS61A 四个项目的抽象递进" tabindex="0">
-          <table>
-            <thead><tr><th>项目</th><th>主要任务</th><th>需要回答的抽象问题</th></tr></thead>
-            <tbody>
-              <tr><td>Hog</td><td>游戏模拟与策略</td><td>如何把规则、控制过程和可替换策略分开？</td></tr>
-              <tr><td>Cats</td><td>打字测量、自动纠错与多人模式</td><td>如何让递归子问题和功能接口稳定组合？</td></tr>
-              <tr><td>Ants</td><td>扩展并测试面向对象塔防程序</td><td>如何在较大代码库中分配状态、行为与继承责任？</td></tr>
-              <tr><td>Scheme</td><td>用 Python 实现 Scheme 子集解释器</td><td>如何把一门语言的求值规则实现为另一段程序？</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <p>“模拟器—交互应用—较大对象系统—语言解释器”的递进，是本文对项目设计的归纳，并非官网对项目顺序的原句。它仍揭示出一个鲜明趋势：学习者管理的对象，从局部计算逐步扩大到组件协作，再扩大到程序语言本身。</p>
-
-        <p>这也说明为什么“所有测试通过”不能等同于“真正理解”。自动测试主要观察输入与输出，未必能判断抽象边界是否合理，是否存在只对已知案例有效的偶然实现，也无法替代对环境、状态和复杂度的解释能力。正确结果是必要条件，但不是完整的学习证据。</p>
-
-        <h2 id="learning">八、怎样把课程资源转化成自己的能力</h2>
-
-        <p>CS61A 官方学习指南强调尽早开始、分散练习、主动做题，并反思自己的解题过程。由此，一次完整练习可以形成五步闭环：</p>
-
-        <ol>
-          <li><strong>重述规格：</strong>先不写代码，用自己的话说明函数或模块承诺什么。</li>
-          <li><strong>构造案例：</strong>覆盖最小输入、边界条件、非法输入和递归子问题。</li>
-          <li><strong>选择表示：</strong>判断当前困难属于过程、数据、状态、范式还是求值规则。</li>
-          <li><strong>实现并测试：</strong>先验证局部契约，再检查组件组合后的行为。</li>
-          <li><strong>复盘抽象：</strong>解释错误为何发生，以及哪一道边界没有被正确建立。</li>
-        </ol>
-
-        <p>第五步最容易被忽略。修复一个报错只能解决当下问题；把错误归因于错误的递归假设、泄漏的表示细节、意外共享的状态或错误的环境查找，才可能让经验迁移到新题目。</p>
-
-        <p>还必须注意当前课程的学术诚信边界。Summer 2026 大纲明确禁止借助 AI 完成项目；Homework 原则上只允许使用课程内置的 61A-bot。对于不指向具体题目的学习咨询，政策列出的可接受方向包括一般概念解释、语法示例和理解错误信息，而不是索取具体作业代码或让工具代为调试完整答案。对自学者而言，最有价值的辅助也应是提出问题、解释机制和审查推理，而不是绕过形成心智模型的过程。</p>
-
-        <h2 id="costs">九、容易被忽略的变量与成本</h2>
-
-        <p>首先，课程没有把特定编程课设为正式门槛，不等于它对完全没有经验的人轻松。当前大纲明确提醒，无编程经验的学习者通常需要投入更多时间，而多数选课学生已经有较多经验。因此，不能用别人的完成速度评价自己的理解，也不能把短期卡顿直接解释为缺乏能力。</p>
-
-        <p>其次，当前官网展示的是压缩的八周暑期版。它的讲次、截止日期和学习强度不能直接代表所有学期。自学时更合理的做法，是按理解和练习质量安排节奏，而不是机械复制暑期日历。</p>
-
-        <p>再次，抽象本身也有成本。抽象层过少会造成重复和耦合，抽象层过多则会引入间接性，使读者必须跨越多个接口才能理解行为。优秀设计不是追求“越抽象越好”，而是在变化频率、运行成本、团队理解和测试难度之间选择恰当边界。</p>
-
-        <p>最后，CS61A 提供的是扎实的概念起点，而不是完整的软件工程训练。真实系统还涉及版本控制、并发、网络、部署、安全、可观测性和团队协作等问题。完成课程不等于已经具备工业项目能力；更可信的验证，是能否在没有现成模板的新问题中解释设计、比较方案并承担权衡。</p>
-
-        <h2 id="conclusion">结语：真正可迁移的是划分复杂度的方法</h2>
-
-        <p>从函数到递归，从数据抽象到对象系统，从 Scheme、SQL 到解释器，CS61A 看似不断更换主题，实际始终追问同一个问题：面对不断增长的复杂度，程序员应该在哪个层次思考，又该把哪些细节交给下一层承担？</p>
-
-        <p>函数让我们命名过程，递归让程序贴合问题结构，数据抽象隔离内部表示，编程范式重组过程、状态与关系，解释器则把语言规则本身变成可分析、可实现的系统。这些内容共同构成一座“抽象的阶梯”。</p>
-
-        <blockquote>
-          <p>语法会更新，工具会更替；真正不容易过时的，是面对新问题时选择抽象边界的能力。</p>
-        </blockquote>
-
-        <h2 id="references">参考资料</h2>
-
-        <ol class="source-list">
-          <li><a href="https://cs61a.org/" rel="noopener noreferrer">UC Berkeley CS61A：Summer 2026 课程主页与日历</a>，访问日期：2026-08-13。</li>
-          <li><a href="https://cs61a.org/articles/about-61a/" rel="noopener noreferrer">UC Berkeley CS61A：Syllabus &amp; Course Policies</a>，访问日期：2026-08-13。</li>
-          <li><a href="https://cs61a.org/articles/studying/" rel="noopener noreferrer">UC Berkeley CS61A：Studying Guide</a>，访问日期：2026-08-13。</li>
-          <li><a href="https://www.composingprograms.com/" rel="noopener noreferrer">John DeNero：Composing Programs</a>。</li>
-          <li><a href="https://cs61a.org/proj/hog/" rel="noopener noreferrer">UC Berkeley CS61A：The Game of Hog</a>。</li>
-          <li><a href="https://cs61a.org/proj/cats/" rel="noopener noreferrer">UC Berkeley CS61A：Computer Aided Typing Software</a>。</li>
-          <li><a href="https://cs61a.org/proj/ants/" rel="noopener noreferrer">UC Berkeley CS61A：Ants Vs. SomeBees</a>。</li>
-          <li><a href="https://cs61a.org/proj/scheme/" rel="noopener noreferrer">UC Berkeley CS61A：Scheme Interpreter</a>。</li>
-        </ol>
+add_three = make_adder(3)
+</code></pre>
+<p><code>make_adder(3)</code> 已经执行完了，但随后调用 <code>add_three(4)</code> 时，内部函数仍然能找到 <code>n</code>。它去哪里找？为什么那个局部变量没有随着外层调用结束而消失？如果另一次调用创建了 <code>make_adder(10)</code>，两个看起来代码相同的 <code>add</code> 又为什么表现不同？</p>
+<p>这类问题很能体现 CS61A 的味道。课程当然教人写函数，却很快把注意力从“语法怎么写”转向“程序为什么这样运行”。答案需要函数值、父环境、词法作用域和闭包共同给出。一个函数并不只是几行代码，它还与定义时的环境相关联。到这里，程序已经不再是一张从上到下执行的指令表，而更像一套由名称、值、环境和求值规则共同组成的系统。<a href="https://www.composingprograms.com/pages/16-higher-order-functions.html">Composing Programs：高阶函数与词法作用域</a></p>
+<p>后面的递归、可变对象、解释器，看似换了题目，其实都在继续追问同一件事：当程序越来越复杂，我们靠什么模型理解它，又靠什么边界控制它？</p>
+<h2 id="premise">一、把 CS61A 理解成 Python 课，是一个错误前提</h2>
+<p>许多编程入门路径从语法表开始：变量如何声明，循环如何书写，列表有哪些方法。这样的知识当然必要，但它容易制造一种错觉——会写更多语法，就等于更懂程序。</p>
+<p>CS61A 的课程定位恰好在纠正这个前提。官方大纲将课程重点概括为“抽象”，即让程序员按照适合问题的层次思考，而不是始终受底层操作支配；它还明确说明，课程希望教授的是编程思想，而不是某一种特定语言。当前版本主要使用 Python 3，同时涉及 Scheme 和 SQL，并用函数式编程、面向对象编程等方式讨论如何管理复杂度。<a href="https://cs61a.org/articles/about-61a/">课程大纲</a></p>
+<p>这解释了一个看似反常的安排：如果目标只是熟练使用 Python，那么切换到 Scheme、SQL，甚至亲手实现解释器，都会显得偏离主线；只有当目标是理解程序的结构与意义时，这些内容才会连成一体。语言在这里更像不同焦距的镜头。Python 让学习者快速写出可运行的程序，Scheme 把表达式和求值规则暴露出来，SQL 则要求人先描述结果关系，而不是亲自规定每一步循环。</p>
+<p>与课程配套的在线教材 <em>Composing Programs</em> 也采用了相同骨架：先讨论函数抽象，再讨论数据抽象，继而进入程序解释和数据处理。教材延续 SICP 的传统，但主要使用 Python 3 阐释概念，因此把它称作“SICP 的 Python 逐字翻译版”并不准确。<a href="https://www.composingprograms.com/">Composing Programs</a></p>
+<p>SICP 在第一章就把编程语言的基本能力概括为处理基本元素、组合它们并为组合结果命名。<em>Composing Programs</em> 沿着这条思想路线，把“组合”与“抽象”放到课程中心。<a href="https://sicp.sourceacademy.org/chapters/1.1.html">SICP：Building Abstractions with Procedures</a> 因而，CS61A 的学习过程可以理解成不断上移抽象边界的过程。抽象不是含糊地“忽略细节”，而是明确规定：哪些细节由实现者负责，哪些承诺可以被调用者依赖，以及变化发生时应该止步于哪一道边界。</p>
+<p>这最后一点尤其重要。初学者常把抽象理解成“少写几行代码”，但真正有价值的抽象不一定更短；它的价值是把变化集中起来。今天更换数据表示，明天调整求值规则，如果整个程序都必须跟着修改，那么边界其实从未建立。</p>
+<h2 id="functions">二、函数抽象：从执行步骤到计算单元</h2>
+<p>学习者最初看程序，往往会逐行追踪：这一行赋值，下一行判断，再下一行返回。函数抽象带来的第一个变化，是给一段计算过程赋予名称，并用输入、输出和行为约定来描述它。调用者不必每次展开函数体，只要依赖它的契约即可。</p>
+<p>普通函数隐藏一段步骤，高阶函数则进一步把“计算过程”本身当作数据：函数可以作为参数传入，也可以作为结果返回。这样，被抽象的就不再只是某一次计算，而是重复出现的控制模式。例如，“反复更新一个猜测直到足够接近”“对一系列项求和”“按某种规则评价策略”等骨架，可以与具体的更新函数、项函数或评价标准分离。教材用多个求和函数展示这一点：真正重复的不是某一行加法，而是“从起点遍历到终点，对每个位置产生一项并累加”的一般方法。<a href="https://www.composingprograms.com/pages/16-higher-order-functions.html">Composing Programs 1.6：Higher-Order Functions</a></p>
+<p>但函数不只是静态代码。CS61A 在高阶函数之后安排环境模型，是因为名称绑定、词法作用域和闭包共同决定了函数调用的实际含义。每次调用都会建立新的帧；函数的父环境由它在哪里定义决定，而不是由它在哪里调用决定。开头的 <code>add_three</code> 正是因为保留了定义时的父环境，才继续找到 <code>n = 3</code>。<a href="https://cs61a.org/assets/slides/04-Environments.pdf">Summer 2026 环境讲义</a></p>
+<p>环境图看上去像考试中的纸笔工具，实际是一套足以预测程序行为的模型。它能回答同名变量为何互不干扰、闭包为何记住外部值，以及调用返回后哪些对象仍可被引用。Python 的 traceback 则能辅助重建异常发生前的动态调用路径：一层层调用帧告诉我们，程序怎样走到了错误位置。不过它不记录环境图里的全部词法父环境与闭包关系，不能与环境模型画等号。读错误栈仍然不是附属技巧，而是在反向追踪求值过程。</p>
+<p>这里有一个很自然的学习转折。刚开始时，人会努力记住每个名字当前是多少；理解环境以后，更有效的问题变成了：“这个名字在哪一帧查找？这个函数的父帧是谁？这次调用新建了什么？”程序从杂乱的值变化，变成了可以遵循规则推演的结构。</p>
+<p>当前课程的第一个项目 <a href="https://cs61a.org/proj/hog/">Hog</a> 要求实现骰子游戏模拟器和多种策略，项目说明明确把控制语句与高阶函数结合起来。它的教学意义并不只在于完成一个小游戏，而在于迫使学习者区分规则、策略、模拟过程和评价机制：哪些部分应当固定，哪些部分应该成为可替换的函数参数？当答案发生变化时，抽象边界也随之显现。</p>
+<p>高阶函数解决的是重复的计算套路如何复用；递归把问题再推进一步：当问题本身是嵌套或自相似的，程序能不能长成和它一样的形状？</p>
+<h2 id="recursion">三、递归：让程序结构服从问题结构</h2>
+<p>递归常被描述成“函数调用自己”，但这只是表面现象。真正重要的是递归契约：先假定一个更小规模的同类问题已经能够正确解决，再说明如何利用它构造当前问题的答案。</p>
+<p>以计算一个正整数的各位数字之和为例。<code>738</code> 可以分成最后一位 <code>8</code> 与剩余部分 <code>73</code>；<code>73</code> 又可分成 <code>3</code> 与 <code>7</code>。问题沿着 <code>738 → 73 → 7</code> 缩小，抵达一位数这个基本情形后，再在返回途中把 <code>7 + 3 + 8</code> 组合起来。真正值得观察的不是函数“调用自己”这件事，而是每一层都在解决同一种、但规模更小的问题。<a href="https://www.composingprograms.com/pages/17-recursive-functions.html">Composing Programs 1.7：Recursive Functions</a></p>
+<p>一个可靠的递归设计至少要回答三个问题：最小情形是什么；每次调用是否确实缩小了问题；较小问题的答案怎样被组合成当前答案。这样的思考方式把注意力从“计算机下一步执行哪一行”转向“问题的结构如何保持不变”。学会递归的标志不是敢让函数调用自己，而是不再企图同时控制所有调用层。只要契约成立，就可以暂时把较小问题当成可信的黑箱。</p>
+<p>树递归进一步展示了这种对应关系：一次求解可能分裂为多个子问题，执行过程因而形成一棵计算树。经典的“整数划分”思路不是先找公式，而是先作决定：一种方案使用当前最大部件，另一种不使用；两个分支再处理更小问题。代码之所以递归，是因为问题的选择结构本身会继续分叉。</p>
+<p>但调用树也把成本画了出来：同一子问题可能从不同路径被反复计算，调用深度和空间使用也会增长。递归在表达层面很自然，不代表运行时自动高效；Python 还会为普通递归调用保留帧，深度过大时可能触发 <code>RecursionError</code>。课程后续引入增长阶和记忆化，正是在为前面的抽象补上性能账单。<a href="https://cs61a.org/assets/slides/05-Recursion.pdf">Summer 2026 递归讲义</a></p>
+<p>因此，“递归比循环高级”是错误结论。表达清晰度、正确性证明和运行成本是不同维度；最贴合数学定义的递归版本，不一定是生产环境中效率最高的版本。CS61A 后续安排效率分析，正是在提醒学习者：抽象可以降低人的认知负担，但不会自动消除机器的时间与空间成本。</p>
+<p><a href="https://cs61a.org/proj/cats/">Cats</a> 项目把抽象与递归放进一个可交互场景：程序需要测量打字速度、实现自动纠错，并支持多人模式。这里值得学习的不是某一道题的答案，而是从需求中识别子问题、明确函数契约、构造边界案例，再用测试验证组合后的行为。</p>
+<p>这也是为什么只看视频中的递归演示很容易产生“我听懂了”的错觉。真正的检验是合上视频，自己画一次调用树，写出基本情形，解释每个递归调用为何更小，再为最小输入和相邻边界造例子。B 站上的 2022 Fall 整理版把递归 lecture 与 discussion 分开放在选集中，恰好让人看到“听解释”和“纸笔推演”原本就是两件事。<a href="https://www.bilibili.com/video/BV1sdFue4Ehf/">B 站：CS61A 2022 Fall 讲座与讨论合集</a></p>
+<p>递归告诉我们怎样沿着结构计算，但在开始计算以前，还必须先回答：这份结构究竟怎样表示，又有哪些细节可以暴露给调用者？</p>
+<h2 id="data">四、数据抽象：隔离表示，而不是迷信某种容器</h2>
+<p>函数抽象隐藏“怎样计算”，数据抽象则隐藏“怎样表示”。一个数据对象可以在内部使用列表、元组、链表或自定义对象，但使用它的程序应尽量只依赖构造器、选择器以及公开操作。这道边界通常被称为表示屏障。</p>
+<p>有理数是一个很小却很干净的例子。假设程序只承诺提供 <code>rational(n, d)</code>、<code>numer(x)</code> 和 <code>denom(x)</code>，那么计算两个有理数之和时，只需要使用这些构造器与选择器，不必知道内部究竟保存为二元列表、元组，还是一个带字段的对象。教材把这种写法称为“wishful thinking”：先假定一个合理接口已经存在，在接口之上完成运算，再回头实现底层表示。它不是逃避细节，而是先决定细节应该被关在哪里。<a href="https://www.composingprograms.com/pages/22-data-abstraction.html">Composing Programs 2.2：Data Abstraction</a></p>
+<p>表示屏障的价值，可以通过一次反事实检验看出来：如果内部表示从列表改为对象，调用方是否需要大面积修改？如果答案是肯定的，那么所谓的模块很可能仍把实现细节泄漏到了外部。反过来，如果变化只落在构造器和选择器内部，边界就真正承担了“让变化止步”的责任。抽象并不是不关心实现，而是避免让每一处代码都同时关心实现。</p>
+<p>可变数据让问题变得更复杂。对于不可变值，表达式的结果主要由输入决定；一旦存在共享状态和别名，同一个对象在不同时间可能具有不同内容，程序结果也会依赖操作顺序。此时，理解程序不仅要问“这个值是什么”，还要问“谁持有它的引用、谁能修改它、修改发生在何时”。抽象从空间上的模块边界，扩展到了时间上的状态约束。</p>
+<pre><code class="language-python">a = [1, 2]
+b = a
+b.append(3)
+</code></pre>
+<p>这几行代码的麻烦不在 <code>append</code> 的语法，而在 <code>a</code> 和 <code>b</code> 是两个名称，却指向同一个对象。修改从 <code>b</code> 发起，之后打印 <code>a</code> 也会看到 <code>[1, 2, 3]</code>。从这一刻起，“两个值看起来相等”与“两个名称指向同一个对象”必须分开：<code>==</code> 询问内容是否相等，<code>is</code> 询问对象身份是否相同。重新绑定名称与修改对象也不是一回事。教材关于 mutation、aliasing 与 identity 的讨论，实际是在提醒我们：只画值而不画引用，已经不足以解释程序。<a href="https://www.composingprograms.com/pages/24-mutable-data.html">Composing Programs 2.4：Mutable Data</a></p>
+<p>这也是很多真实 bug 的缩影。一个函数没有直接改动“我的变量”，却改动了双方共享的列表；一个可变默认参数对象在被修改后被后续调用继续共享；一个对象从缓存中取出后被下游悄悄修改。可变性并非错误，它能自然地表示游戏、账户、界面和模拟系统的演化；代价是程序员必须明确所有权、生命周期和修改权限。所谓“状态难”，本质上是过去的操作开始参与决定现在的结果。</p>
+<p>面向对象编程提供了一种组织身份、状态与行为的办法。类、继承和方法调用可以把相关责任聚合起来，但面向对象并不是数据抽象的唯一形式，更不是所有问题的必然终点。层次过深的继承、含混的共享状态和过大的对象，同样会制造新的复杂度。</p>
+<p>当前 <a href="https://cs61a.org/proj/ants/">Ants Vs. SomeBees</a> 项目要求学习者构建塔防游戏，重点使用面向对象范式，并理解、扩展和测试一个较大的既有程序。与只填写孤立函数相比，这要求学习者先辨认对象之间的协议：地点如何连接，昆虫如何行动，子类应当复用什么、覆盖什么。这里的难点从“写出一段正确代码”变成了“在不破坏现有契约的前提下加入新行为”。</p>
+<p>项目也揭示了 OOP 最容易被忽略的一面：继承不是为了少写几行，而是为了表达“哪些行为稳定共享，哪些差异允许替换”。如果一个子类必须了解父类的大量内部偶然细节才能工作，那么继承关系只是把耦合藏到了更深处。判断设计好坏，仍要回到同一个反事实问题：增加一种新角色时，改动能否被限制在少数清晰位置？</p>
+<p>数据抽象决定“看见什么”，可变性要求解释“何时改变”。再往前一步，迭代器和生成器会把另一个平常被忽略的问题推到台前：一项计算究竟应当在什么时候发生？</p>
+<h2 id="efficiency">五、迭代器、生成器与效率：抽象也要支付账单</h2>
+<p>列表把一组结果一次性存放在内存里，像先把货物全部搬进仓库；生成器更像按需生产线，只有调用方索取下一个值时，计算才继续。两者都能表示序列，但它们对时间和空间作出了不同承诺。迭代器把“如何取得下一个元素”封装在统一协议中，生成器则让函数在 <code>yield</code> 处暂停，并保留恢复执行所需的状态。<a href="https://cs61a.org/assets/slides/10-Iterators_and_Generators.pdf">Summer 2026：Iterators and Generators</a></p>
+<pre><code class="language-python">def naturals():
+    n = 1
+    while True:
+        yield n
+        n += 1
+</code></pre>
+<p>这个生成器可以描述没有终点的自然数序列，因为它从不试图一次性制造“全部自然数”。但如果把它交给 <code>list</code>，程序不会得到完成结果，还会持续消耗内存，最终可能失败。这里最值得学习的不是 <code>yield</code> 这个关键词，而是抽象契约发生了变化：调用者获得的不是现成结果，而是一种继续计算的能力。惰性计算没有消灭成本，只是改变了成本发生的时刻。<a href="https://www.composingprograms.com/pages/42-implicit-sequences.html">Composing Programs 4.2：Implicit Sequences</a></p>
+<p>同样的提醒也适用于增长阶分析。两段代码在小输入上都能瞬间结束，不代表它们对规模增长的反应相同。CS61A 用常数、线性、对数与指数等增长类别，训练学习者忽略机器和输入的偶然细节，观察最主要的规模关系。这本身又是一种抽象：不是精确预测某台电脑上的毫秒数，而是判断输入放大时哪种实现会率先失控。<a href="https://www.composingprograms.com/pages/28-efficiency.html">Composing Programs 2.8：Efficiency</a></p>
+<p>记忆化把课程前半部的多条线索集中到了一个小技巧里：一个高阶函数接收原函数，闭包保存可变缓存，递归中的重复子问题被查表结果替代，程序用更多空间换取更少时间，同时保持调用接口不变。这个例子很像 CS61A 的微缩模型——抽象、环境、状态和效率不是互相独立的章节，而是同一个设计决策的不同侧面。</p>
+<p>因此，好的抽象至少要接受两种审问：它是否让人更容易正确理解和修改程序；它是否让机器承担了可接受的时间与空间成本。只回答前一个问题，会写出漂亮但昂贵的代码；只回答后一个问题，又可能得到难以验证和维护的技巧堆叠。</p>
+<h2 id="languages">六、切换语言：改变问题的表达坐标</h2>
+<p>CS61A 从 Python 转向 Scheme 和 SQL，并不是为了增加语言收藏，而是为了暴露不同的表达模型。</p>
+<p>Python 可以容纳过程式、函数式和面向对象写法，适合在课程前半段逐步引入多种抽象。Scheme 的核心语法更小、更统一，因此学习者很难继续依赖熟悉的 Python 语法直觉，只能回到表达式、环境和求值规则本身。<a href="https://cs61a.org/">Summer 2026 课程日历</a></p>
+<pre><code class="language-scheme">(+ 1 (* 2 3))
+</code></pre>
+<p>在 Scheme 中，这是一段程序；经 reader 读入后，它会被表示为嵌套的 pair/list 结构。解释普通组合时，先求操作符，再求各个操作数，最后应用过程；<code>if</code>、<code>define</code> 等特殊形式则不能机械地把所有子表达式先求值，而要遵循自己的规则。<a href="https://cs61a.org/articles/scheme-spec/">CS61A Scheme Specification</a> 统一的括号一开始会让页面显得陌生，很多人会误以为 Scheme 只是在故意增加阅读难度；适应之后才会发现，语法树几乎直接显露在代码表面，正是“程序可以作为数据处理”变得具体的代价。</p>
+<p>这也是中文视频能够提供帮助、却不能替代练习的地方。B 站的 2021 双语字幕合集把 Higher-Order Functions、Environments、Recursion、Scheme、Interpreters 和 SQL 放在同一套长课中，适合观察概念怎样前后呼应；但字幕把英文术语换成熟悉中文以后，也可能制造“已经掌握”的流畅感。看完一段 Scheme 讲解，若不能独立画出表达式树、说出普通调用和特殊形式的区别，理解仍停留在观看层面。<a href="https://www.bilibili.com/video/BV1v64y1Q78o/">B 站：CS61A Spring 2021 中英双语字幕合集</a></p>
+<p>SQL 则把问题转到另一组坐标。若要统计每位作者的书目数量，Python 写法通常会显式遍历记录、维护字典并更新计数；SQL 可以直接描述想要的关系：</p>
+<pre><code class="language-sql">SELECT author, COUNT(*)
+FROM books
+GROUP BY author;
+</code></pre>
+<p>这条查询没有说明先扫哪一行、何时更新计数器，也没有规定使用哪种物理算法。查询解释器和数据库系统负责把声明转化为执行过程。过程并未消失，而是被移交给了另一层系统；不同索引、数据规模与查询计划仍会带来不同成本。<a href="https://www.composingprograms.com/pages/43-declarative-programming.html">Composing Programs 4.3：Declarative Programming</a></p>
+<p>这三种视角不能简单排成高低等级：</p>
+<ul>
+<li>函数式风格突出值、组合与表达式求值；</li>
+<li>面向对象风格突出具有身份的实体、状态变化与消息协作；</li>
+<li>声明式查询突出结果应满足的关系，而隐藏部分执行过程。</li>
+</ul>
+<p>声明式不等于“没有算法”。类似地，面向对象不会自动产生良好设计，函数式写法也不会自动高效。范式的价值在于重新分配复杂度，而不是消灭复杂度：有人获得更简洁的表达，就意味着另一个组件必须接过被隐藏的工作。</p>
+<p>语言切换因此构成一种迁移测试：如果一个人只在 Python 的固定写法中会做题，他掌握的可能是模板；如果他能在 Scheme 中重新解释作用域，在 SQL 中重新描述数据关系，那么原先的概念才更可能真正脱离语法表面。</p>
+<h2 id="interpreter">七、解释器：当语言的意义也成为程序的对象</h2>
+<p>在本文归纳的学习路线中，解释器是前述概念的关键汇合点。此前，学习者在语言规则之内写程序；此时，语言规则本身成为要实现的对象。</p>
+<p>当前 <a href="https://cs61a.org/proj/scheme/">Scheme Interpreter</a> 项目要求使用 Python 实现一个 Scheme 子集的解释器。一个简化的过程可以概括为：读取源代码，将其转换为结构化表达式；在环境中求值；对普通调用执行过程应用，对特殊形式采用各自规则；最后产生值并在交互循环中显示。名称查找、作用域、过程调用和特殊形式不再只是文档里的规定，而成为能够检查和测试的程序机制。</p>
+<p>仍以 <code>(+ 1 (* 2 3))</code> 为例，解释器不会直接把整行文字“变成 7”。中间至少隔着几层可观察的转换：字符先被切成 token，读取器再构造嵌套表达式；求值器判断最外层是调用，取得 <code>+</code> 对应的过程，递归求得 <code>1</code> 与 <code>(* 2 3)</code> 的值，再把这些参数交给应用阶段。到了内部乘法，完全相同的规则再走一遍。文本、语法结构、环境中的名称和运行结果，是四种不同对象，不能混成一个含糊的“代码”。<a href="https://www.composingprograms.com/pages/34-interpreters-for-languages-with-combination.html">Composing Programs 3.4：Interpreters for Languages with Combination</a></p>
+<p>项目中最有启发性的结构，是求值与应用互相调用：求值一个调用表达式需要应用某个过程；应用用户定义过程又要在新环境中求值它的函数体。看见这组互递归时，课程前半部的递归、链表、环境图和高阶函数突然不再是四个孤立考点，而成为同一台机器里的齿轮。SICP 的元循环求值器也以 <code>eval</code> 与 <code>apply</code> 为中心组织语言语义，这说明 CS61A 的安排有清楚的思想来源，并非为了项目而临时拼接。<a href="https://sicp.sourceacademy.org/chapters/4.1.html">SICP 4.1：The Metacircular Evaluator</a></p>
+<p>这个项目把课程前面的主题重新汇合起来：</p>
+<div class="table-scroll" role="region" aria-label="文章数据表" tabindex="0"><table>
+<thead>
+<tr>
+<th>已学概念</th>
+<th>在解释器中的新角色</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>递归</td>
+<td>表达式包含子表达式，求值器按结构递归</td>
+</tr>
+<tr>
+<td>链表与树</td>
+<td>源程序被表示为可遍历的数据结构</td>
+</tr>
+<tr>
+<td>环境模型</td>
+<td>帧与父环境决定名称如何查找</td>
+</tr>
+<tr>
+<td>高阶函数</td>
+<td>过程本身成为可表示、可传递和可应用的值</td>
+</tr>
+<tr>
+<td>面向对象与数据抽象</td>
+<td>不同表达式、过程和环境通过稳定接口协作</td>
+</tr>
+</tbody></table></div>
+<p>最重要的认知变化是：语言并非不可追问的黑箱。所谓“这段代码的意思”，最终可以被拆成一组读取、求值、查找与应用规则，并由另一门语言实现。课程名字里的“程序的构造和解释”，到这里才真正闭合：我们不只构造程序，也构造赋予程序意义的过程。<a href="https://cs61a.org/assets/slides/20-Interpreters.pdf">Summer 2026：Interpreters 讲义</a></p>
+<p>但这里也要避免夸大。项目实现的是教学用 Scheme 子集的解释器，不是完整工业语言，更不等于掌握了编译器优化、运行时系统和语言工程。它提供的是一扇理解语言机制的窗口，而不是终点。</p>
+<h2 id="projects">八、四个项目背后的抽象递进</h2>
+<p>2026 年夏季版设置了四个正式项目。若按它们要求学习者管理的复杂度来观察，可以得到以下路径：</p>
+<div class="table-scroll" role="region" aria-label="文章数据表" tabindex="0"><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>官网描述的主要任务</th>
+<th>需要回答的抽象问题</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="https://cs61a.org/proj/hog/">Hog</a></td>
+<td>游戏模拟与策略</td>
+<td>如何把规则、控制过程和可替换策略分开？</td>
+</tr>
+<tr>
+<td><a href="https://cs61a.org/proj/cats/">Cats</a></td>
+<td>打字测量、自动纠错与多人模式</td>
+<td>如何让递归子问题和功能接口稳定组合？</td>
+</tr>
+<tr>
+<td><a href="https://cs61a.org/proj/ants/">Ants</a></td>
+<td>扩展并测试面向对象塔防程序</td>
+<td>如何在较大代码库中分配状态、行为与继承责任？</td>
+</tr>
+<tr>
+<td><a href="https://cs61a.org/proj/scheme/">Scheme</a></td>
+<td>用 Python 实现 Scheme 子集解释器</td>
+<td>如何把一门语言的求值规则实现为另一段程序？</td>
+</tr>
+</tbody></table></div>
+<p>“模拟器—交互应用—较大对象系统—语言解释器”的递进是本文对项目设计的归纳，并非官网对项目顺序的原句。它仍揭示了一个鲜明趋势：学习者管理的对象，从局部计算逐步扩大到组件协作，再扩大到程序语言本身。</p>
+<p>这也说明为什么“所有测试通过”不能等同于“真正理解”。自动测试主要观察输入与输出，未必能判断抽象边界是否合理、是否存在只对已知案例有效的偶然实现，也无法替代对环境、状态和复杂度的解释能力。正确结果是必要条件，但不是完整的学习证据。</p>
+<p>四个项目还有一条不那么显眼的工程主线：先读规格和 doctest，再把大任务拆成小契约；先在局部建立可验证行为，再组合成完整系统；出错时根据调用路径和失败案例缩小范围。课程的 <a href="https://cs61a.org/articles/composition/">Composition Guide</a> 强调清晰命名、单一职责、简洁与避免重复，这些原则都指向同一件事：面对复杂任务时，“直接开始敲代码”未必更快，因为没有边界的代码会把理解成本推迟到调试阶段。</p>
+<p>项目也是本文刻意不展示完整实现、测试答案或伪代码级攻略的原因。博客可以讨论设计取舍、常见误解和概念联系，但公开答案既会破坏后来学习者的练习过程，也可能违反课程合作与网络工具政策。尤其是 B 站旧学期合集中包含的 project walkthrough，只能用来了解项目语境，不能被当成当前作业的代写入口。</p>
+<h2 id="bilibili">九、B 站上的 CS61A：适合借一双中文耳朵，不适合借答案</h2>
+<p>中文学习者面对 CS61A，常常不是只卡在概念上，还卡在术语密度和语速上。此时 B 站的字幕、配音与课程整理确实有价值：可以暂停一句话，对照中英文术语，也能按章节定位环境、递归或解释器。但先要把来源性质说清楚——下面这些多为 Berkeley 公开课的转载、翻译或后期配音，并非 Berkeley 官方中文版，也不是对当前 Summer 2026 规则的权威说明。</p>
+<div class="table-scroll" role="region" aria-label="文章数据表" tabindex="0"><table>
+<thead>
+<tr>
+<th>B 站资源</th>
+<th>适合怎样使用</th>
+<th>需要保留的警惕</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="https://www.bilibili.com/video/BV1v64y1Q78o/">Spring 2021 中英双语字幕合集</a></td>
+<td>38 个长课选集覆盖高阶函数、环境、递归、数据抽象、生成器、Scheme、解释器和 SQL，适合顺着完整授课脉络学习</td>
+<td>学期较旧，项目和政策不能照搬；字幕术语需与英文讲义互校</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1sy411z7nA/">“2024”英文原声精翻合集</a></td>
+<td>37 个选集、约 18 小时，从 Functions 一直覆盖到 SQL 与数据库，适合技术主题查漏补缺</td>
+<td>页面标题标注“2024”，但这一标注不足以证明原课程学期；它是翻译整理，不是原创中文课</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1sdFue4Ehf/">Fall 2022 讲座与 discussion 整理</a></td>
+<td>除 lecture 外还含环境图、递归等讨论课，适合观察“听课”怎样转成纸笔解题</td>
+<td>选集含项目导引；不要观看或传播会直接泄露作业实现的内容</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1AXs4zFEem/">Fall 2025 中文配音分段版</a></td>
+<td>主题切得较细，适合快速回看 <code>environment</code>、<code>special form</code>、<code>interpreter</code>、<code>macro</code> 等单点</td>
+<td>属后期配音/字幕学习资源，机器处理可能误译技术词，必须回查官方材料</td>
+</tr>
+</tbody></table></div>
+<p>如果只选一套，我更倾向用 2021 双语长课建立完整脉络；若还需要纸笔推演，可以补 2022 discussion；2025 分段版更适合单点回看。这是基于内容组织方式的学习建议，不是对视频教学效果的实验结论。播放量、弹幕热度和“听起来顺”也不能证明一套材料更准确。</p>
+<p>几处实际画面尤其能补足文字教材的“运动感”：在中文语音整理版的<a href="https://www.bilibili.com/video/BV16J4m1u7xP/?p=5&t=398">环境一讲</a>里，<code>apply_twice(square, 2)</code> 的名称绑定和调用帧被逐步画出；<a href="https://www.bilibili.com/video/BV16J4m1u7xP/?p=13&t=900">数据抽象一讲</a>用表示屏障解释为什么更换底层结构不该迫使整个程序重写；<a href="https://www.bilibili.com/video/BV16J4m1u7xP/?p=23&t=430">效率一讲</a>把记忆化 Fibonacci 与调用次数放在一起；到<a href="https://www.bilibili.com/video/BV16J4m1u7xP/?p=29&t=750">解释器一讲</a>，递归求值与环境绑定终于出现在同一张执行轨迹里。视频最有价值之处正在这里：静态规则被展开成时间过程。不过这些链接来自同一套后期中文语音整理，个别末尾选集仍标注英文，不能把“中文语音完结”理解为每一分钟都经过同等程度的中文讲解与校订。</p>
+<p>一个更可靠的观看循环是：先看十到二十分钟，暂停并关掉视频，用自己的话复述规则；再在纸上画环境图或调用树，造一个最小例子；最后才运行代码核对。如果预测错了，回看的是导致错误的那一小段，而不是从头再播一遍。视频在这里负责第一次建立直觉，理解则要靠预测、失败和修正完成。</p>
+<p>还要建立一个术语对照表。<code>environment</code> 译作“环境”，<code>frame</code> 常译作“帧”，<code>procedure</code> 在 Scheme 语境中是“过程”，<code>special form</code> 是“特殊形式”，<code>mutation</code> 是“可变操作/修改”，<code>tail call</code> 是“尾调用”。中文译法可以帮助进入概念，却不能取代原词，因为报错、项目规格和官方讲义最终仍使用英文。遇到字幕把 <code>frame</code> 译成“框架”、把 <code>procedure</code> 一律译成“程序”时，若不回到原词，概念边界很容易被抹平。</p>
+<h2 id="learning">十、怎样把课程资源转化成自己的能力</h2>
+<p>CS61A 官方学习指南强调尽早开始、分散练习、主动做题和反思解题过程；在解题时，先重述问题，确认输入、输出和状态变化，再构造包括最小情形在内的案例，最后逐步追踪程序并定位错误。<a href="https://cs61a.org/articles/studying/">Studying Guide</a></p>
+<p>据此，一次完整练习可以形成五步闭环：</p>
+<ol>
+<li><strong>重述规格。</strong> 不写代码，先用自己的话说明函数或模块承诺什么。</li>
+<li><strong>构造案例。</strong> 覆盖最小输入、边界条件、非法输入和递归子问题。</li>
+<li><strong>选择表示。</strong> 判断当前困难属于过程、数据、状态、范式还是求值规则。</li>
+<li><strong>实现并测试。</strong> 先验证局部契约，再检查组件组合后的行为。</li>
+<li><strong>复盘抽象。</strong> 解释错误为何发生，以及哪一道边界没有被正确建立。</li>
+</ol>
+<p>其中第五步最容易被忽略。修复一个报错只能解决当下问题；把错误归因于错误的递归假设、泄漏的表示细节、意外共享的状态或错误的环境查找，才可能让经验迁移到新题目。</p>
+<p>例如，做完开头的闭包题，不妨把 <code>make_adder(3)</code> 改成两个不同参数的调用，再预测每个函数对象的父环境；随后故意把内部函数拿到另一个调用位置执行，看结果究竟由“调用处”还是“定义处”决定。这样的变式只需几分钟，却比抄下“词法作用域”四个字更能暴露理解漏洞。递归也一样：把基本情形向前或向后挪一步，检查程序是漏算、重复还是永不停止。学习发生在预测与实际结果不一致的缝隙里。</p>
+<p>资源最好分工，而不是混用。官网大纲、项目规格和当期讲义负责回答“课程现在怎样规定”；<em>Composing Programs</em> 与 SICP 负责解释概念的思想来源；B 站视频负责降低第一次接触的语言阻力；学习者经验只能提示常见卡点，不能证明某种方法对所有人有效。CS61A 的学生建议汇总反复强调跟上进度、主动做练习与旧题、尽早开始项目；这是经验共识，不是随机对照研究。<a href="https://cs61a.org/articles/advice/">Advice from Former Students</a></p>
+<p>如果要把这些材料排成一周的节奏，可以先用视频或教材建立轮廓，第二天在不看答案的情况下完成 discussion 或自造小题，第三步进入项目中的相关任务，最后单独留一页记录：我原先怎样想、哪个案例推翻了它、以后遇到什么信号应重新画环境图或调用树。分散练习的价值不只在“多看几遍”，而在两次接触之间真的发生过遗忘；重新提取概念，才会暴露它是否已经成为自己的工具。</p>
+<p>还必须注意当前课程的学术诚信边界。Summer 2026 大纲明确禁止借助 AI 完成项目；Homework 原则上只允许使用课程内置的 61A-bot。对于不指向具体题目的学习咨询，政策列出的可接受方向包括一般概念解释、语法示例和理解错误信息，而不是索取具体作业代码或让工具代为调试完整答案。<a href="https://cs61a.org/articles/about-61a/#ai-tools-and-the-internet">AI Tools and the Internet 政策</a> 对自学者而言，最有价值的辅助也应当是提出问题、解释机制和审查自己的推理，而不是绕过形成心智模型的过程。</p>
+<h2 id="costs">十一、容易被忽略的变量与成本</h2>
+<p>首先，课程没有把特定编程课设为正式门槛，不等于它对完全没有经验的人轻松。当前大纲明确提醒，无编程经验的学习者通常需要投入更多时间，而多数选课学生已经有较多经验。<a href="https://cs61a.org/articles/about-61a/#prerequisites">课程先修说明</a> 因此，不能用别人的完成速度评价自己的理解，也不能把短期卡顿直接解释为缺乏能力。</p>
+<p>其次，当前官网是压缩的八周暑期版。它的讲次、截止日期和学习强度不能直接代表所有学期。自学时更合理的做法，是按理解和练习质量安排节奏，而不是机械复制暑期日历。</p>
+<p>B 站合集还有明显的版本偏差与选择偏差。可检索到的合集本身不是系统样本，完整性、字幕质量和选集顺序又取决于整理者；评论区出现的“一个月通关”或“某章最劝退”，只是个体经历。它们能提供现场感，却不能推出普遍所需课时，更不能替代对当前项目与政策的核验。文章没有采用某位学习者自报的总耗时，正是因为背景经验、是否完成全部作业、每天可支配时间和“完成”的标准都没有统一。</p>
+<p>进度比较本身还是一项容易漏算的心理成本。有人一遍听懂闭包，有人在环境图上停几天；有人已有竞赛或工程经验，却不会因此出现在视频标题里。B 站转载的 CS61A 结课片段 <a href="https://www.bilibili.com/video/BV1MV4y1W7T1/">“Don&#39;t Compare”</a> 把这件事说得很直接：不要把自我价值绑定在别人的成绩上。它是一段经 UP 主翻译的结课讲话，不是学习心理学研究，不能证明某种干预有效；但作为学习提醒是成立的——比较他人的可见进度，往往忽略了他们不可见的起点、时间与支持条件。</p>
+<p>再次，抽象本身也有成本。抽象层过少会造成重复和耦合，抽象层过多则会引入间接性，使读者必须跨越多个接口才能理解行为。优秀设计不是追求“越抽象越好”，而是在变化频率、运行成本、团队理解和测试难度之间选择恰当边界。</p>
+<p>中文资料也有一项隐性成本：它降低了听课门槛，却可能推迟英文技术词汇的建立。完全依赖翻译后，回到 doctest、错误信息和项目规格时仍会再次卡住。更稳妥的做法是保留双语术语，而不是追求把每个词都中文化。这里不是说英文水平决定编程能力，而是承认课程的实际工具链以英文为主，翻译只能搭桥，不能让桥的另一端消失。</p>
+<p>最后，CS61A 提供的是扎实的概念起点，而不是完整的软件工程训练。真实系统还涉及版本控制、并发、网络、部署、安全、可观测性和团队协作等问题。完成课程不等于已经具备工业项目能力；更可信的验证，是能否在没有现成模板的新问题中解释设计、比较方案并承担权衡。</p>
+<h2 id="conclusion">结语：真正可迁移的是划分复杂度的方法</h2>
+<p>从函数到递归，从数据抽象到对象系统，从 Scheme、SQL 到解释器，CS61A 看似不断更换主题，实际始终追问同一个问题：面对不断增长的复杂度，程序员应该在哪个层次思考，又该把哪些细节交给下一层承担？</p>
+<p>函数让我们命名过程，递归让程序贴合问题结构，数据抽象隔离内部表示，编程范式重组过程、状态与关系，解释器则把语言规则本身变成可分析、可实现的系统。这些内容共同构成一座“抽象的阶梯”。</p>
+<p>语法会更新，工具会更替，流行语言也会变化。真正不容易过时的能力，是在面对新问题时判断：应当抽象过程，隔离数据表示，显式管理状态，切换表达范式，还是重新审视语言赋予程序的意义。CS61A 的价值，正是在一门入门课中，让这种判断第一次变得具体。</p>
+<h2 id="references">参考资料</h2><div class="source-list">
+<h3>课程、讲义与项目</h3>
+<ol>
+<li>UC Berkeley CS61A, <a href="https://cs61a.org/">Summer 2026 课程主页与日历</a>，访问日期：2026-08-13。</li>
+<li>UC Berkeley CS61A, <a href="https://cs61a.org/articles/about-61a/">Syllabus &amp; Course Policies</a>，访问日期：2026-08-13。</li>
+<li>UC Berkeley CS61A, <a href="https://cs61a.org/articles/studying/">Studying Guide</a>，访问日期：2026-08-13。</li>
+<li>UC Berkeley CS61A, <a href="https://cs61a.org/articles/composition/">Composition Guide</a>，访问日期：2026-08-13。</li>
+<li>UC Berkeley CS61A, <a href="https://cs61a.org/articles/advice/">Advice from Former Students</a>，访问日期：2026-08-13。</li>
+<li>UC Berkeley CS61A, <a href="https://cs61a.org/articles/scheme-spec/">Scheme Specification</a>，访问日期：2026-08-13。</li>
+<li>UC Berkeley CS61A, <a href="https://cs61a.org/assets/slides/04-Environments.pdf">Environments — Summer 2026 Slides</a>。</li>
+<li>UC Berkeley CS61A, <a href="https://cs61a.org/assets/slides/05-Recursion.pdf">Recursion — Summer 2026 Slides</a>。</li>
+<li>UC Berkeley CS61A, <a href="https://cs61a.org/assets/slides/10-Iterators_and_Generators.pdf">Iterators and Generators — Summer 2026 Slides</a>。</li>
+<li>UC Berkeley CS61A, <a href="https://cs61a.org/assets/slides/20-Interpreters.pdf">Interpreters — Summer 2026 Slides</a>。</li>
+<li>UC Berkeley CS61A, <a href="https://cs61a.org/proj/hog/">The Game of Hog</a>。</li>
+<li>UC Berkeley CS61A, <a href="https://cs61a.org/proj/cats/">Computer Aided Typing Software</a>。</li>
+<li>UC Berkeley CS61A, <a href="https://cs61a.org/proj/ants/">Ants Vs. SomeBees</a>。</li>
+<li>UC Berkeley CS61A, <a href="https://cs61a.org/proj/scheme/">Scheme Interpreter</a>。</li>
+</ol>
+<h3>教材与思想来源</h3>
+<ol>
+<li>John DeNero, <a href="https://www.composingprograms.com/">Composing Programs</a>。</li>
+<li>John DeNero, <a href="https://www.composingprograms.com/pages/16-higher-order-functions.html">Higher-Order Functions</a>。</li>
+<li>John DeNero, <a href="https://www.composingprograms.com/pages/17-recursive-functions.html">Recursive Functions</a>。</li>
+<li>John DeNero, <a href="https://www.composingprograms.com/pages/22-data-abstraction.html">Data Abstraction</a>。</li>
+<li>John DeNero, <a href="https://www.composingprograms.com/pages/24-mutable-data.html">Mutable Data</a>。</li>
+<li>John DeNero, <a href="https://www.composingprograms.com/pages/28-efficiency.html">Efficiency</a>。</li>
+<li>John DeNero, <a href="https://www.composingprograms.com/pages/34-interpreters-for-languages-with-combination.html">Interpreters for Languages with Combination</a>。</li>
+<li>John DeNero, <a href="https://www.composingprograms.com/pages/42-implicit-sequences.html">Implicit Sequences</a>。</li>
+<li>John DeNero, <a href="https://www.composingprograms.com/pages/43-declarative-programming.html">Declarative Programming</a>。</li>
+<li><em>SICP Comparison Edition</em>（原作 Harold Abelson、Gerald Jay Sussman 与 Julie Sussman；JavaScript 版改编 Martin Henz 与 Tobias Wrigstad）, <a href="https://sicp.sourceacademy.org/chapters/1.1.html">1.1: The Elements of Programming</a>。</li>
+<li><em>SICP Comparison Edition</em>（同上）, <a href="https://sicp.sourceacademy.org/chapters/4.1.html">4.1: The Metacircular Evaluator</a>。</li>
+</ol>
+<h3>B 站中文观看与学习材料</h3>
+<ol>
+<li>凯老师六维学堂, <a href="https://www.bilibili.com/video/BV1v64y1Q78o/">UC Berkeley CS61A Spring 2021 中英双语字幕合集</a>，访问日期：2026-08-13。</li>
+<li>CS自学社区, <a href="https://www.bilibili.com/video/BV1sy411z7nA/">CS61A 精翻双语·英文原声合集（页面标注“2024”）</a>，访问日期：2026-08-13。</li>
+<li>CS自学社区, <a href="https://www.bilibili.com/video/BV16J4m1u7xP/">CS61A 精翻·中文语音合集（页面标注“2024”）</a>，访问日期：2026-08-13。</li>
+<li>想学的很多, <a href="https://www.bilibili.com/video/BV1sdFue4Ehf/">CS61A Fall 2022 讲座与讨论整理</a>，访问日期：2026-08-13。</li>
+<li>万物深译, <a href="https://www.bilibili.com/video/BV1AXs4zFEem/">CS61A Fall 2025 中文配音分段合集</a>，访问日期：2026-08-13。</li>
+<li>为了素晴的世界, <a href="https://www.bilibili.com/video/BV1MV4y1W7T1/">“Don&#39;t Compare” — CS61A Fall 2019 结课片段中译</a>，访问日期：2026-08-13。</li>
+</ol>
+<blockquote>
+<p>注：本组是字幕、配音或转载材料，用于中文观看路径和学习场景分析；课程事实、当期项目和政策以第一组为准。B 站标题中的年份不必然等于原课程学期，引用时已按可核验程度作了限制。</p>
+</blockquote></div>
 
         <div class="post-end">观测结束。抽象不是逃离细节，而是决定细节应该由谁承担。</div>
-
-        <a class="next-post" href="../index.html">
-          <span><small>RETURN / ARCHIVE</small><strong>返回笔记</strong></span>
-          <span class="next-post-arrow" aria-hidden="true">→</span>
-        </a>
+        <a class="next-post" href="../index.html"><span><small>RETURN / ARCHIVE</small><strong>返回笔记</strong></span><span class="next-post-arrow" aria-hidden="true">→</span></a>
       </article>
-
-      <nav class="article-toc" data-toc aria-label="文章目录">
-        <p class="toc-title">CONTENTS</p>
-        <ul>
+      <nav class="article-toc" data-toc aria-label="文章目录"><p class="toc-title">CONTENTS</p><ul><li><a href="#hook">闭包引子</a></li>
           <li><a href="#premise">错误前提</a></li>
           <li><a href="#functions">函数抽象</a></li>
           <li><a href="#recursion">递归契约</a></li>
           <li><a href="#data">数据抽象</a></li>
+          <li><a href="#efficiency">效率账单</a></li>
           <li><a href="#languages">语言与范式</a></li>
           <li><a href="#interpreter">解释器</a></li>
           <li><a href="#projects">项目递进</a></li>
+          <li><a href="#bilibili">中文资源</a></li>
           <li><a href="#learning">学习闭环</a></li>
           <li><a href="#costs">变量与成本</a></li>
-          <li><a href="#conclusion">结语</a></li>
-        </ul>
-      </nav>
+          <li><a href="#conclusion">结语</a></li></ul></nav>
     </div>
   </main>
-
-  <footer class="site-footer">
-    <div class="page-shell">
-      <div class="footer-top">
-        <p class="footer-line">抽象不是忽略细节，而是重新分配复杂度。</p>
-        <nav class="footer-links" aria-label="页脚导航">
-          <a href="../index.html">笔记</a>
-          <a href="../../notes/index.html">日常记录</a>
-          <a href="../../about/index.html">人物侧写</a>
-          <a href="../../feed.xml">订阅</a>
-        </nav>
-      </div>
-      <div class="footer-bottom"><span>© <span data-current-year>2026</span> 陵辰</span><span>第二话 · 思想留下痕迹，结构成为证词</span></div>
-    </div>
-  </footer>
+  <footer class="site-footer"><div class="page-shell"><div class="footer-top"><p class="footer-line">抽象不是忽略细节，而是重新分配复杂度。</p><nav class="footer-links" aria-label="页脚导航"><a href="../index.html">笔记</a><a href="../../notes/index.html">日常记录</a><a href="../../about/index.html">人物侧写</a><a href="../../feed.xml">订阅</a></nav></div><div class="footer-bottom"><span>© <span data-current-year>2026</span> 陵辰</span><span>第二话 · 思想留下痕迹，结构成为证词</span></div></div></footer>
 </body>
 </html>
