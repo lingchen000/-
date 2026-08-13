@@ -53,12 +53,26 @@
           <input id="notes-search" type="search" inputmode="search" autocomplete="off" placeholder="检索日期、标题或正文" data-notes-search>
         </label>
         <div class="notes-archive-actions">
-          <span class="notes-result-count" data-notes-result-count role="status" aria-live="polite" aria-atomic="true">共 22 条记录</span>
+          <span class="notes-result-count" data-notes-result-count role="status" aria-live="polite" aria-atomic="true">共 23 条记录</span>
           <button class="notes-toggle-all" type="button" data-notes-toggle-all>展开全部</button>
         </div>
       </div>
       <div class="observation-log-list" data-notes-list>
-        <article class="observation-log-entry" id="log-2026-08-12" data-notes-entry data-latest>
+        <article class="observation-log-entry" id="log-2026-08-13" data-notes-entry data-latest>
+          <div class="observation-log-meta"><time datetime="2026-08-13">2026.08.13</time><span>LOG 023</span></div>
+          <h3>Akashic 移动端配置与访问保护</h3>
+          <p class="observation-log-project">ASSIGNMENT / AKASHIC MOBILE APP CONFIGURATION &amp; DOMAIN SECURITY</p>
+          <div class="observation-log-content">
+            <p>检查 Akashic Agent 的云服务器部署状态，确认服务已运行，并通过 Cloudflare Tunnel 提供外网访问。</p>
+            <p>整理域名、隧道与本地服务端口的对应关系，确认 Akashic 原服务仍仅监听本机地址，避免直接暴露服务器端口。</p>
+            <p>为 Akashic 网页端增加访问保护：配置本机反向代理和 Basic Auth 登录验证，并将 Cloudflare Tunnel 的目标调整为受保护的代理入口。测试未携带凭据时会被拒绝，携带正确凭据时可正常访问，提升了网页端的基础访问安全性。</p>
+            <p>排查手机端连接 Akashic 时无法生成二维码的问题。确认网页端“连接手机”入口可见，但服务端 mobile_realtime 移动实时网关尚未启用，因此出现“移动网关尚未启用”的提示。</p>
+            <p>阅读相关配置项与代码逻辑，梳理出该功能依赖网页聊天通道、移动网关配置、密钥保护和公网 WebSocket 地址等条件。</p>
+            <p>明日计划继续学习 Akashic 源代码。</p>
+          </div>
+        </article>
+
+        <article class="observation-log-entry" id="log-2026-08-12" data-notes-entry>
           <div class="observation-log-meta"><time datetime="2026-08-12">2026.08.12</time><span>LOG 022</span></div>
           <h3>Akashic Agent记忆、权限与云端运行</h3>
           <p class="observation-log-project">ASSIGNMENT / AGENT MEMORY, ACCESS CONTROL &amp; CLOUD OPERATION</p>
