@@ -3361,25 +3361,6 @@ body.monogatari-theme.worldline-theme .github-activity-card::before {
   display: none;
 }
 
-/* The chart intentionally opens at the newest contributions on the right.
-   Keep the card image-only, while showing that earlier weeks are available
-   by horizontal drag or scroll. */
-.github-heatmap-link::after {
-  position: sticky;
-  z-index: 2;
-  right: 0;
-  display: grid;
-  width: 34px;
-  height: 100%;
-  margin-left: -34px;
-  place-items: center end;
-  background: linear-gradient(90deg, transparent, var(--mono-panel) 64%);
-  color: var(--mono-red-text, var(--mono-red));
-  content: "‹";
-  font: 900 25px/1 var(--font-mono);
-  pointer-events: none;
-}
-
 .github-heatmap {
   position: relative;
   z-index: 1;
