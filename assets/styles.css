@@ -4497,7 +4497,8 @@ body.monogatari-theme.worldline-inner.monogatari-article-page .site-footer .page
   body.monogatari-theme.worldline-inner.monogatari-article-page .post-kicker {
     max-width: 82%;
     margin-bottom: 28px;
-    font-size: 9px;
+    font-size: 12px;
+    letter-spacing: .08em;
   }
 
   body.monogatari-theme.worldline-inner.monogatari-article-page .post-kicker::before {
@@ -4532,7 +4533,8 @@ body.monogatari-theme.worldline-inner.monogatari-article-page .site-footer .page
   body.monogatari-theme.worldline-inner.monogatari-article-page .post-hero .post-meta span,
   body.monogatari-theme.worldline-inner.monogatari-article-page .post-hero .post-meta time {
     padding: 7px 9px;
-    font-size: 9px;
+    font-size: 12px;
+    letter-spacing: .04em;
   }
 
   body.monogatari-theme.worldline-inner.monogatari-article-page .article-layout {
@@ -5795,7 +5797,8 @@ html.intro-pending .startup-intro.is-skipping {
     min-width: 70px;
     min-height: 46px;
     gap: 6px;
-    font-size: 9px;
+    font-size: 12px;
+    letter-spacing: .04em;
   }
 
   .log-terminal-page .notes-entry-state-icon {
