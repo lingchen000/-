@@ -5,8 +5,15 @@
     <link>https://lingchen000.github.io/-/</link>
     <description>陵辰公开的故事、日常切片与私人独白。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Thu, 06 Aug 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 13 Aug 2026 00:00:00 +0800</lastBuildDate>
     <atom:link href="https://lingchen000.github.io/-/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>抽象的阶梯：CS61A 如何训练程序思维</title>
+      <link>https://lingchen000.github.io/-/articles/cs61a-abstraction-staircase/</link>
+      <guid isPermaLink="true">https://lingchen000.github.io/-/articles/cs61a-abstraction-staircase/</guid>
+      <pubDate>Thu, 13 Aug 2026 00:00:00 +0800</pubDate>
+      <description>从高阶函数、递归和数据抽象一路走到解释器，梳理 CS61A 如何训练抽象和管理程序复杂度的能力。</description>
+    </item>
     <item>
       <title>从“会回答”到“会行动”：大语言模型智能体</title>
       <link>https://lingchen000.github.io/-/articles/hugging-face-ai-agents-course/</link>
