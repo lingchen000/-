@@ -5,8 +5,15 @@
     <link>https://lingchen000.github.io/-/</link>
     <description>陵辰公开的故事、日常切片与私人独白。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Thu, 13 Aug 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 14 Aug 2026 00:00:00 +0800</lastBuildDate>
     <atom:link href="https://lingchen000.github.io/-/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Akashic Agent 调试与翻译系统优化</title>
+      <link>https://lingchen000.github.io/-/notes/#log-2026-08-14</link>
+      <guid isPermaLink="true">https://lingchen000.github.io/-/notes/#log-2026-08-14</guid>
+      <pubDate>Fri, 14 Aug 2026 00:00:00 +0800</pubDate>
+      <description>检查 Akashic Agent 服务与移动网关状态，完成 Python 与 uv 环境配置、基础对话验证，并优化翻译系统的前后端联合启动流程。</description>
+    </item>
     <item>
       <title>抽象的阶梯：从高阶函数、递归到解释器</title>
       <link>https://lingchen000.github.io/-/articles/cs61a-abstraction-staircase/</link>
