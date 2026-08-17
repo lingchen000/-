@@ -53,12 +53,25 @@
           <input id="notes-search" type="search" inputmode="search" autocomplete="off" placeholder="检索日期、标题或正文" data-notes-search>
         </label>
         <div class="notes-archive-actions">
-          <span class="notes-result-count" data-notes-result-count role="status" aria-live="polite" aria-atomic="true">共 24 条记录</span>
+          <span class="notes-result-count" data-notes-result-count role="status" aria-live="polite" aria-atomic="true">共 25 条记录</span>
           <button class="notes-toggle-all" type="button" data-notes-toggle-all>展开全部</button>
         </div>
       </div>
       <div class="observation-log-list" data-notes-list>
-        <article class="observation-log-entry" id="log-2026-08-14" data-notes-entry data-latest>
+        <article class="observation-log-entry" id="log-2026-08-17" data-notes-entry data-latest>
+          <div class="observation-log-meta"><time datetime="2026-08-17">2026.08.17</time><span>LOG 025</span></div>
+          <h3>网线接头制作与 Akashic 代码结构学习</h3>
+          <p class="observation-log-project">ASSIGNMENT / NETWORK CABLE BASICS &amp; AKASHIC CODEBASE STRUCTURE</p>
+          <div class="observation-log-content">
+            <p>上午在服务器室学习网线及水晶头的基础知识，并练习网线接入水晶头的操作，进一步认识常用网络硬件。</p>
+            <p>梳理 Akashic Agent 项目的顶层代码结构，了解程序入口、核心 Agent、启动装配、事件总线、会话管理、记忆引擎、主动推送、插件、技能、前端和渠道接入等主要模块的职责。</p>
+            <p>重点学习 Agent 核心目录：<code>runner.py</code> 负责 Agent 主循环，<code>passive_turn.py</code> 负责处理单次被动回复，<code>proactive_kernel.py</code> 负责主动推送决策，<code>prompt_block.py</code> 负责提示词组装，<code>response_parser.py</code> 负责解析模型输出。</p>
+            <p>查看 Agent 生命周期、模型运行时、工具系统、MCP、后台任务、调度器和 Supervisor 等模块，初步理解各模块之间的协作关系。</p>
+            <p>明日计划继续学习 Akashic 的核心机制与升级边界。</p>
+          </div>
+        </article>
+
+        <article class="observation-log-entry" id="log-2026-08-14" data-notes-entry>
           <div class="observation-log-meta"><time datetime="2026-08-14">2026.08.14</time><span>LOG 024</span></div>
           <h3>Akashic Agent 调试与翻译系统优化</h3>
           <p class="observation-log-project">ASSIGNMENT / AKASHIC AGENT DEBUGGING &amp; TRANSLATION SYSTEM OPTIMIZATION</p>

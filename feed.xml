@@ -5,8 +5,15 @@
     <link>https://lingchen000.github.io/-/</link>
     <description>陵辰公开的故事、日常切片与私人独白。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 14 Aug 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 17 Aug 2026 00:00:00 +0800</lastBuildDate>
     <atom:link href="https://lingchen000.github.io/-/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>网线接头制作与 Akashic 代码结构学习</title>
+      <link>https://lingchen000.github.io/-/notes/#log-2026-08-17</link>
+      <guid isPermaLink="true">https://lingchen000.github.io/-/notes/#log-2026-08-17</guid>
+      <pubDate>Mon, 17 Aug 2026 00:00:00 +0800</pubDate>
+      <description>学习网线与水晶头的基础操作，梳理 Akashic Agent 顶层代码结构，并认识 Agent 主循环、回复处理、主动推送和工具调度等核心模块。</description>
+    </item>
     <item>
       <title>Akashic Agent 调试与翻译系统优化</title>
       <link>https://lingchen000.github.io/-/notes/#log-2026-08-14</link>
