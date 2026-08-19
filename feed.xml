@@ -5,8 +5,15 @@
     <link>https://lingchen000.github.io/-/</link>
     <description>陵辰公开的故事、日常切片与私人独白。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Tue, 18 Aug 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 19 Aug 2026 00:00:00 +0800</lastBuildDate>
     <atom:link href="https://lingchen000.github.io/-/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>企业信息核查与域名路由修复</title>
+      <link>https://lingchen000.github.io/-/notes/#log-2026-08-19</link>
+      <guid isPermaLink="true">https://lingchen000.github.io/-/notes/#log-2026-08-19</guid>
+      <pubDate>Wed, 19 Aug 2026 00:00:00 +0800</pubDate>
+      <description>核查网店企业主体信息，并通过调整 Cloudflare Tunnel 路由与 DNS 记录解决根域名的 525 访问故障。</description>
+    </item>
     <item>
       <title>Akashic 生命周期、记忆与插件机制</title>
       <link>https://lingchen000.github.io/-/notes/#log-2026-08-18</link>

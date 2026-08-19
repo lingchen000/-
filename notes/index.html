@@ -53,12 +53,25 @@
           <input id="notes-search" type="search" inputmode="search" autocomplete="off" placeholder="检索日期、标题或正文" data-notes-search>
         </label>
         <div class="notes-archive-actions">
-          <span class="notes-result-count" data-notes-result-count role="status" aria-live="polite" aria-atomic="true">共 26 条记录</span>
+          <span class="notes-result-count" data-notes-result-count role="status" aria-live="polite" aria-atomic="true">共 27 条记录</span>
           <button class="notes-toggle-all" type="button" data-notes-toggle-all>展开全部</button>
         </div>
       </div>
       <div class="observation-log-list" data-notes-list>
-        <article class="observation-log-entry" id="log-2026-08-18" data-notes-entry data-latest>
+        <article class="observation-log-entry" id="log-2026-08-19" data-notes-entry data-latest>
+          <div class="observation-log-meta"><time datetime="2026-08-19">2026.08.19</time><span>LOG 027</span></div>
+          <h3>企业信息核查与域名路由修复</h3>
+          <p class="observation-log-project">ASSIGNMENT / BUSINESS DATA REVIEW &amp; DOMAIN ROUTING REPAIR</p>
+          <div class="observation-log-content">
+            <p>对照智慧市场监督平台，核查常德市、湘潭市带网址的网店企业主体信息，并将结果整理为表格。核查过程中发现一条企业网址已经失效，且无法在湖南省农副产品网络销售公共服务平台检索到对应信息，随后在 WPS 表格中进行标记。</p>
+            <p>排查个人域名无法访问的问题。根据浏览器返回的 Cloudflare 525 错误，判断故障发生在 Cloudflare 与源站之间的 SSL 握手环节。进一步检查后确认 Tunnel 服务运行正常，但根域名的 DNS 记录仍指向旧服务器地址。</p>
+            <p>检查 Cloudflare Tunnel 路由配置，确认 Akashic 服务已绑定子域名，而根域名尚未接入同一 Tunnel。随后新增根域名的 Tunnel 路由，并将原有 A 记录替换为 Tunnel 对应的 CNAME 记录。</p>
+            <p>配置完成后进行公网访问测试。根域名不再返回 525 错误，而是进入密码保护页面并返回未授权状态，说明请求已经能够到达服务器上的 Akashic 服务，访问保护也仍然生效。</p>
+            <p>明日计划学习 Akashic Agent 的程序化控制功能和移动端机制。</p>
+          </div>
+        </article>
+
+        <article class="observation-log-entry" id="log-2026-08-18" data-notes-entry>
           <div class="observation-log-meta"><time datetime="2026-08-18">2026.08.18</time><span>LOG 026</span></div>
           <h3>Akashic 生命周期、记忆与插件机制</h3>
           <p class="observation-log-project">ASSIGNMENT / AGENT LIFECYCLE, MEMORY &amp; PLUGIN MECHANISMS</p>
