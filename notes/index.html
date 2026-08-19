@@ -53,12 +53,26 @@
           <input id="notes-search" type="search" inputmode="search" autocomplete="off" placeholder="检索日期、标题或正文" data-notes-search>
         </label>
         <div class="notes-archive-actions">
-          <span class="notes-result-count" data-notes-result-count role="status" aria-live="polite" aria-atomic="true">共 25 条记录</span>
+          <span class="notes-result-count" data-notes-result-count role="status" aria-live="polite" aria-atomic="true">共 26 条记录</span>
           <button class="notes-toggle-all" type="button" data-notes-toggle-all>展开全部</button>
         </div>
       </div>
       <div class="observation-log-list" data-notes-list>
-        <article class="observation-log-entry" id="log-2026-08-17" data-notes-entry data-latest>
+        <article class="observation-log-entry" id="log-2026-08-18" data-notes-entry data-latest>
+          <div class="observation-log-meta"><time datetime="2026-08-18">2026.08.18</time><span>LOG 026</span></div>
+          <h3>Akashic 生命周期、记忆与插件机制</h3>
+          <p class="observation-log-project">ASSIGNMENT / AGENT LIFECYCLE, MEMORY &amp; PLUGIN MECHANISMS</p>
+          <div class="observation-log-content">
+            <p>学习 Akashic Agent 被动回复的生命周期流程。一次消息处理依次经过六个阶段，分别负责状态注入、记忆与上下文加载、提示词组装、模型推理、结果处理以及持久化清理。</p>
+            <p>学习项目的记忆系统。<code>MEMORY.md</code>、<code>SELF.md</code> 和 <code>PENDING.md</code> 分别用于保存长期用户信息、Agent 自我认知和待归档的记忆候选；Akasha V2 语义记忆引擎负责从历史内容中检索与当前问题相关的信息。</p>
+            <p>了解上下文压缩与消息持久化机制。当上下文使用量超过设定水位时，系统会将较早的对话压缩为摘要，同时保留近期上下文；正常情况下，会话数据库中的消息以只追加方式保存。</p>
+            <p>学习 Drift 空闲任务机制。当主动推送的三路数据均为空时，Agent 可以进入 Drift 模式，按照 <code>SKILL.md</code> 中的步骤执行空闲任务，使用 <code>finish_drift</code> 完成本轮处理，并通过 <code>drift.db</code> 保存任务的连续性状态。</p>
+            <p>学习插件系统的主要扩展方式，包括在生命周期阶段挂载代码、监听事件总线、拦截工具调用以及注册新工具；插件还可以声明普通技能、Drift 技能、MCP 服务和主动推送数据源。</p>
+            <p>明日计划学习 Akashic Agent 的程序化控制功能和移动端机制。</p>
+          </div>
+        </article>
+
+        <article class="observation-log-entry" id="log-2026-08-17" data-notes-entry>
           <div class="observation-log-meta"><time datetime="2026-08-17">2026.08.17</time><span>LOG 025</span></div>
           <h3>网线接头制作与 Akashic 代码结构学习</h3>
           <p class="observation-log-project">ASSIGNMENT / NETWORK CABLE BASICS &amp; AKASHIC CODEBASE STRUCTURE</p>
