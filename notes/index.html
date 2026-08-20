@@ -53,12 +53,26 @@
           <input id="notes-search" type="search" inputmode="search" autocomplete="off" placeholder="检索日期、标题或正文" data-notes-search>
         </label>
         <div class="notes-archive-actions">
-          <span class="notes-result-count" data-notes-result-count role="status" aria-live="polite" aria-atomic="true">共 27 条记录</span>
+          <span class="notes-result-count" data-notes-result-count role="status" aria-live="polite" aria-atomic="true">共 28 条记录</span>
           <button class="notes-toggle-all" type="button" data-notes-toggle-all>展开全部</button>
         </div>
       </div>
       <div class="observation-log-list" data-notes-list>
-        <article class="observation-log-entry" id="log-2026-08-19" data-notes-entry data-latest>
+        <article class="observation-log-entry" id="log-2026-08-20" data-notes-entry data-latest>
+          <div class="observation-log-meta"><time datetime="2026-08-20">2026.08.20</time><span>LOG 028</span></div>
+          <h3>Akashic 程序化控制与移动端机制</h3>
+          <p class="observation-log-project">ASSIGNMENT / PROGRAMMATIC CONTROL &amp; MOBILE ARCHITECTURE</p>
+          <div class="observation-log-content">
+            <p>学习 Akashic Agent 的程序化控制功能，了解项目除聊天渠道外还提供 JSON-RPC 接口。查看 Python SDK 目录 <code>sdk/python</code>，认识开发者通过 SDK 编写自动化脚本、向 Agent 下发任务并获取处理结果的方式。</p>
+            <p>学习 Supervisor 的启动与进程管理机制，了解执行 <code>python main.py</code> 时默认由 Supervisor 启动 Gateway。</p>
+            <p>了解 Agent 的安全自重启流程。当核心代码需要完整重载时，Agent 可以通过 <code>agent_restart</code> 工具申请重启；系统会在重启前完成回复持久化、消息送达和私有证据提交，再启动新一代进程，以降低任务中断或数据丢失的风险。</p>
+            <p>学习 Akashic Mobile 的连接方式。Android 客户端通过独立的移动实时网关连接，默认使用 6323 端口；远程接入推荐通过 Cloudflare Tunnel 仅转发移动网关，并将 Web Chat 与模型设置服务保留在本机 2236 端口。</p>
+            <p>了解移动端与 Web Chat 的前端共享机制。Android 客户端和 Web Chat 共用 <code>frontend/chat/src</code>，服务端可以发布不可变的 WebUI generation，客户端通过 OTA 下载更新，因此一般的前端修改不需要重新打包 APK。</p>
+            <p>明日计划结合 Python SDK 示例测试 JSON-RPC 调用流程，并继续学习 Supervisor、安全自重启和移动实时网关的源代码。</p>
+          </div>
+        </article>
+
+        <article class="observation-log-entry" id="log-2026-08-19" data-notes-entry>
           <div class="observation-log-meta"><time datetime="2026-08-19">2026.08.19</time><span>LOG 027</span></div>
           <h3>企业信息核查与域名路由修复</h3>
           <p class="observation-log-project">ASSIGNMENT / BUSINESS DATA REVIEW &amp; DOMAIN ROUTING REPAIR</p>
