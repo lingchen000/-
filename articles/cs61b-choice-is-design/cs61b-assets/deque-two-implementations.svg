@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">同一个双端队列接口的两种底层实现</title>
+  <desc id="desc">上半部分是带哨兵节点的循环双向链表，下半部分是容量为八的循环数组；两者都支持从两端添加和删除，但维护不同的不变量。</desc>
+  <defs>
+    <style>
+      .bg{fill:#f8fafc}.panel{fill:#fff;stroke:#dbe3ee;stroke-width:2}.h1{font:700 30px 'Microsoft YaHei',sans-serif;fill:#102a43}.h2{font:700 22px 'Microsoft YaHei',sans-serif;fill:#173f5f}.body{font:17px 'Microsoft YaHei',sans-serif;fill:#334e68}.small{font:15px 'Microsoft YaHei',sans-serif;fill:#486581}.node{fill:#e8f3ff;stroke:#247ba0;stroke-width:2}.sentinel{fill:#fff1cc;stroke:#c68a00;stroke-width:2}.cell{fill:#e8f3ff;stroke:#247ba0;stroke-width:2}.empty{fill:#f4f7fb;stroke:#aebdca;stroke-width:2}.accent{fill:#d9f7ef;stroke:#1d8a6d;stroke-width:2}.arrow{fill:none;stroke:#526d82;stroke-width:2.5;marker-end:url(#arrow)}.arrow2{fill:none;stroke:#526d82;stroke-width:2.5;marker-end:url(#arrow);marker-start:url(#arrowStart)}.index{font:14px ui-monospace,Consolas,monospace;fill:#627d98}.value{font:700 20px ui-monospace,Consolas,monospace;fill:#102a43}.label{font:700 16px 'Microsoft YaHei',sans-serif;fill:#1d8a6d}.rule{fill:#effaf6;stroke:#b8e6d6;stroke-width:1.5}
+    </style>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#526d82"/></marker>
+    <marker id="arrowStart" markerWidth="8" markerHeight="8" refX="1" refY="4" orient="auto"><path d="M8,0 L0,4 L8,8 Z" fill="#526d82"/></marker>
+  </defs>
+  <rect class="bg" width="1200" height="650"/>
+  <text class="h1" x="60" y="55">同一个 Deque 接口，两套完全不同的“内部世界”</text>
+
+  <rect class="panel" x="50" y="85" rx="18" width="1100" height="235"/>
+  <text class="h2" x="80" y="125">A. 循环双向链表 + 哨兵节点</text>
+  <text class="body" x="80" y="153">端点操作靠改引用；不需要整体扩容，但每个节点都要保存前后连接。</text>
+  <rect class="sentinel" x="115" y="195" rx="12" width="125" height="62"/>
+  <text class="value" x="140" y="233">sentinel</text>
+  <rect class="node" x="350" y="195" rx="12" width="110" height="62"/>
+  <text class="value" x="399" y="233">A</text>
+  <rect class="node" x="570" y="195" rx="12" width="110" height="62"/>
+  <text class="value" x="619" y="233">B</text>
+  <rect class="node" x="790" y="195" rx="12" width="110" height="62"/>
+  <text class="value" x="839" y="233">C</text>
+  <path class="arrow2" d="M245 212 C285 185 315 185 345 212"/>
+  <path class="arrow2" d="M465 212 C505 185 535 185 565 212"/>
+  <path class="arrow2" d="M685 212 C725 185 755 185 785 212"/>
+  <path class="arrow2" d="M905 232 C1005 290 1000 175 245 232"/>
+  <rect class="rule" x="950" y="178" rx="12" width="165" height="94"/>
+  <text class="label" x="970" y="207">关键不变量</text>
+  <text class="small" x="970" y="234">• 前后引用对称</text>
+  <text class="small" x="970" y="258">• sentinel 闭环</text>
+
+  <rect class="panel" x="50" y="345" rx="18" width="1100" height="255"/>
+  <text class="h2" x="80" y="385">B. 循环数组</text>
+  <text class="body" x="80" y="413">逻辑首尾可跨过数组边界；空间连续，但满载时要扩容并重排。</text>
+  <g transform="translate(105,455)">
+    <text class="index" x="23" y="-12">0</text><text class="index" x="103" y="-12">1</text><text class="index" x="183" y="-12">2</text><text class="index" x="263" y="-12">3</text><text class="index" x="343" y="-12">4</text><text class="index" x="423" y="-12">5</text><text class="index" x="503" y="-12">6</text><text class="index" x="583" y="-12">7</text>
+    <rect class="cell" x="0" y="0" width="70" height="65"/><text class="value" x="28" y="40">B</text>
+    <rect class="cell" x="80" y="0" width="70" height="65"/><text class="value" x="108" y="40">C</text>
+    <rect class="empty" x="160" y="0" width="70" height="65"/><text class="small" x="180" y="40">空</text>
+    <rect class="empty" x="240" y="0" width="70" height="65"/><text class="small" x="260" y="40">空</text>
+    <rect class="empty" x="320" y="0" width="70" height="65"/><text class="small" x="340" y="40">空</text>
+    <rect class="empty" x="400" y="0" width="70" height="65"/><text class="small" x="420" y="40">空</text>
+    <rect class="empty" x="480" y="0" width="70" height="65"/><text class="small" x="500" y="40">空</text>
+    <rect class="accent" x="560" y="0" width="70" height="65"/><text class="value" x="588" y="40">A</text>
+    <path class="arrow" d="M595 80 C650 125 -35 125 35 80"/>
+    <text class="label" x="220" y="119">逻辑顺序：A → B → C（物理位置会回绕）</text>
+  </g>
+  <rect class="rule" x="785" y="438" rx="12" width="330" height="118"/>
+  <text class="label" x="805" y="468">关键不变量</text>
+  <text class="small" x="805" y="495">• nextFirst / nextLast 始终指向空位</text>
+  <text class="small" x="805" y="520">• 逻辑索引通过取模映射到物理索引</text>
+  <text class="small" x="805" y="545">• 扩缩容后顺序不变</text>
+  <text class="small" x="65" y="632">图 1　接口相同不代表实现相同：ADT 规定“能做什么”，数据结构决定“如何兑现以及付出什么成本”。</text>
+</svg>

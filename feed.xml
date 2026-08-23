@@ -5,8 +5,15 @@
     <link>https://lingchen000.github.io/-/</link>
     <description>陵辰公开的故事、日常切片与私人独白。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 21 Aug 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 23 Aug 2026 00:00:00 +0800</lastBuildDate>
     <atom:link href="https://lingchen000.github.io/-/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>选择即设计：从抽象数据类型到大型程序</title>
+      <link>https://lingchen000.github.io/-/articles/cs61b-choice-is-design/</link>
+      <guid isPermaLink="true">https://lingchen000.github.io/-/articles/cs61b-choice-is-design/</guid>
+      <pubDate>Sun, 23 Aug 2026 00:00:00 +0800</pubDate>
+      <description>从循环数组、平衡树、哈希和图算法，到 NGrams/Wordnet 与 BYOW：一篇带技术示意图、项目分析和中文视频指南的 CS61B 学习长文。</description>
+    </item>
     <item>
       <title>企业信息核查与仓库整理</title>
       <link>https://lingchen000.github.io/-/notes/#log-2026-08-21</link>

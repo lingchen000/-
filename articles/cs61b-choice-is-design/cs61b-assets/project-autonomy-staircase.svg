@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">CS61B 项目逐步移交设计权</title>
+  <desc id="desc">三层阶梯从迷你项目的固定功能和 API，经过 Project 4 的部分开放设计，走向 Project 5 中功能、API、实现和团队协作的高度自主。</desc>
+  <defs>
+    <style>
+      .bg{fill:#f8fafc}.h1{font:700 30px 'Microsoft YaHei',sans-serif;fill:#102a43}.h2{font:700 22px 'Microsoft YaHei',sans-serif;fill:#173f5f}.body{font:17px 'Microsoft YaHei',sans-serif;fill:#334e68}.small{font:15px 'Microsoft YaHei',sans-serif;fill:#486581}.step1{fill:#e8f3ff;stroke:#247ba0;stroke-width:2}.step2{fill:#ddf5ed;stroke:#1d8a6d;stroke-width:2}.step3{fill:#fff1cc;stroke:#c68a00;stroke-width:2}.tag{fill:#fff;stroke:#cbd5e1;stroke-width:1.5}.tagText{font:15px 'Microsoft YaHei',sans-serif;fill:#334e68}.big{font:700 25px 'Microsoft YaHei',sans-serif;fill:#102a43}.arrow{fill:none;stroke:#e76f51;stroke-width:5;marker-end:url(#arrow)}.note{fill:#fff;stroke:#dbe3ee;stroke-width:2}.noteTitle{font:700 17px 'Microsoft YaHei',sans-serif;fill:#a43e27}
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#e76f51"/></marker>
+  </defs>
+  <rect class="bg" width="1200" height="650"/>
+  <text class="h1" x="60" y="55">项目主线：课程逐步把“决定什么、怎么做”的权力交给学习者</text>
+  <path class="arrow" d="M170 540 C360 445 580 330 910 150"/>
+
+  <path class="step1" d="M80 420 H450 V565 H80 Z"/>
+  <text class="big" x="110" y="460">Mini-projects 0–3</text>
+  <text class="body" x="110" y="493">Particle Simulator、Deque、Percolation</text>
+  <rect class="tag" x="110" y="515" rx="10" width="125" height="32"/><text class="tagText" x="129" y="537">功能：给定</text>
+  <rect class="tag" x="250" y="515" rx="10" width="110" height="32"/><text class="tagText" x="269" y="537">API：给定</text>
+  <rect class="tag" x="375" y="515" rx="10" width="55" height="32"/><text class="tagText" x="390" y="537">实现</text>
+
+  <path class="step2" d="M390 280 H805 V420 H390 Z"/>
+  <text class="big" x="420" y="320">Project 4：NGordnet / WordNet</text>
+  <text class="body" x="420" y="353">从 4A 的脚手架，过渡到 4B–4D 的自主设计</text>
+  <rect class="tag" x="420" y="375" rx="10" width="125" height="32"/><text class="tagText" x="439" y="397">功能：给定</text>
+  <rect class="tag" x="560" y="375" rx="10" width="210" height="32"/><text class="tagText" x="578" y="397">API / 数据结构：逐步开放</text>
+
+  <path class="step3" d="M745 125 H1120 V280 H745 Z"/>
+  <text class="big" x="775" y="165">Project 5：BYOW</text>
+  <text class="body" x="775" y="198">两人协作完成可探索世界引擎</text>
+  <rect class="tag" x="775" y="220" rx="10" width="115" height="32"/><text class="tagText" x="794" y="242">目标：开放</text>
+  <rect class="tag" x="905" y="220" rx="10" width="90" height="32"/><text class="tagText" x="923" y="242">API：开放</text>
+  <rect class="tag" x="1005" y="220" rx="10" width="105" height="32"/><text class="tagText" x="1020" y="242">双人协作</text>
+
+  <rect class="note" x="70" y="90" rx="14" width="540" height="170"/>
+  <text class="noteTitle" x="100" y="128">自由度上升，不等于要求变少</text>
+  <text class="body" x="100" y="164">越靠后，自动评分器越难替你判断：</text>
+  <text class="body" x="100" y="195">• 模块边界是否清楚　• 技术债是否可控</text>
+  <text class="body" x="100" y="226">• 保存/加载是否确定　• 团队能否合并工作</text>
+  <text class="small" x="65" y="625">图 4　课程从“按既定接口实现”推进到“自己定义接口、组织系统并承担取舍”。</text>
+</svg>

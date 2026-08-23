@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
+  <title id="title">最短路径与最小生成树比较</title>
+  <desc id="desc">同一张加权无向图中，左侧高亮从 A 到 E 的最短路径，右侧高亮连接全部顶点且总权重最小的生成树。</desc>
+  <defs>
+    <style>
+      .bg{fill:#f8fafc}.panel{fill:#fff;stroke:#dbe3ee;stroke-width:2}.h1{font:700 30px 'Microsoft YaHei',sans-serif;fill:#102a43}.h2{font:700 22px 'Microsoft YaHei',sans-serif;fill:#173f5f}.body{font:17px 'Microsoft YaHei',sans-serif;fill:#334e68}.small{font:15px 'Microsoft YaHei',sans-serif;fill:#486581}.edge{stroke:#b8c6d1;stroke-width:4}.path{stroke:#e76f51;stroke-width:8}.mst{stroke:#1d8a6d;stroke-width:8}.node{fill:#fff;stroke:#247ba0;stroke-width:3}.letter{font:700 20px ui-monospace,Consolas,monospace;fill:#102a43;text-anchor:middle;dominant-baseline:middle}.weight{font:700 15px ui-monospace,Consolas,monospace;fill:#526d82;paint-order:stroke;stroke:#fff;stroke-width:5}.badgeA{fill:#ffe8df;stroke:#e76f51;stroke-width:1.5}.badgeB{fill:#ddf5ed;stroke:#1d8a6d;stroke-width:1.5}.badgeTextA{font:700 17px 'Microsoft YaHei',sans-serif;fill:#a43e27}.badgeTextB{font:700 17px 'Microsoft YaHei',sans-serif;fill:#176c54}
+    </style>
+  </defs>
+  <rect class="bg" width="1200" height="680"/>
+  <text class="h1" x="60" y="55">最短路径 ≠ 最小生成树：名字相近，优化目标不同</text>
+  <rect class="panel" x="50" y="85" rx="18" width="525" height="535"/>
+  <rect class="panel" x="625" y="85" rx="18" width="525" height="535"/>
+  <text class="h2" x="80" y="125">问题 A：从 A 到 E，怎样走最便宜？</text>
+  <text class="body" x="80" y="153">只关心一对端点；其他顶点可以完全不经过。</text>
+  <g transform="translate(40,70)">
+    <line class="edge" x1="120" y1="170" x2="280" y2="120"/><line class="edge" x1="120" y1="170" x2="260" y2="310"/><line class="edge" x1="280" y1="120" x2="430" y2="190"/><line class="edge" x1="280" y1="120" x2="260" y2="310"/><line class="edge" x1="260" y1="310" x2="430" y2="190"/><line class="edge" x1="260" y1="310" x2="460" y2="350"/><line class="edge" x1="430" y1="190" x2="460" y2="350"/>
+    <line class="path" x1="120" y1="170" x2="280" y2="120"/><line class="path" x1="280" y1="120" x2="430" y2="190"/><line class="path" x1="430" y1="190" x2="460" y2="350"/>
+    <text class="weight" x="195" y="132">2</text><text class="weight" x="180" y="255">5</text><text class="weight" x="365" y="142">2</text><text class="weight" x="260" y="210">4</text><text class="weight" x="350" y="260">3</text><text class="weight" x="358" y="345">2</text><text class="weight" x="463" y="270">1</text>
+    <circle class="node" cx="120" cy="170" r="28"/><text class="letter" x="120" y="170">A</text>
+    <circle class="node" cx="280" cy="120" r="28"/><text class="letter" x="280" y="120">B</text>
+    <circle class="node" cx="260" cy="310" r="28"/><text class="letter" x="260" y="310">C</text>
+    <circle class="node" cx="430" cy="190" r="28"/><text class="letter" x="430" y="190">D</text>
+    <circle class="node" cx="460" cy="350" r="28"/><text class="letter" x="460" y="350">E</text>
+  </g>
+  <rect class="badgeA" x="135" y="540" rx="12" width="350" height="48"/><text class="badgeTextA" x="160" y="571">A → B → D → E，总权重 5</text>
+
+  <text class="h2" x="655" y="125">问题 B：怎样以最小总代价连通所有点？</text>
+  <text class="body" x="655" y="153">要求覆盖每个顶点；优化的是整棵连接结构。</text>
+  <g transform="translate(615,70)">
+    <line class="edge" x1="120" y1="170" x2="280" y2="120"/><line class="edge" x1="120" y1="170" x2="260" y2="310"/><line class="edge" x1="280" y1="120" x2="430" y2="190"/><line class="edge" x1="280" y1="120" x2="260" y2="310"/><line class="edge" x1="260" y1="310" x2="430" y2="190"/><line class="edge" x1="260" y1="310" x2="460" y2="350"/><line class="edge" x1="430" y1="190" x2="460" y2="350"/>
+    <line class="mst" x1="120" y1="170" x2="280" y2="120"/><line class="mst" x1="280" y1="120" x2="430" y2="190"/><line class="mst" x1="260" y1="310" x2="460" y2="350"/><line class="mst" x1="430" y1="190" x2="460" y2="350"/>
+    <text class="weight" x="195" y="132">2</text><text class="weight" x="180" y="255">5</text><text class="weight" x="365" y="142">2</text><text class="weight" x="260" y="210">4</text><text class="weight" x="350" y="260">3</text><text class="weight" x="358" y="345">2</text><text class="weight" x="463" y="270">1</text>
+    <circle class="node" cx="120" cy="170" r="28"/><text class="letter" x="120" y="170">A</text>
+    <circle class="node" cx="280" cy="120" r="28"/><text class="letter" x="280" y="120">B</text>
+    <circle class="node" cx="260" cy="310" r="28"/><text class="letter" x="260" y="310">C</text>
+    <circle class="node" cx="430" cy="190" r="28"/><text class="letter" x="430" y="190">D</text>
+    <circle class="node" cx="460" cy="350" r="28"/><text class="letter" x="460" y="350">E</text>
+  </g>
+  <rect class="badgeB" x="710" y="540" rx="12" width="350" height="48"/><text class="badgeTextB" x="735" y="571">选 4 条边覆盖 5 个点，总权重 7</text>
+  <text class="small" x="65" y="654">图 3　同一张图、同一组权重，因为问题定义不同，高亮的“最优答案”也不同。</text>
+</svg>
