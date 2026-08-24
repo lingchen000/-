@@ -5,8 +5,15 @@
     <link>https://lingchen000.github.io/-/</link>
     <description>陵辰公开的故事、日常切片与私人独白。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 23 Aug 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 24 Aug 2026 00:00:00 +0800</lastBuildDate>
     <atom:link href="https://lingchen000.github.io/-/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>云端代理部署、模型同步排查与企业信息核查</title>
+      <link>https://lingchen000.github.io/-/notes/#log-2026-08-24</link>
+      <guid isPermaLink="true">https://lingchen000.github.io/-/notes/#log-2026-08-24</guid>
+      <pubDate>Mon, 24 Aug 2026 00:00:00 +0800</pubDate>
+      <description>完成 Akashic 云服务器代理部署，排查 Codex 模型列表同步异常，并核查 50 条网店企业主体信息。</description>
+    </item>
     <item>
       <title>选择即设计：从抽象数据类型到大型程序</title>
       <link>https://lingchen000.github.io/-/articles/cs61b-choice-is-design/</link>
