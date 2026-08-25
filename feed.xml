@@ -5,8 +5,15 @@
     <link>https://lingchen000.github.io/-/</link>
     <description>陵辰公开的故事、日常切片与私人独白。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Mon, 24 Aug 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 25 Aug 2026 00:00:00 +0800</lastBuildDate>
     <atom:link href="https://lingchen000.github.io/-/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>企业信息核查与 Akashic 模型接入修复</title>
+      <link>https://lingchen000.github.io/-/notes/#log-2026-08-25</link>
+      <guid isPermaLink="true">https://lingchen000.github.io/-/notes/#log-2026-08-25</guid>
+      <pubDate>Tue, 25 Aug 2026 00:00:00 +0800</pubDate>
+      <description>核查 67 条网店企业主体信息，修复 HTTPS 同源校验问题，并恢复 Akashic 容器内的 Codex 授权链路。</description>
+    </item>
     <item>
       <title>云端代理部署、模型同步排查与企业信息核查</title>
       <link>https://lingchen000.github.io/-/notes/#log-2026-08-24</link>

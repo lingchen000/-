@@ -53,12 +53,26 @@
           <input id="notes-search" type="search" inputmode="search" autocomplete="off" placeholder="检索日期、标题或正文" data-notes-search>
         </label>
         <div class="notes-archive-actions">
-          <span class="notes-result-count" data-notes-result-count role="status" aria-live="polite" aria-atomic="true">共 30 条记录</span>
+          <span class="notes-result-count" data-notes-result-count role="status" aria-live="polite" aria-atomic="true">共 31 条记录</span>
           <button class="notes-toggle-all" type="button" data-notes-toggle-all>展开全部</button>
         </div>
       </div>
       <div class="observation-log-list" data-notes-list>
-        <article class="observation-log-entry" id="log-2026-08-24" data-notes-entry data-latest>
+        <article class="observation-log-entry" id="log-2026-08-25" data-notes-entry data-latest>
+          <div class="observation-log-meta"><time datetime="2026-08-25">2026.08.25</time><span>LOG 031</span></div>
+          <h3>企业信息核查与 Akashic 模型接入修复</h3>
+          <p class="observation-log-project">ASSIGNMENT / BUSINESS DATA REVIEW &amp; MODEL ACCESS REPAIR</p>
+          <div class="observation-log-content">
+            <p>对照智慧市场监督平台，核查怀化市、娄底市及湘西土家族苗族自治州共 67 条带网址的网店企业主体信息，并将结果整理为表格。核查过程中有一条记录未能检索到对应营业执照，随后在 WPS 表格中进行标记。</p>
+            <p>分析模型管理页面无法新增 Codex 模型的问题。结合服务端日志和接口返回信息，确认前端经 HTTPS 域名访问时，后端同源校验仍按照 HTTP 来源进行判断，导致模型保存请求被错误拦截并返回 403。</p>
+            <p>备份服务器配置与项目源码后，对同源校验逻辑进行最小范围修改，并重新构建、启动 Akashic 服务。接口测试显示设置页访问恢复正常，来自 HTTPS 页面的模型保存请求不再被拒绝。</p>
+            <p>继续排查 Codex 授权失败问题。日志显示服务器获取 device code 时收到 HTTP 403；分别测试直连与代理链路后，确认直连请求被拒绝，而通过已配置代理可以正常获得响应。</p>
+            <p>在不开放公网代理端口的前提下，为 Akashic 容器配置本机代理环境变量，并在备份 Compose 配置后执行受控重启。最终验证容器内的 Codex device-code 请求返回 HTTP 200，模型设置接口保持正常，QQBot 与记忆插件等原有服务也恢复运行。</p>
+            <p>明日计划继续采集并整理企业信息。</p>
+          </div>
+        </article>
+
+        <article class="observation-log-entry" id="log-2026-08-24" data-notes-entry>
           <div class="observation-log-meta"><time datetime="2026-08-24">2026.08.24</time><span>LOG 030</span></div>
           <h3>云端代理部署、模型同步排查与企业信息核查</h3>
           <p class="observation-log-project">ASSIGNMENT / CLOUD PROXY, MODEL SYNC &amp; BUSINESS DATA REVIEW</p>
