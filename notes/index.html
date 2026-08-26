@@ -53,12 +53,24 @@
           <input id="notes-search" type="search" inputmode="search" autocomplete="off" placeholder="检索日期、标题或正文" data-notes-search>
         </label>
         <div class="notes-archive-actions">
-          <span class="notes-result-count" data-notes-result-count role="status" aria-live="polite" aria-atomic="true">共 31 条记录</span>
+          <span class="notes-result-count" data-notes-result-count role="status" aria-live="polite" aria-atomic="true">共 32 条记录</span>
           <button class="notes-toggle-all" type="button" data-notes-toggle-all>展开全部</button>
         </div>
       </div>
       <div class="observation-log-list" data-notes-list>
-        <article class="observation-log-entry" id="log-2026-08-25" data-notes-entry data-latest>
+        <article class="observation-log-entry" id="log-2026-08-26" data-notes-entry data-latest>
+          <div class="observation-log-meta"><time datetime="2026-08-26">2026.08.26</time><span>LOG 032</span></div>
+          <h3>企业信息核查、代理配置与图像功能验收</h3>
+          <p class="observation-log-project">ASSIGNMENT / BUSINESS DATA, PROXY CONFIGURATION &amp; VISION QA</p>
+          <div class="observation-log-content">
+            <p>对照智慧市场监督平台，核查长沙市共 66 条带网址的网店企业主体信息，并将结果整理为表格。核查过程中有一条记录未能检索到对应营业执照，另有三条记录的营业执照信息与平台数据不一致，随后分别使用黄色和橙色填充在 WPS 表格中标记。</p>
+            <p>排查代理配置问题，确认原订阅配置未能稳定使用指定节点。重新整理配置并完成节点切换后，对代理服务进行重启验证，确认配置能够持久保存，出口地区也符合预期。</p>
+            <p>测试 Akashic 网页聊天与附件上传功能，发现图片上传会触发服务端 HTTP 500 错误。随后调研可用的视觉模型接入方案，包括重新配置支持视觉输入的 Codex 模型，以及接入阿里云 Qwen-VL 模型。</p>
+            <p>明日计划继续完善 Akashic 网关配置。</p>
+          </div>
+        </article>
+
+        <article class="observation-log-entry" id="log-2026-08-25" data-notes-entry>
           <div class="observation-log-meta"><time datetime="2026-08-25">2026.08.25</time><span>LOG 031</span></div>
           <h3>企业信息核查与 Akashic 模型接入修复</h3>
           <p class="observation-log-project">ASSIGNMENT / BUSINESS DATA REVIEW &amp; MODEL ACCESS REPAIR</p>
