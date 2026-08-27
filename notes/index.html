@@ -53,12 +53,25 @@
           <input id="notes-search" type="search" inputmode="search" autocomplete="off" placeholder="检索日期、标题或正文" data-notes-search>
         </label>
         <div class="notes-archive-actions">
-          <span class="notes-result-count" data-notes-result-count role="status" aria-live="polite" aria-atomic="true">共 32 条记录</span>
+          <span class="notes-result-count" data-notes-result-count role="status" aria-live="polite" aria-atomic="true">共 33 条记录</span>
           <button class="notes-toggle-all" type="button" data-notes-toggle-all>展开全部</button>
         </div>
       </div>
       <div class="observation-log-list" data-notes-list>
-        <article class="observation-log-entry" id="log-2026-08-26" data-notes-entry data-latest>
+        <article class="observation-log-entry" id="log-2026-08-27" data-notes-entry data-latest>
+          <div class="observation-log-meta"><time datetime="2026-08-27">2026.08.27</time><span>LOG 033</span></div>
+          <h3>Akashic 视觉对话与 QQ 群聊配置</h3>
+          <p class="observation-log-project">ASSIGNMENT / VISION MODEL &amp; QQ GROUP CHAT CONFIGURATION</p>
+          <div class="observation-log-content">
+            <p>针对 QQ 机器人接收图片后出现模型流响应中断和消息处理错误的问题，依次检查服务器代理、模型接口、QQBot 插件及会话数据库。</p>
+            <p>排查确认，部分境外视觉模型接口需要通过服务器代理访问。关闭代理后，普通国内模型仍可正常使用，但依赖代理的视觉接口会发生连接中断。</p>
+            <p>恢复代理后，图片请求进一步暴露出上下文超限问题。检查会话数据库发现，目标 QQ 私聊积累了大量历史消息，导致模型输入超过最大 Token 限制。完成数据库备份与一致性检查后，仅清理该目标会话的历史记录，未改动其他用户数据、白名单或系统配置。</p>
+            <p>处理 QQ 群聊中不同群响应状态不一致的问题。实时日志显示，机器人能够收到新群的艾特消息，但由于群聊尚未配置，系统按规则拒绝处理。随后依据最新群事件，将对应群聊与发送者加入白名单；新群仍保持必须艾特机器人才响应，并关闭主动发言功能。</p>
+            <p>明日计划继续完善 Akashic 的运行机制。</p>
+          </div>
+        </article>
+
+        <article class="observation-log-entry" id="log-2026-08-26" data-notes-entry>
           <div class="observation-log-meta"><time datetime="2026-08-26">2026.08.26</time><span>LOG 032</span></div>
           <h3>企业信息核查、代理配置与图像功能验收</h3>
           <p class="observation-log-project">ASSIGNMENT / BUSINESS DATA, PROXY CONFIGURATION &amp; VISION QA</p>
