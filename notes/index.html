@@ -53,12 +53,26 @@
           <input id="notes-search" type="search" inputmode="search" autocomplete="off" placeholder="检索日期、标题或正文" data-notes-search>
         </label>
         <div class="notes-archive-actions">
-          <span class="notes-result-count" data-notes-result-count role="status" aria-live="polite" aria-atomic="true">共 33 条记录</span>
+          <span class="notes-result-count" data-notes-result-count role="status" aria-live="polite" aria-atomic="true">共 34 条记录</span>
           <button class="notes-toggle-all" type="button" data-notes-toggle-all>展开全部</button>
         </div>
       </div>
       <div class="observation-log-list" data-notes-list>
-        <article class="observation-log-entry" id="log-2026-08-27" data-notes-entry data-latest>
+        <article class="observation-log-entry" id="log-2026-08-28" data-notes-entry data-latest>
+          <div class="observation-log-meta"><time datetime="2026-08-28">2026.08.28</time><span>LOG 034</span></div>
+          <h3>企业公众号信息整理与 Akashic QQBot 排查</h3>
+          <p class="observation-log-project">ASSIGNMENT / WECHAT DATA &amp; QQBOT TROUBLESHOOTING</p>
+          <div class="observation-log-content">
+            <p>通过企查查查询并整理 25 家陕西省企业的信息，将登记机关、微信公众号头像、链接、名称及企业基础信息补充至表格。</p>
+            <p>分别验证文本与图片接口：文本模型能够正常回答，视觉模型能够接收标准图片输入，Akashic 网页端与 QQBot 通道均成功启动。</p>
+            <p>整理 Akashic 的人格与长期记忆配置。通过服务器终端依次修改 <code>VEDA.md</code>、<code>SELF.md</code> 和 <code>MEMORY.md</code>，调整机器人的名称、交流风格、情绪表达及身份关系设定，使回复方式更符合实际使用需求。</p>
+            <p>排查 QQ 机器人无法加入新群的问题。服务器日志显示机器人服务处于在线状态，但未收到对应的进群事件；结合 QQ 客户端提示，初步判断问题更可能发生在平台审核或群聊权限环节，而非服务器程序本身。</p>
+            <p>了解 QQ 机器人的正式发布流程，包括完善机器人资料、配置使用功能、设置应用范围、准备隐私政策、填写自测报告及提交上线审核。</p>
+            <p>明日计划继续为 Akashic QQBot 增加服务能力。</p>
+          </div>
+        </article>
+
+        <article class="observation-log-entry" id="log-2026-08-27" data-notes-entry>
           <div class="observation-log-meta"><time datetime="2026-08-27">2026.08.27</time><span>LOG 033</span></div>
           <h3>Akashic 视觉对话与 QQ 群聊配置</h3>
           <p class="observation-log-project">ASSIGNMENT / VISION MODEL &amp; QQ GROUP CHAT CONFIGURATION</p>
