@@ -53,12 +53,25 @@
           <input id="notes-search" type="search" inputmode="search" autocomplete="off" placeholder="检索日期、标题或正文" data-notes-search>
         </label>
         <div class="notes-archive-actions">
-          <span class="notes-result-count" data-notes-result-count role="status" aria-live="polite" aria-atomic="true">共 34 条记录</span>
+          <span class="notes-result-count" data-notes-result-count role="status" aria-live="polite" aria-atomic="true">共 35 条记录</span>
           <button class="notes-toggle-all" type="button" data-notes-toggle-all>展开全部</button>
         </div>
       </div>
       <div class="observation-log-list" data-notes-list>
-        <article class="observation-log-entry" id="log-2026-08-28" data-notes-entry data-latest>
+        <article class="observation-log-entry" id="log-2026-08-31" data-notes-entry data-latest>
+          <div class="observation-log-meta"><time datetime="2026-08-31">2026.08.31</time><span>LOG 035</span></div>
+          <h3>Akashic 富媒体处理与云端环境维护</h3>
+          <p class="observation-log-project">ASSIGNMENT / RICH MEDIA PIPELINE &amp; CLOUD MAINTENANCE</p>
+          <div class="observation-log-content">
+            <p>为机器人增加图片、视频和普通文件的发送支持，并实现公网 HTTPS 视频链接的自动拉取功能。</p>
+            <p>针对 QQ 上传接口的兼容性限制，将出站文件上限设置为 10 MB；对于超过限制的视频，使用 FFmpeg 自动转码压缩，并将目标大小控制在约 9 MiB。</p>
+            <p>检查容器运行状态、网络代理、模型配置和服务端日志，修复图片附件的安全策略及多模态请求流程，使网页端能够正常上传图片并调用视觉模型。同时完善机器人的长期记忆、人格设定和用户身份识别逻辑，并将相关配置同步至网页端与 QQBot。</p>
+            <p>整理阿里云 ECS 上的 Akashic 智能助手运行环境，清理不再使用的博客文件，并检查服务器磁盘占用、Docker 容器及网络连接状态。</p>
+            <p>明日计划继续为 Akashic QQBot 增加指令服务。</p>
+          </div>
+        </article>
+
+        <article class="observation-log-entry" id="log-2026-08-28" data-notes-entry>
           <div class="observation-log-meta"><time datetime="2026-08-28">2026.08.28</time><span>LOG 034</span></div>
           <h3>企业公众号信息整理与 Akashic QQBot 排查</h3>
           <p class="observation-log-project">ASSIGNMENT / WECHAT DATA &amp; QQBOT TROUBLESHOOTING</p>

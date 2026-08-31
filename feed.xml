@@ -5,8 +5,15 @@
     <link>https://lingchen000.github.io/-/</link>
     <description>陵辰公开的故事、日常切片与私人独白。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 28 Aug 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 31 Aug 2026 00:00:00 +0800</lastBuildDate>
     <atom:link href="https://lingchen000.github.io/-/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Akashic 富媒体处理与云端环境维护</title>
+      <link>https://lingchen000.github.io/-/notes/#log-2026-08-31</link>
+      <guid isPermaLink="true">https://lingchen000.github.io/-/notes/#log-2026-08-31</guid>
+      <pubDate>Mon, 31 Aug 2026 00:00:00 +0800</pubDate>
+      <description>完善 Akashic 图片、视频与文件发送能力，加入视频自动压缩，并检查维护阿里云 ECS 运行环境。</description>
+    </item>
     <item>
       <title>企业公众号信息整理与 Akashic QQBot 排查</title>
       <link>https://lingchen000.github.io/-/notes/#log-2026-08-28</link>
