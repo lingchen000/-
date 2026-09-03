@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="670" viewBox="0 0 1200 670" role="img" aria-labelledby="title desc">
+  <title id="title">C 语言中的指针、栈与堆</title>
+  <desc id="desc">左侧展示栈帧中的指针如何指向堆上对象，右侧对比释放后继续访问、丢失最后一个指针和正确转移所有权三种情况。</desc>
+  <defs>
+    <style>
+      .bg{fill:#f8fafc}.panel{fill:#fff;stroke:#dbe3ee;stroke-width:2}.h1{font:700 30px 'Microsoft YaHei',sans-serif;fill:#102a43}.h2{font:700 21px 'Microsoft YaHei',sans-serif;fill:#173f5f}.body{font:17px 'Microsoft YaHei',sans-serif;fill:#334e68}.small{font:15px 'Microsoft YaHei',sans-serif;fill:#486581}.mono{font:700 17px ui-monospace,Consolas,monospace;fill:#102a43}.stack{fill:#e8f3ff;stroke:#247ba0;stroke-width:2}.heap{fill:#e7f8ef;stroke:#208761;stroke-width:2}.bad{fill:#fff0f0;stroke:#d64545;stroke-width:2}.warn{fill:#fff5dc;stroke:#c68a00;stroke-width:2}.good{fill:#e7f8ef;stroke:#208761;stroke-width:2}.arrow{fill:none;stroke:#526d82;stroke-width:2.5;marker-end:url(#arrow)}.dead{fill:none;stroke:#d64545;stroke-width:2.5;stroke-dasharray:8 7;marker-end:url(#badarrow)}.label{font:700 16px 'Microsoft YaHei',sans-serif}.red{fill:#b62e2e}.green{fill:#157153}.amber{fill:#9a6900}.line{stroke:#c9d5e1;stroke-width:2}
+    </style>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#526d82"/></marker>
+    <marker id="badarrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#d64545"/></marker>
+  </defs>
+  <rect class="bg" width="1200" height="670"/>
+  <text class="h1" x="55" y="55">指针保存的是地址；真正困难的是“谁负责让对象继续有效”</text>
+  <rect class="panel" x="45" y="85" width="520" height="520" rx="18"/>
+  <text class="h2" x="75" y="127">A. 一次正常的动态分配</text>
+  <text class="body" x="75" y="157">局部变量在栈帧里；malloc 得到的对象在堆上。</text>
+  <text class="small" x="75" y="181">堆对象的生命周期不会随函数返回而自动结束。</text>
+  <rect class="stack" x="95" y="205" width="180" height="245" rx="15"/>
+  <text class="label" x="155" y="238" fill="#173f5f">栈 Stack</text>
+  <line class="line" x1="95" y1="255" x2="275" y2="255"/>
+  <text class="mono" x="120" y="292">p = 0xA0</text>
+  <text class="small" x="120" y="321">局部指针变量</text>
+  <line class="line" x1="95" y1="347" x2="275" y2="347"/>
+  <text class="mono" x="120" y="382">n = 3</text>
+  <text class="small" x="120" y="410">普通局部值</text>
+  <rect class="heap" x="350" y="235" width="165" height="155" rx="15"/>
+  <text class="label" x="404" y="267" fill="#157153">堆 Heap</text>
+  <text class="mono" x="382" y="310">0xA0</text>
+  <text class="mono" x="382" y="344">[7, 8, 9]</text>
+  <path class="arrow" d="M250 286 C300 286 315 310 350 310"/>
+  <rect class="warn" x="88" y="485" width="435" height="83" rx="12"/>
+  <text class="small" x="112" y="518">函数返回：栈帧自动消失；堆对象不会自动释放。</text>
+  <text class="small" x="112" y="546">必须明确 free 的责任，并避免留下仍在使用的别名。</text>
+
+  <rect class="panel" x="600" y="85" width="555" height="520" rx="18"/>
+  <text class="h2" x="630" y="127">B. 三种常见生命周期结果</text>
+  <rect class="bad" x="630" y="165" width="495" height="108" rx="13"/>
+  <text class="label red" x="654" y="197">悬空指针（use-after-free）</text>
+  <text class="mono" x="655" y="230">free(p);  *p = 42;</text>
+  <path class="dead" d="M885 224 L1058 224"/>
+  <text class="small" x="654" y="255">地址还在变量里，但那块存储已不再属于程序。</text>
+
+  <rect class="warn" x="630" y="298" width="495" height="108" rx="13"/>
+  <text class="label amber" x="654" y="330">内存泄漏（lost ownership）</text>
+  <text class="mono" x="655" y="363">p = NULL;  // 最后引用丢失</text>
+  <text class="small" x="654" y="388">堆对象仍占空间，却再也找不到可用于 free 的地址。</text>
+
+  <rect class="good" x="630" y="431" width="495" height="137" rx="13"/>
+  <text class="label green" x="654" y="463">清晰的所有权约定</text>
+  <text class="small" x="654" y="494">1. 约定谁分配、谁释放；2. 转移所有权时旧指针不再使用；</text>
+  <text class="small" x="654" y="522">3. free 后立即清除可疑别名；4. 用 Valgrind/测试验证路径。</text>
+  <text class="small" x="654" y="550">工具能发现症状，但不能替你定义正确的生命周期。</text>
+  <text class="small" x="58" y="643">图 2　“知道指针语法”不等于掌握内存：地址、对象生命周期和释放责任必须一起推理。</text>
+</svg>

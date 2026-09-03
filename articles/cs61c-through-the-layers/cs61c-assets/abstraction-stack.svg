@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="690" viewBox="0 0 1200 690" role="img" aria-labelledby="title desc">
+  <title id="title">从 C 程序到硬件状态的抽象层</title>
+  <desc id="desc">四层纵向结构展示高级语言、软件工具链、RISC-V ISA 契约和微体系结构之间的翻译关系。</desc>
+  <defs>
+    <style>
+      .bg{fill:#f8fafc}.panel{fill:#fff;stroke:#dbe3ee;stroke-width:2}.h1{font:700 30px 'Microsoft YaHei',sans-serif;fill:#102a43}.h2{font:700 21px 'Microsoft YaHei',sans-serif}.body{font:17px 'Microsoft YaHei',sans-serif;fill:#334e68}.small{font:15px 'Microsoft YaHei',sans-serif;fill:#486581}.mono{font:700 17px ui-monospace,Consolas,monospace;fill:#102a43}.soft{fill:#e8f3ff;stroke:#247ba0;stroke-width:2}.tool{fill:#e7f8ef;stroke:#208761;stroke-width:2}.contract{fill:#fff3d6;stroke:#c68a00;stroke-width:2.6}.hard{fill:#f0eaff;stroke:#7656b7;stroke-width:2}.chip{fill:#fff;stroke:#9ba9b8;stroke-width:1.6}.arrow{fill:none;stroke:#526d82;stroke-width:2.5;marker-end:url(#arrow)}.tag{font:700 15px 'Microsoft YaHei',sans-serif}.blue{fill:#176c93}.green{fill:#157153}.amber{fill:#9a6900}.purple{fill:#6847a8}
+    </style>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#526d82"/></marker>
+  </defs>
+  <rect class="bg" width="1200" height="690"/>
+  <text class="h1" x="55" y="55">一行 C 代码不是“直接运行”：它要跨过多层契约</text>
+
+  <rect class="soft" x="75" y="90" width="1050" height="105" rx="16"/>
+  <text class="h2 blue" x="105" y="127">1. 高级语言与程序意图</text>
+  <text class="mono" x="105" y="162">sum += a[i];</text>
+  <text class="body" x="350" y="161">程序员看到变量、数组、函数与类型；并不直接指定寄存器编号或门电路。</text>
+
+  <path class="arrow" d="M600 195 L600 225"/>
+  <rect class="tool" x="75" y="225" width="1050" height="115" rx="16"/>
+  <text class="h2 green" x="105" y="262">2. 软件工具链逐步翻译</text>
+  <g transform="translate(105,282)">
+    <rect class="chip" x="0" y="0" width="170" height="40" rx="9"/><text class="tag green" x="61" y="26">编译器</text>
+    <path class="arrow" d="M175 20 L222 20"/>
+    <rect class="chip" x="227" y="0" width="170" height="40" rx="9"/><text class="tag green" x="280" y="26">汇编器</text>
+    <path class="arrow" d="M402 20 L449 20"/>
+    <rect class="chip" x="454" y="0" width="170" height="40" rx="9"/><text class="tag green" x="507" y="26">链接器</text>
+    <path class="arrow" d="M629 20 L676 20"/>
+    <rect class="chip" x="681" y="0" width="170" height="40" rx="9"/><text class="tag green" x="734" y="26">加载器</text>
+  </g>
+
+  <path class="arrow" d="M600 340 L600 370"/>
+  <rect class="contract" x="75" y="370" width="1050" height="115" rx="16"/>
+  <text class="h2 amber" x="105" y="407">3. RISC-V ISA：软件与硬件之间的可见契约</text>
+  <text class="body" x="105" y="443">规定指令编码、寄存器与状态转换；调用约定和目标文件格式等 ABI 规则让不同工具生成的代码能协作。</text>
+  <text class="small" x="105" y="468">关键区别：ISA 说明“处理器必须表现成什么样”，微体系结构决定“用什么数据通路、流水线和缓存做到”。</text>
+
+  <path class="arrow" d="M600 485 L600 515"/>
+  <rect class="hard" x="75" y="515" width="1050" height="112" rx="16"/>
+  <text class="h2 purple" x="105" y="552">4. 具体机器实现</text>
+  <g transform="translate(105,571)">
+    <rect class="chip" x="0" y="0" width="190" height="40" rx="9"/><text class="tag purple" x="48" y="26">CPU 数据通路</text>
+    <rect class="chip" x="220" y="0" width="190" height="40" rx="9"/><text class="tag purple" x="272" y="26">控制逻辑</text>
+    <rect class="chip" x="440" y="0" width="190" height="40" rx="9"/><text class="tag purple" x="500" y="26">缓存层次</text>
+    <rect class="chip" x="660" y="0" width="190" height="40" rx="9"/><text class="tag purple" x="720" y="26">主存 / I/O</text>
+  </g>
+  <text class="small" x="58" y="667">图 1　抽象隐藏实现细节，但不会取消成本：每一层都有自己的表示、错误类型和性能边界。</text>
+</svg>

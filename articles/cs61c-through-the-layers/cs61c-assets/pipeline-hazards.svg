@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">五级流水线与数据冒险</title>
+  <desc id="desc">上半部分对比单周期与五级流水线，下半部分展示相邻指令的数据相关、转发路径以及载入后仍可能需要停顿的原因。</desc>
+  <defs>
+    <style>
+      .bg{fill:#f8fafc}.panel{fill:#fff;stroke:#dbe3ee;stroke-width:2}.h1{font:700 30px 'Microsoft YaHei',sans-serif;fill:#102a43}.h2{font:700 21px 'Microsoft YaHei',sans-serif;fill:#173f5f}.body{font:17px 'Microsoft YaHei',sans-serif;fill:#334e68}.small{font:15px 'Microsoft YaHei',sans-serif;fill:#486581}.mono{font:700 16px ui-monospace,Consolas,monospace;fill:#102a43}.stage{stroke-width:2}.if{fill:#e8f3ff;stroke:#247ba0}.id{fill:#e7f8ef;stroke:#208761}.ex{fill:#fff3d6;stroke:#c68a00}.mem{fill:#f0eaff;stroke:#7656b7}.wb{fill:#ffe9ef;stroke:#c0446d}.bubble{fill:#f4f7fb;stroke:#9aabbb;stroke-dasharray:7 6}.dep{fill:none;stroke:#d64545;stroke-width:3;marker-end:url(#redarrow)}.forward{fill:none;stroke:#208761;stroke-width:3;marker-end:url(#greenarrow)}.label{font:700 15px 'Microsoft YaHei',sans-serif}.red{fill:#b62e2e}.green{fill:#157153}.amber{fill:#9a6900}.axis{stroke:#9fb0bf;stroke-width:1.5}
+    </style>
+    <marker id="redarrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#d64545"/></marker>
+    <marker id="greenarrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#208761"/></marker>
+  </defs>
+  <rect class="bg" width="1200" height="700"/>
+  <text class="h1" x="55" y="55">流水线提高的是吞吐量，不是让单条指令“瞬间完成”</text>
+  <rect class="panel" x="45" y="85" width="1110" height="190" rx="18"/>
+  <text class="h2" x="75" y="125">A. 把长组合路径切成五段</text>
+  <text class="body" x="75" y="154">IF 取指 → ID 译码/读寄存器 → EX 运算 → MEM 访存 → WB 写回</text>
+  <g transform="translate(95,180)">
+    <rect class="stage if" x="0" y="0" width="165" height="58" rx="11"/><text class="mono" x="70" y="35">IF</text>
+    <rect class="stage id" x="190" y="0" width="165" height="58" rx="11"/><text class="mono" x="260" y="35">ID</text>
+    <rect class="stage ex" x="380" y="0" width="165" height="58" rx="11"/><text class="mono" x="450" y="35">EX</text>
+    <rect class="stage mem" x="570" y="0" width="165" height="58" rx="11"/><text class="mono" x="632" y="35">MEM</text>
+    <rect class="stage wb" x="760" y="0" width="165" height="58" rx="11"/><text class="mono" x="825" y="35">WB</text>
+    <text class="small" x="948" y="25">理想稳态：</text><text class="label green" x="948" y="50">每周期完成 1 条</text>
+  </g>
+
+  <rect class="panel" x="45" y="300" width="1110" height="335" rx="18"/>
+  <text class="h2" x="75" y="340">B. 指令重叠后，相关性变成时间问题</text>
+  <text class="mono" x="80" y="381">I1: add x5, x1, x2</text>
+  <text class="mono" x="80" y="432">I2: sub x6, x5, x3</text>
+  <text class="mono" x="80" y="483">I3: lw  x7, 0(x8)</text>
+  <text class="mono" x="80" y="534">I4: add x9, x7, x4</text>
+  <g transform="translate(315,355)">
+    <text class="small" x="25" y="-5">C1</text><text class="small" x="155" y="-5">C2</text><text class="small" x="285" y="-5">C3</text><text class="small" x="415" y="-5">C4</text><text class="small" x="545" y="-5">C5</text><text class="small" x="675" y="-5">C6</text>
+    <g transform="translate(0,10)"><rect class="stage if" x="0" y="0" width="112" height="38" rx="8"/><text class="mono" x="44" y="25">IF</text><rect class="stage id" x="130" y="0" width="112" height="38" rx="8"/><text class="mono" x="174" y="25">ID</text><rect class="stage ex" x="260" y="0" width="112" height="38" rx="8"/><text class="mono" x="304" y="25">EX</text><rect class="stage mem" x="390" y="0" width="112" height="38" rx="8"/><text class="mono" x="425" y="25">MEM</text><rect class="stage wb" x="520" y="0" width="112" height="38" rx="8"/><text class="mono" x="560" y="25">WB</text></g>
+    <g transform="translate(0,61)"><rect class="stage if" x="130" y="0" width="112" height="38" rx="8"/><text class="mono" x="174" y="25">IF</text><rect class="stage id" x="260" y="0" width="112" height="38" rx="8"/><text class="mono" x="304" y="25">ID</text><rect class="stage ex" x="390" y="0" width="112" height="38" rx="8"/><text class="mono" x="434" y="25">EX</text><rect class="stage mem" x="520" y="0" width="112" height="38" rx="8"/><text class="mono" x="555" y="25">MEM</text><rect class="stage wb" x="650" y="0" width="112" height="38" rx="8"/><text class="mono" x="690" y="25">WB</text></g>
+    <path class="forward" d="M446 47 C446 80 470 77 470 61"/>
+    <text class="label green" x="484" y="56">转发 x5</text>
+    <g transform="translate(0,112)"><rect class="stage if" x="260" y="0" width="112" height="38" rx="8"/><text class="mono" x="304" y="25">IF</text><rect class="stage id" x="390" y="0" width="112" height="38" rx="8"/><text class="mono" x="434" y="25">ID</text><rect class="stage ex" x="520" y="0" width="112" height="38" rx="8"/><text class="mono" x="564" y="25">EX</text><rect class="stage mem" x="650" y="0" width="112" height="38" rx="8"/><text class="mono" x="685" y="25">MEM</text></g>
+    <g transform="translate(0,163)"><rect class="stage if" x="390" y="0" width="112" height="38" rx="8"/><text class="mono" x="434" y="25">IF</text><rect class="stage id" x="520" y="0" width="112" height="38" rx="8"/><text class="mono" x="564" y="25">ID</text><rect class="stage bubble" x="650" y="0" width="112" height="38" rx="8"/><text class="mono" x="680" y="25">stall</text></g>
+    <path class="dep" d="M706 150 C760 150 790 170 790 190"/>
+    <text class="label red" x="600" y="105">load-use：必须停顿</text>
+  </g>
+  <rect x="75" y="567" width="1015" height="45" rx="10" fill="#effaf6" stroke="#b8e6d6"/>
+  <text class="small" x="95" y="595">转发能缩短一部分等待，但并非万能；冒险处理是在“正确性、周期时间、面积与控制复杂度”之间做设计。</text>
+  <text class="small" x="58" y="677">图 3　流水线通过重叠工作提高吞吐量；数据、控制和结构冒险决定理想速度能否实现。</text>
+</svg>

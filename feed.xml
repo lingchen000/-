@@ -5,8 +5,15 @@
     <link>https://lingchen000.github.io/-/</link>
     <description>陵辰公开的故事、日常切片与私人独白。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Mon, 31 Aug 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 03 Sep 2026 00:00:00 +0800</lastBuildDate>
     <atom:link href="https://lingchen000.github.io/-/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>穿过抽象层：从 C 指针到 RISC-V 处理器</title>
+      <link>https://lingchen000.github.io/-/articles/cs61c-through-the-layers/</link>
+      <guid isPermaLink="true">https://lingchen000.github.io/-/articles/cs61c-through-the-layers/</guid>
+      <pubDate>Thu, 03 Sep 2026 00:00:00 +0800</pubDate>
+      <description>从位表示、C 内存与 RISC-V，到 CPU 流水线、缓存、并行和虚拟内存：沿程序的执行路径理解 CS61C。</description>
+    </item>
     <item>
       <title>Akashic 富媒体处理与云端环境维护</title>
       <link>https://lingchen000.github.io/-/notes/#log-2026-08-31</link>
