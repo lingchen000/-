@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+  <defs><style>
+    .title{font:700 34px 'Microsoft YaHei','Noto Sans CJK SC',sans-serif;fill:#102a43}.sub{font:400 18px 'Microsoft YaHei','Noto Sans CJK SC',sans-serif;fill:#52677c}.h{font:700 23px 'Microsoft YaHei','Noto Sans CJK SC',sans-serif;fill:#102a43}.t{font:400 18px 'Microsoft YaHei','Noto Sans CJK SC',sans-serif;fill:#334e68}.math{font:600 23px 'Cambria Math','Microsoft YaHei',serif;fill:#102a43}.small{font:400 16px 'Microsoft YaHei','Noto Sans CJK SC',sans-serif;fill:#627d98}.line{stroke:#94a3b8;stroke-width:3;fill:none}.card{fill:#fff;stroke:#cbd5e1;stroke-width:2}
+  </style></defs>
+  <rect width="1200" height="720" rx="28" fill="#f4f8fc"/>
+  <text x="60" y="62" class="title">贝叶斯公式：先把条件概率还原成人数</text>
+  <text x="60" y="94" class="sub">例：1000 封邮件中 10% 是垃圾邮件；检测器召回率 90%，正常邮件误报率 5%。</text>
+
+  <rect x="60" y="140" width="190" height="86" rx="16" class="card"/>
+  <text x="95" y="177" class="h">1000 封</text><text x="95" y="205" class="small">先验总体</text>
+  <path d="M250 183 H340 V274 H400" class="line"/><path d="M340 183 V452 H400" class="line"/>
+  <rect x="400" y="232" width="210" height="86" rx="16" fill="#fff1f2" stroke="#f59aaa" stroke-width="2"/>
+  <text x="430" y="269" class="h">垃圾 100</text><text x="430" y="297" class="small">先验概率 10%</text>
+  <rect x="400" y="410" width="210" height="86" rx="16" fill="#f1fdf4" stroke="#83d39a" stroke-width="2"/>
+  <text x="430" y="447" class="h">正常 900</text><text x="430" y="475" class="small">先验概率 90%</text>
+  <path d="M610 275 H690 V222 H748" class="line"/><path d="M690 275 V328 H748" class="line"/>
+  <path d="M610 453 H690 V436 H748" class="line"/><path d="M690 453 V542 H748" class="line"/>
+  <rect x="748" y="180" width="210" height="82" rx="16" fill="#fee2e2" stroke="#e11d48" stroke-width="2"/>
+  <text x="778" y="215" class="h">被标记 90</text><text x="778" y="243" class="small">100 × 90%</text>
+  <rect x="748" y="288" width="210" height="82" rx="16" class="card"/>
+  <text x="778" y="323" class="h">未标记 10</text><text x="778" y="351" class="small">100 × 10%</text>
+  <rect x="748" y="396" width="210" height="82" rx="16" fill="#fff7d6" stroke="#f0b94d" stroke-width="2"/>
+  <text x="778" y="431" class="h">被误报 45</text><text x="778" y="459" class="small">900 × 5%</text>
+  <rect x="748" y="504" width="210" height="82" rx="16" class="card"/>
+  <text x="778" y="539" class="h">未标记 855</text><text x="778" y="567" class="small">900 × 95%</text>
+
+  <rect x="992" y="208" width="160" height="320" rx="20" fill="#e8f1ff" stroke="#7aa7f7" stroke-width="2"/>
+  <text x="1018" y="251" class="h">已被标记</text>
+  <text x="1018" y="291" class="t">真阳性 90</text>
+  <text x="1018" y="326" class="t">误报　 45</text>
+  <line x1="1018" y1="347" x2="1126" y2="347" stroke="#7aa7f7" stroke-width="2"/>
+  <text x="1018" y="383" class="t">共计 135</text>
+  <text x="1018" y="432" class="math">90 / 135</text>
+  <text x="1032" y="470" class="math">= 2 / 3</text>
+  <text x="1018" y="505" class="small">而不是 90%</text>
+
+  <rect x="60" y="625" width="1080" height="55" rx="14" fill="#fff8e7"/>
+  <text x="88" y="660" class="t">基率效应：正常邮件基数很大，即使误报率只有 5%，也会产生 45 个误报。</text>
+</svg>

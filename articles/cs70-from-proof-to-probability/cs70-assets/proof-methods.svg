@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+  <defs>
+    <style>
+      .title{font:700 34px 'Microsoft YaHei','Noto Sans CJK SC',sans-serif;fill:#102a43}.sub{font:400 18px 'Microsoft YaHei','Noto Sans CJK SC',sans-serif;fill:#52677c}.h{font:700 23px 'Microsoft YaHei','Noto Sans CJK SC',sans-serif;fill:#102a43}.t{font:400 18px 'Microsoft YaHei','Noto Sans CJK SC',sans-serif;fill:#334e68}.math{font:600 20px 'Cambria Math','Microsoft YaHei',serif;fill:#102a43}.small{font:400 16px 'Microsoft YaHei','Noto Sans CJK SC',sans-serif;fill:#627d98}.card{fill:#fff;stroke:#cbd5e1;stroke-width:2}.arrow{stroke:#276ef1;stroke-width:3;fill:none;marker-end:url(#a)}
+    </style>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#276ef1"/></marker>
+  </defs>
+  <rect width="1200" height="720" rx="28" fill="#f4f8fc"/>
+  <text x="60" y="62" class="title">同一个命题，四种常见证明路线</text>
+  <text x="60" y="94" class="sub">先辨认命题结构，再选择能缩短推理距离的工具；形式不同，逻辑义务不能省略。</text>
+
+  <rect x="60" y="130" width="520" height="230" rx="20" class="card"/>
+  <circle cx="105" cy="176" r="24" fill="#dbeafe"/><text x="98" y="184" class="h">1</text>
+  <text x="145" y="184" class="h">直接证明</text>
+  <text x="95" y="226" class="t">目标：证明 P ⇒ Q</text>
+  <rect x="96" y="250" width="110" height="52" rx="12" fill="#e8f1ff"/><text x="122" y="283" class="math">假设 P</text>
+  <path d="M216 276 H340" class="arrow"/>
+  <rect x="352" y="250" width="130" height="52" rx="12" fill="#dcfce7"/><text x="382" y="283" class="math">推出 Q</text>
+  <text x="95" y="334" class="small">适合：定义可直接展开，结论离前提很近。</text>
+
+  <rect x="620" y="130" width="520" height="230" rx="20" class="card"/>
+  <circle cx="665" cy="176" r="24" fill="#ede9fe"/><text x="658" y="184" class="h">2</text>
+  <text x="705" y="184" class="h">逆否证明</text>
+  <text x="655" y="226" class="t">等价地证明 ¬Q ⇒ ¬P</text>
+  <rect x="656" y="250" width="120" height="52" rx="12" fill="#f3e8ff"/><text x="681" y="283" class="math">假设 ¬Q</text>
+  <path d="M786 276 H900" class="arrow"/>
+  <rect x="912" y="250" width="130" height="52" rx="12" fill="#dcfce7"/><text x="939" y="283" class="math">推出 ¬P</text>
+  <text x="655" y="334" class="small">适合：“没有结果”比“构造结果”更容易分析。</text>
+
+  <rect x="60" y="398" width="520" height="250" rx="20" class="card"/>
+  <circle cx="105" cy="444" r="24" fill="#fee2e2"/><text x="98" y="452" class="h">3</text>
+  <text x="145" y="452" class="h">反证法</text>
+  <text x="95" y="494" class="t">目标：证明命题 C</text>
+  <rect x="96" y="520" width="126" height="52" rx="12" fill="#fff1f2"/><text x="118" y="553" class="math">假设 ¬C</text>
+  <path d="M232 546 H342" class="arrow"/>
+  <rect x="354" y="520" width="150" height="52" rx="12" fill="#fee2e2"/><text x="383" y="553" class="math">推出矛盾 ⊥</text>
+  <text x="95" y="612" class="small">矛盾必须明确：例如 R 与 ¬R 同时成立。</text>
+
+  <rect x="620" y="398" width="520" height="250" rx="20" class="card"/>
+  <circle cx="665" cy="444" r="24" fill="#fef3c7"/><text x="658" y="452" class="h">4</text>
+  <text x="705" y="452" class="h">数学归纳法</text>
+  <text x="655" y="494" class="t">目标：对所有 n ≥ 0 证明 P(n)</text>
+  <rect x="656" y="520" width="118" height="52" rx="12" fill="#fff7d6"/><text x="681" y="553" class="math">P(0)</text>
+  <path d="M784 546 H858" class="arrow"/>
+  <rect x="870" y="520" width="198" height="52" rx="12" fill="#dcfce7"/><text x="894" y="553" class="math">P(k) ⇒ P(k+1)</text>
+  <text x="655" y="612" class="small">基例决定起点；归纳步只连接相邻台阶。</text>
+</svg>

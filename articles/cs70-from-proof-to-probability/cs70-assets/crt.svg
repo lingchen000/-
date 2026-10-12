@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+  <defs><style>
+    .title{font:700 34px 'Microsoft YaHei','Noto Sans CJK SC',sans-serif;fill:#102a43}.sub{font:400 18px 'Microsoft YaHei','Noto Sans CJK SC',sans-serif;fill:#52677c}.h{font:700 24px 'Microsoft YaHei','Noto Sans CJK SC',sans-serif;fill:#102a43}.t{font:400 19px 'Microsoft YaHei','Noto Sans CJK SC',sans-serif;fill:#334e68}.math{font:600 24px 'Cambria Math','Microsoft YaHei',serif;fill:#102a43}.small{font:400 16px 'Microsoft YaHei','Noto Sans CJK SC',sans-serif;fill:#627d98}.card{fill:#fff;stroke:#cbd5e1;stroke-width:2}
+  </style></defs>
+  <rect width="1200" height="720" rx="28" fill="#f4f8fc"/>
+  <text x="60" y="62" class="title">中国剩余定理：两只小钟如何合成一只大钟</text>
+  <text x="60" y="94" class="sub">当模数两两互素时，各自的余数共同确定模乘积意义下的唯一位置。</text>
+  <rect x="60" y="135" width="320" height="255" rx="20" class="card"/>
+  <text x="95" y="178" class="h">模 3 的钟</text>
+  <circle cx="220" cy="275" r="78" fill="#eef5ff" stroke="#7aa7f7" stroke-width="3"/>
+  <text x="210" y="215" class="math">0</text><text x="277" y="301" class="math">1</text><text x="143" y="301" class="math" fill="#e11d48">2</text>
+  <line x1="220" y1="275" x2="163" y2="291" stroke="#e11d48" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="220" cy="275" r="8" fill="#102a43"/><text x="115" y="367" class="math">x ≡ 2 (mod 3)</text>
+  <rect x="440" y="135" width="320" height="255" rx="20" class="card"/>
+  <text x="475" y="178" class="h">模 5 的钟</text>
+  <circle cx="600" cy="275" r="78" fill="#f1fdf4" stroke="#69c487" stroke-width="3"/>
+  <text x="590" y="215" class="math">0</text><text x="657" y="262" class="math">1</text><text x="633" y="335" class="math">2</text><text x="540" y="335" class="math" fill="#e11d48">3</text><text x="515" y="262" class="math">4</text>
+  <line x1="600" y1="275" x2="559" y2="326" stroke="#e11d48" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="600" cy="275" r="8" fill="#102a43"/><text x="492" y="367" class="math">x ≡ 3 (mod 5)</text>
+  <rect x="820" y="135" width="320" height="255" rx="20" fill="#fff8e7" stroke="#f0b94d" stroke-width="3"/>
+  <text x="855" y="178" class="h">合成：模 15</text>
+  <text x="865" y="239" class="t">0 到 14 中，同时满足</text>
+  <text x="865" y="279" class="math">x mod 3 = 2</text>
+  <text x="865" y="317" class="math">x mod 5 = 3</text>
+  <rect x="870" y="336" width="220" height="42" rx="12" fill="#fee2e2"/><text x="916" y="365" class="math">只有 x = 8</text>
+
+  <text x="60" y="448" class="h">在一个完整周期 0…14 里检查</text>
+  <g font-family="Microsoft YaHei,Noto Sans CJK SC,sans-serif" font-size="18" text-anchor="middle">
+    <rect x="60" y="478" width="68" height="68" rx="10" fill="#fff" stroke="#cbd5e1"/><text x="94" y="520">0</text>
+    <rect x="134" y="478" width="68" height="68" rx="10" fill="#fff" stroke="#cbd5e1"/><text x="168" y="520">1</text>
+    <rect x="208" y="478" width="68" height="68" rx="10" fill="#e8f1ff" stroke="#7aa7f7"/><text x="242" y="520">2</text>
+    <rect x="282" y="478" width="68" height="68" rx="10" fill="#f1fdf4" stroke="#69c487"/><text x="316" y="520">3</text>
+    <rect x="356" y="478" width="68" height="68" rx="10" fill="#fff" stroke="#cbd5e1"/><text x="390" y="520">4</text>
+    <rect x="430" y="478" width="68" height="68" rx="10" fill="#e8f1ff" stroke="#7aa7f7"/><text x="464" y="520">5</text>
+    <rect x="504" y="478" width="68" height="68" rx="10" fill="#fff" stroke="#cbd5e1"/><text x="538" y="520">6</text>
+    <rect x="578" y="478" width="68" height="68" rx="10" fill="#fff" stroke="#cbd5e1"/><text x="612" y="520">7</text>
+    <rect x="652" y="470" width="68" height="84" rx="10" fill="#fee2e2" stroke="#e11d48" stroke-width="3"/><text x="686" y="520" font-weight="700">8</text>
+    <rect x="726" y="478" width="68" height="68" rx="10" fill="#fff" stroke="#cbd5e1"/><text x="760" y="520">9</text>
+    <rect x="800" y="478" width="68" height="68" rx="10" fill="#fff" stroke="#cbd5e1"/><text x="834" y="520">10</text>
+    <rect x="874" y="478" width="68" height="68" rx="10" fill="#e8f1ff" stroke="#7aa7f7"/><text x="908" y="520">11</text>
+    <rect x="948" y="478" width="68" height="68" rx="10" fill="#fff" stroke="#cbd5e1"/><text x="982" y="520">12</text>
+    <rect x="1022" y="478" width="68" height="68" rx="10" fill="#f1fdf4" stroke="#69c487"/><text x="1056" y="520">13</text>
+    <rect x="1096" y="478" width="44" height="68" rx="10" fill="#e8f1ff" stroke="#7aa7f7"/><text x="1118" y="520">14</text>
+  </g>
+  <text x="60" y="598" class="small">蓝色：余 2（mod 3）　绿色：余 3（mod 5）　红色：两条件的交点</text>
+  <rect x="60" y="625" width="1080" height="52" rx="14" fill="#e8f1ff"/>
+  <text x="90" y="659" class="t">因此所有解都是 x = 8 + 15k，即 x ≡ 8 (mod 15)。“唯一”指模 15 意义下唯一。</text>
+</svg>
