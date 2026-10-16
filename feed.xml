@@ -5,8 +5,22 @@
     <link>https://lingchen000.github.io/-/</link>
     <description>陵辰公开的故事、日常切片与私人独白。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Mon, 12 Oct 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 15 Oct 2026 00:00:00 +0800</lastBuildDate>
     <atom:link href="https://lingchen000.github.io/-/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>校园跑应用风控与风险应用排查</title>
+      <link>https://lingchen000.github.io/-/notes/#log-2026-10-15</link>
+      <guid isPermaLink="true">https://lingchen000.github.io/-/notes/#log-2026-10-15</guid>
+      <pubDate>Thu, 15 Oct 2026 00:00:00 +0800</pubDate>
+      <description>排查校园跑客户端的设备风险提示，确认未获位置权限的 NFC 写入软件仍可能因已安装应用扫描而触发风控。</description>
+    </item>
+    <item>
+      <title>Android 模拟定位机制与安全风险研究</title>
+      <link>https://lingchen000.github.io/-/notes/#log-2026-09-04</link>
+      <guid isPermaLink="true">https://lingchen000.github.io/-/notes/#log-2026-09-04</guid>
+      <pubDate>Fri, 04 Sep 2026 00:00:00 +0800</pubDate>
+      <description>研究 Android 模拟定位服务、路线点位插值与多源反作弊检测，理解相关系统权限及接口滥用风险。</description>
+    </item>
     <item>
       <title>从证明到不确定性：CS70 如何训练计算机科学的数学思维</title>
       <link>https://lingchen000.github.io/-/articles/cs70-from-proof-to-probability/</link>

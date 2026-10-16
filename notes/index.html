@@ -53,12 +53,36 @@
           <input id="notes-search" type="search" inputmode="search" autocomplete="off" placeholder="检索日期、标题或正文" data-notes-search>
         </label>
         <div class="notes-archive-actions">
-          <span class="notes-result-count" data-notes-result-count role="status" aria-live="polite" aria-atomic="true">共 35 条记录</span>
+          <span class="notes-result-count" data-notes-result-count role="status" aria-live="polite" aria-atomic="true">共 37 条记录</span>
           <button class="notes-toggle-all" type="button" data-notes-toggle-all>展开全部</button>
         </div>
       </div>
       <div class="observation-log-list" data-notes-list>
-        <article class="observation-log-entry" id="log-2026-08-31" data-notes-entry data-latest>
+        <article class="observation-log-entry" id="log-2026-10-15" data-notes-entry data-latest>
+          <div class="observation-log-meta"><time datetime="2026-10-15">2026.10.15</time><span>LOG 037</span></div>
+          <h3>校园跑应用风控与风险应用排查</h3>
+          <p class="observation-log-project">ASSIGNMENT / ANDROID RISK CONTROL ANALYSIS</p>
+          <div class="observation-log-content">
+            <p>在测试校园跑应用检测机制时，客户端提示设备中存在风险类应用，导致无法正常进行跑步打卡。</p>
+            <p>依次尝试回退 Android 系统版本、卸载虚拟定位相关程序、移除代理工具、关闭开发者模式、清理支付宝缓存并重启设备，但问题仍未解决。</p>
+            <p>经过逐步排查，最终确认触发风控的是设备内安装的 NFC 写入软件。即使该应用未获得位置权限，校园跑客户端仍会将其识别并标记为风险应用。</p>
+            <p>本次实践表明，移动端应用风控并不只检查位置权限或模拟定位接口，也可能扫描设备中的已安装应用列表，以判断当前运行环境是否存在风险。</p>
+          </div>
+        </article>
+
+        <article class="observation-log-entry" id="log-2026-09-04" data-notes-entry>
+          <div class="observation-log-meta"><time datetime="2026-09-04">2026.09.04</time><span>LOG 036</span></div>
+          <h3>Android 模拟定位机制与安全风险研究</h3>
+          <p class="observation-log-project">ASSIGNMENT / ANDROID LOCATION SYSTEM RESEARCH</p>
+          <div class="observation-log-content">
+            <p>研究 Android 系统模拟定位服务的工作方式：通过 <code>setMockLocation</code> 接口持续向系统提交经纬度，并配置移动速度与时间间隔，用于理解道路移动轨迹的生成过程。</p>
+            <p>分析路线模拟的基本逻辑：输入一组途经点后，程序按照时间分片计算中间点位，再以固定时间间隔提交给系统定位服务。</p>
+            <p>了解目标应用可能采用的反作弊检测，包括开发者选项、模拟位置权限及传感器加速度数据校验。单独修改 GPS 数据容易因多源数据不一致而被识别。</p>
+            <p>本次研究以学习 Android 定位系统底层流程、模拟定位接口的合法用途与滥用风险为目标，并进一步理解系统权限和开发者模式所带来的安全影响。</p>
+          </div>
+        </article>
+
+        <article class="observation-log-entry" id="log-2026-08-31" data-notes-entry>
           <div class="observation-log-meta"><time datetime="2026-08-31">2026.08.31</time><span>LOG 035</span></div>
           <h3>Akashic 富媒体处理与云端环境维护</h3>
           <p class="observation-log-project">ASSIGNMENT / RICH MEDIA PIPELINE &amp; CLOUD MAINTENANCE</p>
